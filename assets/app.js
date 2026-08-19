@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
         frame.src = url;
         titleEl.textContent = name;
         openInTabLink.setAttribute("href", url);
-        setMode("pc");
+        setMode(card.getAttribute("data-default-mode") || "pc");
         modal.classList.add("open");
         document.body.style.overflow = "hidden";
       });
