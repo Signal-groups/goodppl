@@ -9,42 +9,45 @@
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css">
 <link rel="stylesheet" href="assets/style.css">
 <style>
-  .featured-tpl{
-    display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;
-    border-radius:24px;overflow:hidden;margin-bottom:56px;
-    border:1.5px solid transparent;background:linear-gradient(var(--bg-alt),var(--bg-alt)) padding-box,var(--gradient) border-box;
-  }
-  .featured-tpl-info{padding:40px 40px;display:flex;flex-direction:column;justify-content:center;}
+  .std-intro{margin-bottom:28px;}
   .ft-badge{
     display:inline-flex;align-items:center;gap:7px;width:fit-content;
     font-size:12px;font-weight:800;letter-spacing:.03em;color:var(--text);
     background:var(--gradient-soft);border:1px solid var(--border-strong);border-radius:100px;
-    padding:6px 14px;margin-bottom:16px;
+    padding:6px 14px;margin-bottom:14px;
   }
-  .featured-tpl-info h2{font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.35;}
-  .featured-tpl-info p{margin-top:12px;font-size:14px;color:var(--text-dim);line-height:1.75;}
-  .featured-tpl-points{display:flex;flex-direction:column;gap:8px;margin-top:18px;}
-  .featured-tpl-points span{font-size:13px;color:var(--text-dim);padding-left:18px;position:relative;}
-  .featured-tpl-points span::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:2px;background:var(--gradient);}
-  .featured-tpl-info .hero-cta{margin-top:24px;}
-  .featured-tpl-visual{
-    background:linear-gradient(160deg,#fbf6ee,#f0c9ab 130%);
-    display:flex;align-items:center;justify-content:center;padding:32px 20px;position:relative;min-height:260px;
+  .std-intro h2{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.4;}
+  .std-intro p{margin-top:10px;font-size:14px;color:var(--text-dim);line-height:1.75;max-width:640px;}
+  .std-intro .featured-tpl-points{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;}
+  .std-intro .featured-tpl-points span{font-size:12.5px;color:var(--text-dim);padding-left:16px;position:relative;}
+  .std-intro .featured-tpl-points span::before{content:"";position:absolute;left:0;top:7px;width:6px;height:6px;border-radius:2px;background:var(--gradient);}
+
+  .std-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:56px;}
+  .std-card{
+    border-radius:20px;overflow:hidden;cursor:pointer;text-align:left;padding:0;width:100%;font:inherit;color:inherit;
+    border:1.5px solid transparent;background:linear-gradient(var(--bg-alt),var(--bg-alt)) padding-box,var(--gradient) border-box;
+    transition:transform .2s;
   }
-  .ft-phone{
-    width:180px;background:#fff;border-radius:22px;border:6px solid #1c1710;
-    box-shadow:0 30px 60px -20px rgba(0,0,0,.45);overflow:hidden;
-  }
-  .ft-phone .fp-top{height:14px;background:#d3502f;}
-  .ft-phone .fp-body{padding:12px;}
-  .ft-phone .fp-photo{aspect-ratio:4/3;border-radius:10px;background:linear-gradient(150deg,#e9a97c,#d3502f 70%);margin-bottom:8px;}
-  .ft-phone .fp-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
-  .ft-phone .fp-grid div{aspect-ratio:1/1;border-radius:7px;background:#f7e3d8;}
+  .std-card:hover{transform:translateY(-4px);}
+  .std-visual{padding:22px 22px 0;display:flex;justify-content:center;}
+  .ft-phone{width:104px;background:#fff;border-radius:16px;border:5px solid #1c1710;box-shadow:0 20px 40px -16px rgba(0,0,0,.45);overflow:hidden;}
+  .ft-phone .fp-top{height:16px;}
+  .ft-phone .fp-body{padding:8px;}
+  .ft-phone .fp-photo{aspect-ratio:4/3;border-radius:7px;margin-bottom:6px;}
+  .ft-phone .fp-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;}
+  .ft-phone .fp-grid div{aspect-ratio:1/1;border-radius:5px;}
+  .std-body{padding:16px 20px 20px;text-align:center;}
+  .std-body .cat{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--accent-2);text-transform:uppercase;}
+  .std-body h3{font-size:16px;font-weight:700;margin-top:6px;}
+  .std-body p{font-size:12.5px;color:var(--text-dim);margin-top:5px;line-height:1.5;}
+  .std-body .go{margin-top:12px;font-size:12.5px;font-weight:700;color:var(--text);}
 
   @media (max-width:920px){
-    .featured-tpl{grid-template-columns:1fr;}
-    .featured-tpl-info{padding:32px 26px;}
-    .featured-tpl-visual{padding:28px 20px 36px;}
+    .std-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:600px){
+    .std-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
+    .std-body{padding:12px 12px 16px;}
   }
 
   .pf-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px;}
@@ -154,31 +157,17 @@
 
   <section class="section-pad tight">
     <div class="wrap">
-      <div class="featured-tpl">
-        <div class="featured-tpl-info">
-          <span class="ft-badge">★ Good People STANDARD 템플릿</span>
-          <h2>모바일에서 가게가<br>한눈에 보이는 홈페이지</h2>
-          <p>실제 고객에게 만들어드리는 홈페이지는 이렇게 구성됩니다. 음식점 기준 예시로 확인해보세요.</p>
-          <div class="featured-tpl-points">
-            <span>메뉴는 4개 그리드로, 누르면 바로 설명이 열립니다</span>
-            <span>전화·예약 버튼이 화면 하단에 항상 고정됩니다</span>
-            <span>모바일 줄바꿈까지 신경 써서 읽기 편합니다</span>
-          </div>
-          <div class="hero-cta">
-            <button type="button" class="btn btn-solid" data-preview="templates/food.html" data-name="밥심 · STANDARD 템플릿 (음식점)" data-default-mode="mobile">모바일로 미리보기</button>
-            <a href="templates/food.html" target="_blank" class="btn btn-ghost">새 탭에서 열기</a>
-          </div>
-        </div>
-        <div class="featured-tpl-visual">
-          <div class="ft-phone">
-            <div class="fp-top"></div>
-            <div class="fp-body">
-              <div class="fp-photo"></div>
-              <div class="fp-grid"><div></div><div></div><div></div><div></div></div>
-            </div>
-          </div>
+      <div class="std-intro">
+        <span class="ft-badge">★ Good People STANDARD 템플릿</span>
+        <h2>모바일에서 가게가 한눈에 보이는 홈페이지</h2>
+        <p>실제 고객에게 만들어드리는 홈페이지는 이렇게 구성됩니다. PC에서는 전체 내용을 보여주고, 모바일에서는 대표 정보만 압축해서 보여줍니다. 업종별 예시로 확인해보세요.</p>
+        <div class="featured-tpl-points">
+          <span>대표 항목은 4개 그리드로, 누르면 바로 설명이 열립니다</span>
+          <span>전화·예약 버튼이 화면 하단에 항상 고정됩니다</span>
+          <span>모바일 줄바꿈까지 신경 써서 읽기 편합니다</span>
         </div>
       </div>
+      <div class="std-grid" id="std-grid"></div>
 
       <div class="pf-filters" id="pf-filters">
         <button data-filter="all" class="active">전체</button>
@@ -271,6 +260,45 @@
 </div>
 
 <script>
+  var STD_TEMPLATES = [
+    { file: "food.html",     cat: "음식점",         name: "밥심",           tag: "집밥처럼, 든든하게",     top: "#d3502f", photo: "linear-gradient(150deg,#e9a97c,#d3502f 70%)", chip: "#f7e3d8" },
+    { file: "cafe.html",     cat: "카페 · 디저트",   name: "카페 봄날",       tag: "느린 오후, 향긋한 한 잔", top: "#8a5a3b", photo: "linear-gradient(150deg,#e0c39d,#8a5a3b 70%)", chip: "#f0e2d0" },
+    { file: "beauty.html",   cat: "헤어 살롱",       name: "살롱 결",         tag: "결을 살리는 손끝",       top: "#b25a63", photo: "linear-gradient(150deg,#e2b3b7,#b25a63 70%)", chip: "#f2dede" },
+    { file: "academy.html",  cat: "수학 전문 학원",  name: "브라이트 수학학원", tag: "흔들리지 않는 실력",     top: "#2c4a9e", photo: "linear-gradient(150deg,#b7c7ee,#2c4a9e 70%)", chip: "#dde6fa" },
+    { file: "fitness.html",  cat: "필라테스 스튜디오", name: "코어핏 필라테스", tag: "다시 세우는 코어",      top: "#5a7a4d", photo: "linear-gradient(150deg,#bcd0ac,#5a7a4d 70%)", chip: "#e2ead9" },
+    { file: "local.html",    cat: "목공방",          name: "우드랩 공방",     tag: "손끝에서 완성되는 가구",  top: "#8a5a34", photo: "linear-gradient(150deg,#d8b98c,#8a5a34 70%)", chip: "#ecdcc4" }
+  ];
+
+  var stdGrid = document.getElementById("std-grid");
+  STD_TEMPLATES.forEach(function (t) {
+    var card = document.createElement("button");
+    card.type = "button";
+    card.className = "std-card";
+    card.setAttribute("data-preview", "templates/" + t.file);
+    card.setAttribute("data-name", t.name + " · STANDARD 템플릿");
+    card.setAttribute("data-default-mode", "mobile");
+    card.innerHTML =
+      '<div class="std-visual">' +
+        '<div class="ft-phone">' +
+          '<div class="fp-top" style="background:' + t.top + '"></div>' +
+          '<div class="fp-body">' +
+            '<div class="fp-photo" style="background:' + t.photo + '"></div>' +
+            '<div class="fp-grid">' +
+              '<div style="background:' + t.chip + '"></div><div style="background:' + t.chip + '"></div>' +
+              '<div style="background:' + t.chip + '"></div><div style="background:' + t.chip + '"></div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="std-body">' +
+        '<span class="cat">' + t.cat + '</span>' +
+        '<h3>' + t.name + '</h3>' +
+        '<p>' + t.tag + '</p>' +
+        '<span class="go">모바일로 미리보기 →</span>' +
+      '</div>';
+    stdGrid.appendChild(card);
+  });
+
   var CATEGORIES = {
     cafe:     { label: "카페·베이커리", en: "CAFE" },
     food:     { label: "음식점",         en: "FOOD" },

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>브라이트 수학학원 — 흔들리지 않는 실력</title>
+<meta name="description" content="원주 수학학원 브라이트. 커리큘럼, 운영시간, 위치, 전화·상담 문의를 한눈에 확인하세요.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css">
+<style>
+  :root{
+    --bg:#f5f7fb;
+    --surface:#ffffff;
+    --ink:#1c2333;
+    --ink-dim:#5c667e;
+    --ink-faint:#95a0b8;
+    --accent:#2c4a9e;
+    --accent-dark:#213a80;
+    --accent-soft:#dde6fa;
+    --line:#e2e7f2;
+    --radius:20px;
+    --safe-bottom:env(safe-area-inset-bottom, 0px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+    line-height:1.6;
+    word-break:keep-all;
+    overflow-wrap:break-word;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:calc(74px + var(--safe-bottom));
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;}
+  .wrap{max-width:520px;margin:0 auto;padding:0 20px;}
+
+  .mini-header{position:sticky;top:0;z-index:50;background:rgba(245,247,251,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .mini-header .row{max-width:520px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .brand{font-size:17px;font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;gap:8px;}
+  .brand .dot{width:7px;height:7px;border-radius:50%;background:#3fa15e;flex-shrink:0;}
+  .mini-actions{display:flex;gap:8px;}
+  .icon-btn{width:36px;height:36px;border-radius:11px;border:1px solid var(--line);background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+
+  .hero{padding:20px 0 8px;}
+  .hero-photo{aspect-ratio:4/3;border-radius:var(--radius);overflow:hidden;position:relative;background:linear-gradient(150deg,#6f89cf,#2c4a9e 65%,#182d63);}
+  .hero-photo::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(220px 160px at 20% 15%, rgba(255,255,255,.20), transparent 60%),radial-gradient(260px 200px at 85% 90%, rgba(0,0,0,.28), transparent 60%);}
+  .hero-photo .ph-label{position:absolute;left:16px;bottom:16px;color:#fff;font-weight:800;font-size:13px;background:rgba(0,0,0,.28);padding:6px 12px;border-radius:100px;backdrop-filter:blur(4px);}
+  .hero-badges{position:absolute;top:14px;left:14px;display:flex;gap:6px;}
+  .badge{font-size:11.5px;font-weight:800;padding:6px 11px;border-radius:100px;}
+  .badge-open{background:#eafaf0;color:#1e8a4c;}
+  .badge-cat{background:rgba(255,255,255,.9);color:var(--ink);}
+
+  .hero-info{padding:18px 2px 6px;}
+  .hero-info h1{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.35;}
+  .hero-info .tagline{margin-top:6px;font-size:14.5px;color:var(--ink-dim);line-height:1.6;}
+  .amenities{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
+  .amenities span{font-size:12.5px;font-weight:700;color:var(--ink-dim);background:var(--surface);border:1px solid var(--line);padding:6px 12px;border-radius:100px;}
+
+  .glance{margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:12px;}
+  .glance-row{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;}
+  .glance-row .ic{width:20px;flex-shrink:0;text-align:center;}
+  .glance-row .l{color:var(--ink-dim);}
+  .glance-row b{color:var(--ink);font-weight:700;}
+
+  .section{padding:34px 0 4px;}
+  .section-title{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;}
+  .section-title h2{font-size:18px;font-weight:800;letter-spacing:-.01em;}
+  .section-title .sub{font-size:12.5px;color:var(--ink-faint);font-weight:600;}
+
+  .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+  .menu-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;text-align:left;cursor:pointer;transition:transform .15s,box-shadow .15s;padding:0;width:100%;}
+  .menu-card:active{transform:scale(.97);}
+  .menu-card:hover{box-shadow:0 14px 30px -18px rgba(28,35,51,.35);}
+  .menu-photo{aspect-ratio:1/1;position:relative;background:linear-gradient(150deg,var(--accent-soft),#b7c7ee);}
+  .menu-photo .mn{position:absolute;bottom:8px;right:10px;font-size:11px;font-weight:800;color:rgba(28,35,51,.35);}
+  .menu-body{padding:11px 12px 13px;}
+  .menu-body .name{font-size:14px;font-weight:700;line-height:1.4;}
+  .menu-body .price{font-size:14.5px;font-weight:800;color:var(--accent);margin-top:5px;}
+  .menu-body .tap{font-size:11px;color:var(--ink-faint);margin-top:6px;font-weight:600;}
+
+  .price-notice{margin-top:16px;background:var(--accent-soft);border-radius:16px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .price-notice .t1{font-size:12.5px;color:var(--accent-dark);font-weight:700;}
+  .price-notice .t2{font-size:16px;font-weight:800;margin-top:2px;}
+  .price-notice a{font-size:13px;font-weight:800;color:#fff;background:var(--accent);padding:9px 16px;border-radius:100px;flex-shrink:0;}
+
+  .hours-table{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px;}
+  .hours-row{display:flex;justify-content:space-between;font-size:13.5px;padding:7px 0;color:var(--ink-dim);}
+  .hours-row.today{color:var(--ink);font-weight:800;}
+  .hours-row:not(:last-child){border-bottom:1px dashed var(--line);}
+  .hours-note{margin-top:10px;font-size:12.5px;color:var(--ink-faint);line-height:1.6;}
+
+  .map-card{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;}
+  .map-visual{aspect-ratio:16/7;background:repeating-linear-gradient(0deg,#e2e7f2,#e2e7f2 1px,#eff2f9 1px,#eff2f9 26px),repeating-linear-gradient(90deg,#e2e7f2,#e2e7f2 1px,#eff2f9 1px,#eff2f9 26px);position:relative;}
+  .map-visual .pin{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);width:34px;height:34px;border-radius:50% 50% 50% 0;background:var(--accent);rotate:-45deg;box-shadow:0 8px 18px -6px rgba(44,74,158,.6);}
+  .map-body{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .map-body .addr{font-size:13.5px;color:var(--ink-dim);line-height:1.6;}
+  .map-body a{font-size:12.5px;font-weight:800;color:var(--accent-dark);flex-shrink:0;}
+
+  footer{margin-top:40px;padding:24px 0 20px;border-top:1px solid var(--line);}
+  footer .f-name{font-size:13.5px;font-weight:800;}
+  footer p{font-size:12px;color:var(--ink-faint);margin-top:6px;line-height:1.7;}
+  .made-by{margin-top:16px;font-size:11px;color:var(--ink-faint);display:flex;align-items:center;gap:6px;}
+  .made-by b{color:var(--ink-dim);}
+
+  .bottom-bar{position:fixed;left:0;right:0;bottom:0;z-index:80;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:10px 16px calc(10px + var(--safe-bottom));}
+  .bottom-bar .row{max-width:520px;margin:0 auto;display:flex;gap:10px;}
+  .bb-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:13px 14px;border-radius:14px;font-size:14.5px;font-weight:800;}
+  .bb-call{background:var(--surface);border:1.5px solid var(--line);color:var(--ink);}
+  .bb-reserve{background:var(--accent);color:#fff;border:1.5px solid var(--accent);}
+
+  .sheet{position:fixed;inset:0;z-index:200;display:none;}
+  .sheet.open{display:block;}
+  .sheet-backdrop{position:absolute;inset:0;background:rgba(12,16,28,.5);}
+  .sheet-panel{position:absolute;left:0;right:0;bottom:0;max-width:520px;margin:0 auto;background:var(--surface);border-radius:22px 22px 0 0;transform:translateY(100%);transition:transform .32s cubic-bezier(.22,.9,.32,1);max-height:86vh;overflow-y:auto;padding-bottom:calc(20px + var(--safe-bottom));}
+  .sheet.open .sheet-panel{transform:translateY(0);}
+  .sheet-handle{width:38px;height:4px;border-radius:4px;background:var(--line);margin:12px auto 4px;}
+  .sheet-photo{margin:10px 20px 0;aspect-ratio:16/9;border-radius:16px;background:linear-gradient(150deg,var(--accent-soft),#b7c7ee);}
+  .sheet-body{padding:18px 22px 4px;}
+  .sheet-price{font-size:14.5px;font-weight:800;color:var(--accent);}
+  .sheet-body h3{font-size:20px;font-weight:800;margin-top:6px;letter-spacing:-.01em;}
+  .sheet-body p{font-size:14px;color:var(--ink-dim);margin-top:10px;line-height:1.75;}
+  .sheet-actions{margin-top:20px;display:flex;gap:10px;}
+  .sheet-actions a{flex:1;text-align:center;padding:14px;border-radius:14px;font-size:14.5px;font-weight:800;background:var(--accent);color:#fff;}
+  .sheet-close{position:absolute;top:14px;right:16px;width:32px;height:32px;border-radius:50%;background:var(--bg);border:1px solid var(--line);font-size:14px;color:var(--ink-dim);}
+
+  @media (min-width:860px){
+    .wrap{max-width:960px;}
+    .hero{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:center;padding-top:36px;}
+    .hero-photo{aspect-ratio:4/3;}
+    .hero-info{padding-top:0;}
+    .hero-info h1{font-size:34px;}
+    .menu-grid{grid-template-columns:repeat(4,1fr);}
+    .glance{flex-direction:row;justify-content:space-between;}
+    .price-notice{padding:20px 26px;}
+    .sheet-panel{position:fixed;left:50%;top:50%;bottom:auto;transform:translate(-50%,-46%) scale(.96);opacity:0;width:100%;max-width:480px;border-radius:22px;transition:transform .25s,opacity .25s;}
+    .sheet.open .sheet-panel{transform:translate(-50%,-50%) scale(1);opacity:1;}
+  }
+</style>
+</head>
+<body>
+
+<header class="mini-header">
+  <div class="row">
+    <span class="brand"><span class="dot"></span>브라이트 수학학원</span>
+    <div class="mini-actions">
+      <a href="tel:010-0000-0000" class="icon-btn" aria-label="전화">📞</a>
+      <a href="#map" class="icon-btn" aria-label="위치">📍</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="hero-photo">
+      <div class="hero-badges">
+        <span class="badge badge-open">상담 가능</span>
+        <span class="badge badge-cat">수학 전문 학원</span>
+      </div>
+      <span class="ph-label">대표 사진</span>
+    </div>
+    <div class="hero-info">
+      <h1>기초부터 수능까지,<br>흔들리지 않는 실력.</h1>
+      <p class="tagline">학생 개개인의 진단부터 시작해<br class="brk">소수정예로 관리하는 수학 전문 학원입니다.</p>
+      <div class="amenities">
+        <span>소수정예반</span>
+        <span>주 3회 관리</span>
+        <span>학부모 리포트</span>
+        <span>주차 가능</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="glance">
+    <div class="glance-row"><span class="ic">🕒</span><span class="l">오늘 <b>14:00 – 22:00</b> · 주말 상담 가능</span></div>
+    <div class="glance-row"><span class="ic">📍</span><span class="l">강원 원주시 ○○로 78 <b>(도보 5분)</b></span></div>
+    <div class="glance-row"><span class="ic">💰</span><span class="l">초등 기초반 <b>월 180,000원</b>부터</span></div>
+  </section>
+
+  <section class="section" id="menu">
+    <div class="section-title">
+      <h2>커리큘럼</h2>
+      <span class="sub">눌러서 자세히 보기</span>
+    </div>
+    <div class="menu-grid" id="menu-grid"></div>
+
+    <div class="price-notice">
+      <div>
+        <div class="t1">우리 아이 레벨이 궁금하신가요?</div>
+        <div class="t2">무료 레벨테스트로 먼저 확인해드립니다</div>
+      </div>
+      <a href="tel:010-0000-0000">상담 문의</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title"><h2>운영시간</h2></div>
+    <div class="hours-table">
+      <div class="hours-row today"><span>오늘 (수)</span><span>14:00 – 22:00</span></div>
+      <div class="hours-row"><span>토요일</span><span>10:00 – 16:00 (상담)</span></div>
+      <div class="hours-row"><span>일요일</span><span>휴무</span></div>
+      <div class="hours-note">신규 상담은 평일 14시 이후, 주말 사전 예약 시 가능합니다.</div>
+    </div>
+  </section>
+
+  <section class="section" id="map">
+    <div class="section-title"><h2>오시는 길</h2></div>
+    <div class="map-card">
+      <div class="map-visual"><div class="pin"></div></div>
+      <div class="map-body">
+        <span class="addr">강원 원주시 ○○로 78<br>브라이트 수학학원 (3층)</span>
+        <a href="https://map.naver.com" target="_blank" rel="noopener">지도 앱에서 보기</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="f-name">브라이트 수학학원</div>
+    <p>강원 원주시 ○○로 78 · 010-0000-0000<br>사업자등록번호 000-00-00000</p>
+    <div class="made-by">이 페이지는 <b>Good People</b>이 제작한 STANDARD 홈페이지 예시입니다.</div>
+  </footer>
+</main>
+
+<div class="bottom-bar">
+  <div class="row">
+    <a href="tel:010-0000-0000" class="bb-btn bb-call">📞 전화하기</a>
+    <a href="tel:010-0000-0000" class="bb-btn bb-reserve">📝 상담 신청</a>
+  </div>
+</div>
+
+<div class="sheet" id="menu-sheet">
+  <div class="sheet-backdrop"></div>
+  <div class="sheet-panel">
+    <div class="sheet-handle"></div>
+    <button class="sheet-close" aria-label="닫기">✕</button>
+    <div class="sheet-photo"></div>
+    <div class="sheet-body">
+      <span class="sheet-price" id="sheet-price"></span>
+      <h3 id="sheet-name"></h3>
+      <p id="sheet-desc"></p>
+      <div class="sheet-actions">
+        <a href="tel:010-0000-0000">이 과정으로 상담하기</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var MENU = [
+    { name: "초등 기초반", price: "월 180,000원", desc: "연산과 개념을 단단히 다지는 초등 전 학년 대상 기초반입니다. 주 2회 수업입니다." },
+    { name: "중등 내신반", price: "월 220,000원", desc: "학교별 시험 범위에 맞춘 내신 대비반입니다. 시험 기간에는 특강이 추가됩니다." },
+    { name: "고등 수능반", price: "월 280,000원", desc: "수능 기출 분석과 유형별 문제풀이를 병행하는 고등부 전문반입니다." },
+    { name: "1:1 클리닉", price: "회당 60,000원", desc: "취약 단원을 집중 보완하는 1:1 개인 지도 수업입니다. 시간은 사전 예약제입니다." }
+  ];
+
+  var grid = document.getElementById("menu-grid");
+  MENU.forEach(function (item, i) {
+    var card = document.createElement("button");
+    card.type = "button";
+    card.className = "menu-card";
+    card.innerHTML =
+      '<div class="menu-photo"><span class="mn">' + (i + 1) + '</span></div>' +
+      '<div class="menu-body">' +
+        '<div class="name">' + item.name + '</div>' +
+        '<div class="price">' + item.price + '</div>' +
+        '<div class="tap">눌러서 자세히 보기 →</div>' +
+      '</div>';
+    card.addEventListener("click", function () { openSheet(item); });
+    grid.appendChild(card);
+  });
+
+  var sheet = document.getElementById("menu-sheet");
+  function openSheet(item) {
+    document.getElementById("sheet-name").textContent = item.name;
+    document.getElementById("sheet-price").textContent = item.price;
+    document.getElementById("sheet-desc").textContent = item.desc;
+    sheet.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function closeSheet() {
+    sheet.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+  sheet.querySelector(".sheet-close").addEventListener("click", closeSheet);
+  sheet.querySelector(".sheet-backdrop").addEventListener("click", closeSheet);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && sheet.classList.contains("open")) closeSheet();
+  });
+</script>
+
+</body>
+</html>
