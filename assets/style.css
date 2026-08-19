@@ -17,14 +17,17 @@
   --maxw:1120px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
 body{
   background:var(--bg);
   color:var(--text);
   font-family:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
+  scroll-behavior:smooth;
   overflow-x:hidden;
+  word-break:keep-all;
+  overflow-wrap:break-word;
 }
 img{max-width:100%;display:block;}
 a{color:inherit;text-decoration:none;}
@@ -139,7 +142,7 @@ header{
   background:var(--gradient);
 }
 .cta-banner::after{
-  content:"";position:absolute;inset:0;
+  content:"";position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(500px 260px at 50% -20%, rgba(255,255,255,.35), transparent 60%);
 }
 .cta-banner h2{font-size:clamp(24px,3.4vw,36px);font-weight:800;color:#0a0c18;position:relative;letter-spacing:-.02em;}
