@@ -1,0 +1,2539 @@
+<!DOCTYPE html>
+<html lang="ko"><head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'&gt;&lt;rect width='64' height='64' rx='14' fill='%230a0a0a'/&gt;&lt;path d='M38 4 L14 36 L28 36 L24 60 L50 26 L34 26 Z' fill='%23FFEB00' stroke='%23FFEB00' stroke-width='1' stroke-linejoin='round'/&gt;&lt;/svg&gt;">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stackly — IT Solution Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&amp;family=Noto+Sans+KR:wght@300;400;500;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   디자인 토큰: Linear/Vercel/Stripe 스타일 다크 모던
+   ========================================================= */
+:root {
+  --bg: #0a0e1a;
+  --bg-elev-1: #0d1220;
+  --bg-elev-2: #11172a;
+  --bg-card: #131a30;
+  --bg-card-hover: #161e36;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.12);
+  --border-accent: rgba(91, 143, 255, 0.3);
+
+  --text: #ffffff;
+  --text-1: rgba(255, 255, 255, 0.92);
+  --text-2: rgba(255, 255, 255, 0.62);
+  --text-3: rgba(255, 255, 255, 0.42);
+  --text-4: rgba(255, 255, 255, 0.28);
+
+  --primary: #5b8fff;
+  --primary-soft: rgba(91, 143, 255, 0.12);
+  --primary-glow: rgba(91, 143, 255, 0.4);
+  --success: #34d5b0;
+  --success-soft: rgba(52, 213, 176, 0.12);
+  --danger: #f26b5b;
+  --danger-soft: rgba(242, 107, 91, 0.12);
+
+  --gradient-brand: linear-gradient(135deg, #5b8fff 0%, #34d5b0 100%);
+  --gradient-text: linear-gradient(180deg, #ffffff 0%, #8b94a7 100%);
+  --gradient-mesh: radial-gradient(ellipse 60% 80% at 20% 30%, rgba(91, 143, 255, 0.18), transparent 60%),
+                   radial-gradient(ellipse 50% 60% at 80% 70%, rgba(52, 213, 176, 0.10), transparent 60%),
+                   radial-gradient(ellipse 40% 40% at 50% 100%, rgba(91, 143, 255, 0.15), transparent 60%);
+
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Noto Sans KR', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --shadow-card: 0 1px 0 rgba(255,255,255,0.04) inset, 0 0 0 1px rgba(255,255,255,0.04), 0 8px 24px rgba(0,0,0,0.2);
+  --shadow-elev: 0 1px 0 rgba(255,255,255,0.06) inset, 0 0 0 1px rgba(255,255,255,0.06), 0 24px 48px rgba(0,0,0,0.4);
+
+  --container: 1180px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* 노이즈 텍스처: SVG feTurbulence 기반 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+/* =========================================================
+   타이포그래피
+   ========================================================= */
+.display-1, .display-2, h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: var(--text);
+}
+.display-1 { font-size: clamp(48px, 7vw, 84px); }
+.display-2 { font-size: clamp(36px, 4.5vw, 56px); }
+h2 { font-size: clamp(32px, 3.5vw, 44px); }
+h3 { font-size: clamp(20px, 2vw, 24px); letter-spacing: -0.015em; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.eyebrow::before {
+  content: ''; width: 24px; height: 1px; background: var(--primary);
+}
+
+.lead {
+  font-size: 18px;
+  color: var(--text-2);
+  font-weight: 400;
+  max-width: 640px;
+}
+
+.mono { font-family: var(--font-mono); }
+
+.gradient-text {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.subtle-text {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* =========================================================
+   레이아웃 공통
+   ========================================================= */
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 32px;
+  position: relative;
+  z-index: 2;
+}
+
+section {
+  position: relative;
+  padding: 120px 0;
+}
+section:not(.hero)::before {
+  content: '';
+  position: absolute; left: 0; right: 0; top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+}
+
+.section-header { margin-bottom: 64px; max-width: 720px; }
+.section-header .eyebrow { margin-bottom: 16px; }
+.section-header h2 { margin-bottom: 16px; }
+
+/* 그리드 백그라운드 (전 섹션 미세하게) */
+.grid-bg {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 30%, transparent 70%);
+}
+
+/* =========================================================
+   버튼
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 20px;
+  font-size: 14px; font-weight: 500;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+  font-family: var(--font-body);
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--text);
+  color: var(--bg);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.1), 0 1px 0 rgba(255,255,255,0.4) inset, 0 8px 24px rgba(91,143,255,0.15);
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.15), 0 1px 0 rgba(255,255,255,0.5) inset, 0 12px 32px rgba(91,143,255,0.25);
+}
+.btn-accent {
+  background: var(--primary);
+  color: var(--text);
+  box-shadow: 0 0 0 1px rgba(91,143,255,0.4), 0 1px 0 rgba(255,255,255,0.3) inset, 0 8px 24px rgba(91,143,255,0.3);
+}
+.btn-accent:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 1px rgba(91,143,255,0.5), 0 1px 0 rgba(255,255,255,0.4) inset, 0 12px 32px rgba(91,143,255,0.45);
+}
+.btn-ghost {
+  background: rgba(255,255,255,0.04);
+  color: var(--text-1);
+  border: 1px solid var(--border-strong);
+}
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.2);
+}
+.btn-link { color: var(--text-2); padding: 12px 0; }
+.btn-link:hover { color: var(--text); }
+
+.btn-lg { padding: 16px 28px; font-size: 15px; }
+
+/* =========================================================
+   네비게이션
+   ========================================================= */
+.nav {
+  position: fixed; top: 16px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  width: calc(100% - 32px);
+  max-width: var(--container);
+  background: rgba(13, 18, 32, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  padding: 10px 16px 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+}
+.nav-brand {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  display: flex; align-items: center; gap: 8px;
+}
+.nav-brand .logo-mark {
+  width: 22px; height: 22px;
+  background: var(--gradient-brand);
+  border-radius: 6px;
+  position: relative;
+}
+.nav-brand .logo-mark::after {
+  content: ''; position: absolute; inset: 4px;
+  border: 1.5px solid rgba(255,255,255,0.85);
+  border-radius: 3px;
+  border-bottom: none; border-right: none;
+}
+.nav-links {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 14px;
+}
+.nav-links a {
+  color: var(--text-2);
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+.nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+.nav-cta { display: flex; gap: 8px; align-items: center; }
+.nav-cta .btn { padding: 8px 14px; font-size: 13px; }
+
+@media (max-width: 768px) { .nav-links { display: none; } }
+
+/* =========================================================
+   SECTION 1: HERO
+   ========================================================= */
+.hero {
+  min-height: 100vh;
+  padding: 160px 0 100px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-mesh {
+  position: absolute; inset: 0;
+  background: var(--gradient-mesh);
+  filter: blur(60px);
+  z-index: 0;
+}
+.hero-grid {
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(91, 143, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(91, 143, 255, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 20%, transparent 70%);
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 6px 14px 6px 8px;
+  background: rgba(91,143,255,0.08);
+  border: 1px solid var(--border-accent);
+  border-radius: 100px;
+  font-size: 13px;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--text-1);
+  margin-bottom: 32px;
+}
+.hero-badge .badge-pill {
+  background: var(--primary);
+  color: white;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-weight: 600;
+}
+.hero-badge .arrow { color: var(--text-3); transition: transform 0.2s; }
+.hero-badge:hover .arrow { transform: translateX(4px); color: var(--primary); }
+
+.hero h1 {
+  margin-bottom: 24px;
+  max-width: 900px;
+}
+.hero h1 .highlight {
+  position: relative; display: inline-block;
+}
+.hero-sub {
+  font-size: clamp(17px, 1.4vw, 19px);
+  color: var(--text-2);
+  max-width: 560px;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+.hero-cta {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  margin-bottom: 80px;
+}
+
+.hero-trust {
+  display: flex; flex-direction: column; gap: 20px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+  max-width: 720px;
+}
+.hero-trust-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.hero-trust-label strong { color: var(--text-1); font-weight: 600; }
+.hero-logos {
+  display: flex; gap: 40px; flex-wrap: wrap; align-items: center;
+}
+.logo-item {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text-3);
+  display: flex; align-items: center; gap: 8px;
+  letter-spacing: -0.01em;
+  transition: color 0.2s ease;
+}
+.logo-item:hover { color: var(--text-1); }
+.logo-item .dot { width: 6px; height: 6px; background: currentColor; border-radius: 50%; opacity: 0.6; }
+
+/* 코드 스니펫 장식 (히어로 우측 상단) */
+.code-decoration {
+  position: absolute;
+  right: 32px; top: 140px;
+  width: 380px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.7;
+  z-index: 2;
+  box-shadow: var(--shadow-elev);
+  transform: rotate(2deg);
+  display: none;
+}
+.code-decoration::before {
+  content: '';
+  position: absolute; top: 12px; left: 12px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #f26b5b;
+  box-shadow: 18px 0 0 #f5b942, 36px 0 0 #34d5b0;
+}
+.code-decoration .code-body { margin-top: 24px; }
+.code-decoration .kw { color: var(--primary); }
+.code-decoration .str { color: var(--success); }
+.code-decoration .com { color: var(--text-3); }
+.code-decoration .num { color: #f5b942; }
+@media (min-width: 1280px) { .code-decoration { display: block; } }
+
+/* =========================================================
+   SECTION 2: PROBLEM
+   ========================================================= */
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.problem-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  position: relative;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+.problem-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--danger), transparent);
+  opacity: 0.4;
+}
+.problem-card:hover {
+  border-color: rgba(242, 107, 91, 0.3);
+  transform: translateY(-4px);
+  background: var(--bg-card-hover);
+}
+.problem-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--danger);
+  letter-spacing: 0.1em;
+  margin-bottom: 24px;
+}
+.problem-icon {
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--danger-soft);
+  border: 1px solid rgba(242, 107, 91, 0.2);
+  border-radius: 10px;
+  margin-bottom: 24px;
+  color: var(--danger);
+}
+.problem-card h3 { margin-bottom: 12px; font-size: 20px; }
+.problem-card p { color: var(--text-2); font-size: 15px; }
+.problem-meta {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px dashed var(--border-strong);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-3);
+  display: flex; justify-content: space-between;
+}
+.problem-meta strong { color: var(--danger); font-weight: 500; }
+
+@media (max-width: 900px) { .problem-grid { grid-template-columns: 1fr; } }
+
+/* =========================================================
+   SECTION 3: SOLUTION (지그재그)
+   ========================================================= */
+.solution-row {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 80px;
+  align-items: center;
+  margin-bottom: 120px;
+}
+.solution-row:last-child { margin-bottom: 0; }
+.solution-row.reverse { grid-template-columns: 1.1fr 1fr; }
+.solution-row.reverse .solution-text { order: 2; }
+.solution-row.reverse .solution-visual { order: 1; }
+
+.solution-text .feature-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 4px 12px;
+  background: var(--primary-soft);
+  border: 1px solid var(--border-accent);
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--primary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.solution-text h3 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3vw, 36px);
+  margin-bottom: 16px;
+}
+.solution-text p {
+  color: var(--text-2);
+  font-size: 16px;
+  margin-bottom: 24px;
+  max-width: 480px;
+}
+.solution-bullets { list-style: none; }
+.solution-bullets li {
+  padding: 10px 0;
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 15px;
+  color: var(--text-1);
+  border-bottom: 1px solid var(--border);
+}
+.solution-bullets li:last-child { border-bottom: none; }
+.solution-bullets li::before {
+  content: '';
+  width: 16px; height: 16px;
+  margin-top: 4px;
+  flex-shrink: 0;
+  background: var(--success-soft);
+  border: 1px solid rgba(52, 213, 176, 0.3);
+  border-radius: 4px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'><path d='M3 8L7 11L13 5' stroke='%2334d5b0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* CSS-기반 UI 목업 */
+.ui-mockup {
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  position: relative;
+  box-shadow: var(--shadow-elev);
+  overflow: hidden;
+}
+.ui-mockup::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 1px; background: linear-gradient(90deg, transparent, var(--primary), transparent); opacity: 0.5;
+}
+.ui-window-bar {
+  display: flex; align-items: center; gap: 6px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.ui-window-bar .dot {
+  width: 10px; height: 10px; border-radius: 50%;
+}
+.ui-window-bar .dot:nth-child(1) { background: #f26b5b; }
+.ui-window-bar .dot:nth-child(2) { background: #f5b942; }
+.ui-window-bar .dot:nth-child(3) { background: #34d5b0; }
+.ui-window-bar .url {
+  margin-left: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+  background: var(--bg-elev-1);
+  padding: 4px 12px;
+  border-radius: 6px;
+  flex: 1;
+  border: 1px solid var(--border);
+}
+
+/* 목업 1: 대시보드 */
+.mockup-dashboard {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 12px;
+}
+.mockup-sidebar {
+  background: var(--bg-elev-1);
+  border-radius: 8px;
+  padding: 12px 8px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.mockup-sidebar .nav-icon {
+  width: 100%; aspect-ratio: 1;
+  background: var(--bg-elev-2);
+  border-radius: 6px;
+  position: relative;
+}
+.mockup-sidebar .nav-icon.active {
+  background: var(--primary-soft);
+  box-shadow: inset 0 0 0 1px var(--border-accent);
+}
+.mockup-sidebar .nav-icon::after {
+  content: ''; position: absolute; inset: 30%;
+  border: 1.5px solid var(--text-3); border-radius: 2px;
+}
+.mockup-sidebar .nav-icon.active::after { border-color: var(--primary); }
+
+.mockup-content { padding: 4px 8px; }
+.mockup-row {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 12px;
+}
+.mockup-bar {
+  height: 8px;
+  background: var(--bg-elev-2);
+  border-radius: 4px;
+}
+.mockup-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.mockup-stat {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.mockup-stat .label {
+  font-size: 9px; color: var(--text-3);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.mockup-stat .value {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 4px;
+}
+.mockup-stat .delta {
+  font-size: 9px; color: var(--success);
+  font-family: var(--font-mono);
+  margin-top: 2px;
+}
+
+.mockup-chart {
+  height: 120px;
+  background: var(--bg-elev-1);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  padding: 12px;
+}
+.mockup-chart svg { width: 100%; height: 100%; }
+
+/* 목업 2: 자동화 워크플로우 */
+.mockup-flow {
+  padding: 8px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.flow-node {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  position: relative;
+}
+.flow-node.active { border-color: var(--border-accent); background: var(--primary-soft); }
+.flow-node-icon {
+  width: 28px; height: 28px;
+  background: var(--bg-elev-2);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 600;
+  color: var(--text-3);
+  flex-shrink: 0;
+}
+.flow-node.active .flow-node-icon { background: var(--primary); color: white; }
+.flow-node-text { flex: 1; }
+.flow-node-text .title {
+  font-size: 12px; font-weight: 500; color: var(--text-1);
+  margin-bottom: 2px;
+}
+.flow-node-text .desc {
+  font-size: 10px; color: var(--text-3);
+  font-family: var(--font-mono);
+}
+.flow-node-status {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--success);
+  padding: 3px 8px;
+  background: var(--success-soft);
+  border-radius: 100px;
+}
+.flow-node-status.pending { color: var(--text-3); background: var(--bg-elev-2); }
+.flow-arrow {
+  width: 1px; height: 12px; background: var(--border-strong);
+  margin: 0 auto;
+}
+
+/* 목업 3: 데이터 분석 */
+.mockup-analytics .ui-tab {
+  display: flex; gap: 4px; margin-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.mockup-analytics .ui-tab span {
+  padding: 6px 12px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--text-3);
+  border-bottom: 1px solid transparent;
+  margin-bottom: -1px;
+}
+.mockup-analytics .ui-tab span.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+.mockup-analytics .table-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 80px;
+  gap: 8px;
+  padding: 10px 12px;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+.mockup-analytics .table-row:hover { background: var(--bg-elev-1); }
+.mockup-analytics .cell-name {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 500;
+  color: var(--text-1);
+}
+.mockup-analytics .cell-name .avatar {
+  width: 20px; height: 20px;
+  background: var(--gradient-brand);
+  border-radius: 4px;
+}
+.mockup-analytics .cell-data {
+  font-family: var(--font-mono);
+  color: var(--text-2);
+  font-size: 11px;
+}
+.mockup-analytics .badge-mini {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 100px;
+  text-align: center;
+}
+.mockup-analytics .badge-mini.success { background: var(--success-soft); color: var(--success); }
+.mockup-analytics .badge-mini.warn { background: rgba(245,185,66,0.12); color: #f5b942; }
+
+@media (max-width: 820px) {
+  .nav-links { display: none; }
+  .nav .btn-link { display: none; }
+  .nav { left: 16px; right: 16px; width: auto; max-width: none; transform: none; box-sizing: border-box; }
+}
+@media (max-width: 900px) {
+  .solution-row, .solution-row.reverse {
+    grid-template-columns: 1fr;
+    gap: 40px; margin-bottom: 80px;
+  }
+  .solution-row > * { min-width: 0; }
+  .solution-text h3, .solution-text p, .solution-bullets li { overflow-wrap: anywhere; word-break: keep-all; }
+  .solution-row.reverse .solution-text { order: 1; }
+  .solution-row.reverse .solution-visual { order: 2; }
+}
+
+/* =========================================================
+   SECTION 4: FEATURES (체크리스트)
+   ========================================================= */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.feature-cell {
+  background: var(--bg);
+  padding: 28px 32px;
+  display: flex; gap: 16px;
+  transition: background 0.2s ease;
+}
+.feature-cell:hover { background: var(--bg-elev-1); }
+.feature-cell-icon {
+  width: 36px; height: 36px;
+  flex-shrink: 0;
+  background: var(--primary-soft);
+  border: 1px solid var(--border-accent);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--primary);
+}
+.feature-cell h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text);
+  display: flex; align-items: center; gap: 8px;
+}
+.feature-cell .badge-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 2px 6px;
+  background: var(--success-soft);
+  color: var(--success);
+  border-radius: 4px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+.feature-cell p {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+@media (max-width: 768px) { .features-grid { grid-template-columns: 1fr; } }
+
+/* =========================================================
+   SECTION 5: INTEGRATIONS (추가 섹션)
+   ========================================================= */
+.integrations-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 64px;
+  align-items: center;
+}
+.integrations-text h2 { margin-bottom: 16px; }
+.integrations-text p { color: var(--text-2); margin-bottom: 24px; max-width: 420px; }
+.integrations-list {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.integrations-list li {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-2);
+  display: flex; align-items: center; gap: 10px;
+}
+.integrations-list li::before {
+  content: '→'; color: var(--primary);
+}
+
+.integrations-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.integration-tile {
+  aspect-ratio: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.integration-tile:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-accent);
+  transform: translateY(-2px);
+}
+.integration-tile.center {
+  background: var(--gradient-brand);
+  border-color: transparent;
+  color: white;
+}
+.integration-tile.center::before {
+  content: ''; position: absolute; inset: 1px;
+  background: var(--bg-card);
+  border-radius: calc(var(--radius-md) - 1px);
+}
+.integration-tile.center > * { position: relative; z-index: 1; }
+.integration-tile .ico {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 14px;
+  color: white;
+}
+.integration-tile .name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-2);
+}
+.integration-tile.center .name { color: var(--text); font-weight: 600; }
+
+@media (max-width: 900px) {
+  .integrations-wrap { grid-template-columns: 1fr; gap: 40px; }
+  .integrations-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* =========================================================
+   SECTION 6: METRICS (카운터)
+   ========================================================= */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.metric-card {
+  background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-elev-1) 100%);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+.metric-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  opacity: 0.4;
+}
+.metric-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 24px;
+}
+.metric-value {
+  font-family: var(--font-display);
+  font-size: clamp(60px, 7vw, 88px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  background: linear-gradient(180deg, var(--text) 0%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.metric-suffix {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--primary);
+  margin-left: 4px;
+}
+.metric-desc {
+  font-size: 14px; color: var(--text-2);
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  margin-top: 24px;
+}
+.metric-desc strong { color: var(--text-1); font-weight: 500; }
+
+@media (max-width: 900px) { .metrics-grid { grid-template-columns: 1fr; } }
+
+/* =========================================================
+   SECTION 7: CASE STUDIES
+   ========================================================= */
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.case-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  display: flex; flex-direction: column;
+  position: relative;
+  transition: all 0.3s ease;
+}
+.case-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-strong);
+  transform: translateY(-4px);
+}
+.case-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 24px;
+}
+.case-logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+}
+.case-industry {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+  background: var(--bg-elev-1);
+  padding: 4px 10px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+}
+.case-result {
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.case-result-value {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.case-result-label { font-size: 13px; color: var(--text-2); }
+.case-quote {
+  font-size: 14px;
+  color: var(--text-1);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  flex: 1;
+}
+.case-quote::before { content: '"'; color: var(--primary); font-size: 24px; line-height: 0; margin-right: 4px; }
+.case-author {
+  display: flex; align-items: center; gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.case-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--gradient-brand);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+}
+.case-author-info .name { font-size: 13px; font-weight: 500; color: var(--text-1); }
+.case-author-info .role { font-size: 11px; color: var(--text-3); font-family: var(--font-mono); }
+
+@media (max-width: 900px) { .case-grid { grid-template-columns: 1fr; } }
+
+/* =========================================================
+   SECTION 8: PRICING
+   ========================================================= */
+.pricing-toggle-wrap {
+  display: flex; justify-content: center;
+  margin-bottom: 48px;
+}
+.pricing-toggle {
+  display: inline-flex; align-items: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: 100px;
+  padding: 4px;
+  position: relative;
+}
+.pricing-toggle button {
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  border-radius: 100px;
+  transition: color 0.2s ease;
+  position: relative;
+  z-index: 2;
+  display: flex; align-items: center; gap: 6px;
+}
+.pricing-toggle button.active { color: var(--text); }
+.pricing-toggle .save-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 6px;
+  background: var(--success);
+  color: var(--bg);
+  border-radius: 4px;
+  font-weight: 600;
+}
+.pricing-toggle .slider {
+  position: absolute;
+  top: 4px; bottom: 4px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--border-strong);
+  border-radius: 100px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  align-items: stretch;
+}
+.pricing-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  display: flex; flex-direction: column;
+  position: relative;
+  transition: all 0.3s ease;
+}
+.pricing-card.featured {
+  background: linear-gradient(180deg, rgba(91,143,255,0.08) 0%, var(--bg-card) 50%);
+  border-color: var(--border-accent);
+  box-shadow: 0 0 0 1px var(--border-accent), 0 32px 64px rgba(91,143,255,0.15);
+  transform: scale(1.02);
+}
+.pricing-badge {
+  position: absolute; top: -12px; left: 32px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: var(--gradient-brand);
+  color: var(--text);
+  padding: 6px 12px;
+  border-radius: 100px;
+}
+.plan-name {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.plan-tagline { font-size: 13px; color: var(--text-3); margin-bottom: 24px; }
+.plan-price {
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 4px;
+  display: flex; align-items: baseline; gap: 4px;
+  color: var(--text);
+}
+.plan-price .currency { font-size: 24px; color: var(--text-3); font-weight: 600; }
+.plan-price .amount { transition: opacity 0.3s ease; }
+.plan-period { font-size: 13px; color: var(--text-3); margin-bottom: 24px; font-family: var(--font-mono); }
+.plan-cta { width: 100%; justify-content: center; margin-bottom: 24px; }
+.plan-features { list-style: none; flex: 1; }
+.plan-features li {
+  padding: 10px 0;
+  font-size: 14px;
+  color: var(--text-1);
+  display: flex; gap: 10px; align-items: flex-start;
+  border-top: 1px solid var(--border);
+}
+.plan-features li:first-child { border-top: none; padding-top: 0; }
+.plan-features li::before {
+  content: '';
+  width: 14px; height: 14px;
+  margin-top: 4px; flex-shrink: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none'><path d='M3 7L6 10L11 4' stroke='%2334d5b0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.plan-features li.muted { color: var(--text-3); }
+.plan-features li.muted::before {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none'><path d='M4 7H10' stroke='%23666' stroke-width='2' stroke-linecap='round'/></svg>");
+}
+
+@media (max-width: 900px) {
+  .pricing-grid { grid-template-columns: 1fr; }
+  .pricing-card { min-width: 0; }
+  .pricing-card * { min-width: 0; }
+  .plan-price { font-size: 40px; flex-wrap: wrap; }
+  .plan-price .amount { word-break: break-all; }
+  .pricing-card.featured { transform: scale(1); }
+}
+
+/* =========================================================
+   SECTION 9: FAQ (아코디언)
+   ========================================================= */
+.faq-wrap {
+  max-width: 820px; margin: 0 auto;
+  border-top: 1px solid var(--border);
+}
+.faq-item {
+  border-bottom: 1px solid var(--border);
+}
+.faq-q {
+  width: 100%;
+  padding: 24px 0;
+  display: flex; align-items: center; justify-content: space-between;
+  text-align: left;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text);
+  font-family: var(--font-body);
+  transition: color 0.2s ease;
+}
+.faq-q:hover { color: var(--primary); }
+.faq-q .faq-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-3);
+  margin-right: 16px;
+  font-weight: 400;
+}
+.faq-q-text { flex: 1; }
+.faq-toggle {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  background: var(--bg-card);
+}
+.faq-toggle::before, .faq-toggle::after {
+  content: ''; position: absolute;
+  width: 12px; height: 1.5px;
+  background: var(--text-1);
+  border-radius: 2px;
+  transition: transform 0.3s ease;
+}
+.faq-toggle::after { transform: rotate(90deg); }
+.faq-item.open .faq-toggle::after { transform: rotate(0deg); }
+.faq-item.open .faq-toggle {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.faq-a-inner {
+  padding: 0 0 28px 44px;
+  color: var(--text-2);
+  font-size: 15px;
+  line-height: 1.7;
+  max-width: 700px;
+}
+.faq-a-inner code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  background: var(--bg-card);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  color: var(--primary);
+}
+
+/* =========================================================
+   SECTION 10: CTA + FOOTER
+   ========================================================= */
+.cta-final {
+  padding: 100px 0 80px;
+  position: relative;
+}
+.cta-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-xl);
+  padding: 80px 64px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--gradient-mesh);
+  filter: blur(40px);
+  opacity: 0.7;
+  z-index: 0;
+}
+.cta-card::after {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(91, 143, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(91, 143, 255, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+  z-index: 0;
+}
+.cta-card > * { position: relative; z-index: 1; }
+.cta-card h2 { margin-bottom: 16px; }
+.cta-card p { color: var(--text-2); margin-bottom: 36px; max-width: 540px; margin-left: auto; margin-right: auto; }
+.cta-card .btn-group {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+.cta-meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-3);
+  display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
+}
+.cta-meta span { display: flex; align-items: center; gap: 6px; }
+.cta-meta .check {
+  width: 14px; height: 14px;
+  background: var(--success-soft);
+  border: 1px solid rgba(52, 213, 176, 0.3);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--success);
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 64px 0 40px;
+  position: relative;
+  z-index: 2;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(4, 1fr);
+  gap: 48px;
+  margin-bottom: 48px;
+}
+.footer-brand .nav-brand { margin-bottom: 16px; }
+.footer-brand p {
+  font-size: 13px;
+  color: var(--text-3);
+  line-height: 1.6;
+  max-width: 280px;
+  margin-bottom: 24px;
+}
+.footer-contact {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-3);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.footer-contact a:hover { color: var(--primary); }
+.footer-col h5 {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 10px; }
+.footer-col a {
+  font-size: 13px;
+  color: var(--text-3);
+  transition: color 0.2s ease;
+}
+.footer-col a:hover { color: var(--text-1); }
+
+.footer-bottom {
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+}
+.footer-bottom .links { display: flex; gap: 16px; }
+.footer-bottom .links a:hover { color: var(--text-1); }
+
+@media (max-width: 900px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-bottom { flex-direction: column; gap: 12px; }
+  .cta-card { padding: 60px 32px; }
+}
+
+/* =========================================================
+   ANIMATION: 스크롤 페이드인
+   ========================================================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.visible {
+  opacity: 1; transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+
+/* 코드 스니펫 (장식) */
+.code-snippet-deco {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+  display: flex; align-items: center; gap: 12px;
+  margin-top: 24px;
+  padding: 8px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  width: fit-content;
+}
+.code-snippet-deco .prompt { color: var(--primary); }
+.code-snippet-deco .cursor {
+  width: 8px; height: 14px; background: var(--primary);
+  animation: blink 1s steps(2) infinite;
+}
+@keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+
+</style>
+<style id="dp-force-reveal-style">
+      .rv, .reveal, .day-row, .fade-in, .fade-up, .scroll-reveal, [data-aos], [data-reveal], .scroll-trigger, .animate-on-scroll {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style><style id="dp-mobile-guard">[class*="cursor-glow"],[class*="cursor-trail"],[class*="custom-cursor"],[class*="cursor-dot"],[class*="cursor-ring"],[class*="cursor-follow"]{display:none!important}html,body,body *,body *::before,body *::after{cursor:auto!important}a[href],button,[role="button"],input[type="submit"],input[type="button"],.btn,label,select,summary{cursor:pointer!important}button,input[type="submit"],input[type="button"],[role="button"],.btn,.dp-cta-submit,a[onclick]{-webkit-user-select:none!important;user-select:none!important;cursor:pointer!important}html{-webkit-text-size-adjust:100%;-moz-text-size-adjust:100%;text-size-adjust:100%;}img,video,iframe,table,pre,canvas,svg{max-width:100%;}h1,h2,h3,h4,h5,h6,p,li,a,span,div,blockquote{overflow-wrap:break-word;word-break:keep-all;}.dp-hero-video iframe{max-width:none!important;}@media (max-width:768px){html,body{overflow-x:hidden!important;}body *{max-width:100vw!important;min-width:0!important;box-sizing:border-box!important;}.dp-hero-video,.dp-hero-video *{max-width:none!important;}img,video,iframe,svg,canvas{height:auto!important;}.dp-hero-video iframe{height:auto!important;}[style*="display:flex"],[style*="display: flex"]{flex-wrap:wrap!important;}[style*="display:grid"],[style*="display: grid"]{grid-template-columns:1fr!important;}.gallery-track{animation:none!important;width:auto!important;flex-wrap:wrap!important;}.gallery-track .gallery-item{flex:0 0 100%!important;width:100%!important;height:220px!important;}.gallery-track .gallery-item:nth-child(n+6){display:none!important;}table{display:block!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch;white-space:nowrap;}}</style><script id="dp-grid-collapse">(function(){var BP=600;function apply(){var phone=window.innerWidth<=BP;var els=document.querySelectorAll('*');for(var i=0;i<els.length;i++){var el=els[i];var cs=getComputedStyle(el);if(cs.display.indexOf('grid')===-1){if(el.hasAttribute('data-dpg')){el.style.gridTemplateColumns=el.getAttribute('data-dpg')==='_'?'':el.getAttribute('data-dpg');el.removeAttribute('data-dpg');}continue;}var cols=cs.gridTemplateColumns.split(' ').filter(Boolean);if(phone&&cols.length>=2){if(!el.hasAttribute('data-dpg')){el.setAttribute('data-dpg',el.style.gridTemplateColumns||'_');}el.style.gridTemplateColumns='1fr';}else if(!phone&&el.hasAttribute('data-dpg')){el.style.gridTemplateColumns=el.getAttribute('data-dpg')==='_'?'':el.getAttribute('data-dpg');el.removeAttribute('data-dpg');}}}var t;function deb(){clearTimeout(t);t=setTimeout(apply,120);}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',apply);}else{apply();}window.addEventListener('resize',deb);window.addEventListener('orientationchange',deb);})();</script><style id="dp-edit-hide-style">
+      body.dp-editing .dp-sec-del,
+      body.dp-editing .dp-bg-btn { opacity: 0.15 !important; transition: opacity .15s; }
+      body.dp-editing .dp-sec-del:hover,
+      body.dp-editing .dp-bg-btn:hover { opacity: 1 !important; }
+    </style><style id="dp-bg-style">
+      [data-dp-bg-bound]:hover > .dp-bg-btn{opacity:1 !important;transform:translateY(0)}
+      [data-dp-bg-bound]:hover{outline:3px dashed #03c75a !important;outline-offset:-3px}
+      .dp-bg-btn{
+        position:absolute;top:64px;right:14px;z-index:9998;
+        background:rgba(0,0,0,.92);color:#FFEB00;border:2px solid #FFEB00;
+        padding:8px 12px;border-radius:10px;cursor:pointer;
+        font-family:'Pretendard',sans-serif;font-weight:800;font-size:12px;
+        opacity:0.65;transition:all .2s;
+        box-shadow:0 6px 20px rgba(0,0,0,.6),0 0 0 2px rgba(255,235,0,0.2);
+        display:inline-flex;align-items:center;gap:6px;
+        max-width:calc(100% - 28px);white-space:nowrap;
+      }
+      .dp-bg-btn:hover{background:#FFEB00;color:#000;transform:scale(1.05)}
+      .dp-bg-broken{outline:4px dashed #FFEB00 !important;outline-offset:-4px;animation:dpBgPulse 1.5s ease-in-out infinite}
+      .dp-bg-broken > .dp-bg-btn{opacity:1 !important;background:#ff3030 !important;border-color:#fff !important;color:#fff !important}
+      @keyframes dpBgPulse{0%,100%{box-shadow:inset 0 0 0 0 rgba(255,235,0,0.3)}50%{box-shadow:inset 0 0 100px 0 rgba(255,235,0,0.15)}}
+    </style><style id="dp-link-style">
+      [data-dp-btn-bound]{position:relative}
+      .dp-link-btn{
+        position:absolute;top:-12px;right:-8px;z-index:9998;
+        background:#03c75a;color:#fff;border:2px solid #fff;
+        padding:4px 9px;border-radius:14px;cursor:pointer;
+        font-family:'Pretendard',sans-serif;font-weight:900;font-size:11px;
+        box-shadow:0 4px 12px rgba(0,0,0,.5);white-space:nowrap;
+        opacity:0;pointer-events:none;transition:opacity .15s;
+        line-height:1;
+      }
+      [data-dp-btn-bound]:hover > .dp-link-btn{opacity:0.95;pointer-events:auto}
+      .dp-link-btn:hover{background:#fff;color:#03c75a;transform:scale(1.1);opacity:1}
+      [data-dp-btn-bound][data-dp-has-link="1"]:hover{
+        box-shadow: inset 0 0 0 2px rgba(3,199,90,0.6);
+      }
+      [data-dp-btn-bound][data-dp-has-link="1"] > .dp-link-btn{
+        background:#0d9e4a;
+      }
+      [data-dp-btn-bound][data-dp-has-link="1"] > .dp-link-btn::before{
+        content:'✓ ';
+      }
+    </style></head>
+<body><script data-dp-cta-rescue="1">(function(){
+  if(window.__dpCtaRescue) return; window.__dpCtaRescue = 1;
+  var _alert = window.alert.bind(window);
+  var KAKAO = "";
+  function goForm(){
+    var f = document.querySelector('#dp-contact-form') || document.querySelector('form');
+    if(!f) return false;
+    try{
+      f.scrollIntoView({behavior:'smooth', block:'center'});
+      var inp = f.querySelector('input:not([type=hidden]),textarea,select');
+      if(inp) setTimeout(function(){ try{ inp.focus(); }catch(e){} }, 500);
+    }catch(e){}
+    return true;
+  }
+  window.alert = function(msg){
+    var s = String(msg == null ? '' : msg);
+    // 실제 폼 검증·접수확인·동의·성공/오류 → 그대로 표시
+    if(/입력해|형식|선택해|동의|접수|완료|✓|❌|✗/.test(s)) return _alert(s);
+    // 카톡 채널 placeholder → 카톡 URL 있으면 열기, 없으면 상담폼
+    if(/카카오|카톡|채널/.test(s)){
+      if(KAKAO){ try{ window.open(KAKAO, '_blank', 'noopener'); }catch(e){} return; }
+      if(goForm()) return;
+    }
+    // 이동/데모/준비/백엔드/자사몰/플레이어/연결 placeholder → 상담폼으로
+    if(/이동합니다|이동한|준비\s*중|데모|백엔드|자사몰|플레이어|시뮬레이션|연동|연결됩니다/.test(s)){
+      if(goForm()) return;
+    }
+    return _alert(s);
+  };
+})();</script>
+
+<!-- 네비게이션 -->
+<nav class="nav" style="box-shadow: rgba(0, 0, 0, 0.3) 0px 16px 48px; background: rgba(13, 18, 32, 0.7);">
+  <a href="#" class="nav-brand" data-dp-btn-bound="1" onclick="return false;" style="cursor: default;">
+    <span class="logo-mark"></span>
+    <span>Stackly</span>
+  </a>
+  <div class="nav-links">
+    <a href="#problem" data-dp-btn-bound="1" data-dp-has-link="1" onclick="var t=document.getElementById('problem');if(t){t.scrollIntoView({behavior:'smooth'});}return false;">문제</a>
+    <a href="#solution" data-dp-btn-bound="1" data-dp-has-link="1" onclick="var t=document.getElementById('solution');if(t){t.scrollIntoView({behavior:'smooth'});}return false;">솔루션</a>
+    <a href="#features" data-dp-btn-bound="1" data-dp-has-link="1" onclick="var t=document.getElementById('features');if(t){t.scrollIntoView({behavior:'smooth'});}return false;">기능</a>
+    <a href="#pricing" data-dp-btn-bound="1" data-dp-has-link="1" onclick="var t=document.getElementById('pricing');if(t){t.scrollIntoView({behavior:'smooth'});}return false;">요금제</a>
+    <a href="#faq" data-dp-btn-bound="1" data-dp-has-link="1" onclick="var t=document.getElementById('faq');if(t){t.scrollIntoView({behavior:'smooth'});}return false;">FAQ</a>
+  </div>
+  <div class="nav-cta">
+    <a href="#" class="btn btn-link" data-dp-btn-bound="1" onclick="return false;" style="cursor: default;">로그인</a>
+    <a href="#cta" class="btn btn-primary" data-dp-btn-bound="1" data-dp-has-link="1" onclick="var t=document.getElementById('cta');if(t){t.scrollIntoView({behavior:'smooth'});}return false;">무료 시작 →</a>
+  </div>
+</nav>
+
+
+<!-- =========================================================
+     SECTION 1: HERO
+     ========================================================= -->
+<section class="hero">
+  <div class="hero-mesh"></div>
+  <div class="hero-grid"></div>
+
+  <!-- 코드 스니펫 장식 (대형 스크린에서만) -->
+  <div class="code-decoration">
+    <div class="code-body">
+      <div><span class="com">// 5분 안에 자동화 시작</span></div>
+      <div><span class="kw">import</span> { Stackly } <span class="kw">from</span> <span class="str">'@stackly/sdk'</span></div>
+      <div>&nbsp;</div>
+      <div><span class="kw">const</span> client = <span class="kw">new</span> Stackly({</div>
+      <div>&nbsp;&nbsp;apiKey: <span class="str">'sk_live_...'</span>,</div>
+      <div>&nbsp;&nbsp;workspace: <span class="str">'production'</span></div>
+      <div>})</div>
+      <div>&nbsp;</div>
+      <div><span class="kw">await</span> client.workflow.run(<span class="num">42</span>)</div>
+      <div><span class="com">// → ✓ 처리 완료 (0.42s)</span></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="reveal visible on show active aos-animate is-visible in-view">
+      <a href="#" class="hero-badge" data-dp-btn-bound="1" onclick="return false;" style="cursor: default;">
+        <span class="badge-pill">NEW</span>
+        <span>v2.0 출시 · AI 분석 엔진 탑재</span>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <h1 class="display-1 reveal visible on show active aos-animate is-visible in-view">
+      반복은 <span class="gradient-text">자동화</span>로,<br>
+      <span class="subtle-text">시간은 성장으로.</span>
+    </h1>
+
+    <p class="hero-sub reveal visible reveal-delay-1 on show active aos-animate is-visible in-view">
+      엑셀과 메일, 흩어진 도구를 오가며 낭비되던 시간을 되찾으세요.
+      Stackly는 비즈니스 운영의 모든 흐름을 한 곳에서 자동화합니다.
+    </p>
+
+    <div class="hero-cta reveal visible reveal-delay-2 on show active aos-animate is-visible in-view">
+      <a href="#cta" class="btn btn-accent btn-lg" data-dp-btn-bound="1" data-dp-has-link="1" onclick="var t=document.getElementById('dp-contact-form');if(t)t.scrollIntoView({behavior:'smooth'});return false;">
+        데모 시작하기 →
+      </a>
+      <a href="#solution" class="btn btn-ghost btn-lg" data-dp-btn-bound="1" data-dp-has-link="1">
+        <span style="display: inline-flex; width: 18px; height: 18px; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.1); border-radius: 50%;">▶</span>
+        제품 영상 (1분 24초)
+      </a>
+    </div>
+
+    <div class="hero-trust reveal visible reveal-delay-3 on show active aos-animate is-visible in-view">
+      <div class="hero-trust-label">
+        <strong>234개 기업</strong>이 이미 Stackly로 일하고 있습니다
+      </div>
+      <div class="hero-logos">
+        <div class="logo-item">◆ NEXUS</div>
+        <div class="logo-item"><span class="dot"></span>Vercel*</div>
+        <div class="logo-item">▣ ARCANE</div>
+        <div class="logo-item">◇ Linewave</div>
+        <div class="logo-item">▲ Helios</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     SECTION 2: PROBLEM
+     ========================================================= -->
+<section id="problem">
+  <div class="grid-bg"></div>
+  <div class="container">
+    <div class="section-header reveal on visible show active aos-animate is-visible in-view">
+      <div class="eyebrow">/ 01 · 문제 정의</div>
+      <h2>왜 지금까지의 방식은 <br>한계에 부딪혔을까요?</h2>
+      <p class="lead" style="margin-top: 16px;">실무에서 매일 마주치는 비효율을 정확히 짚었습니다.</p>
+    </div>
+
+    <div class="problem-grid">
+      <div class="problem-card reveal reveal-delay-1 on visible show active aos-animate is-visible in-view">
+        <div class="problem-num">PROBLEM 01</div>
+        <div class="problem-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="10"></circle></svg>
+        </div>
+        <h3>흩어진 도구, 사라진 시간</h3>
+        <p>스프레드시트, 메일, 메신저, 사내 시스템 — 평균 7개 이상의 도구를 오가며 반복 작업에 시간을 쏟습니다.</p>
+        <div class="problem-meta">
+          <span>주당 손실 시간</span>
+          <strong>평균 12.4h</strong>
+        </div>
+      </div>
+
+      <div class="problem-card reveal reveal-delay-2 on visible show active aos-animate is-visible in-view">
+        <div class="problem-num">PROBLEM 02</div>
+        <div class="problem-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </div>
+        <h3>수기 처리, 늘어나는 휴먼 에러</h3>
+        <p>데이터를 옮겨 적고, 보고서를 갱신하고, 누락을 검수하는 과정에서 반복적으로 발생하는 실수가 의사결정을 지연시킵니다.</p>
+        <div class="problem-meta">
+          <span>오류 발생률</span>
+          <strong>약 4.7%</strong>
+        </div>
+      </div>
+
+      <div class="problem-card reveal reveal-delay-3 on visible show active aos-animate is-visible in-view">
+        <div class="problem-num">PROBLEM 03</div>
+        <div class="problem-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="M7 12l4-4 4 4 5-5"></path></svg>
+        </div>
+        <h3>의사결정의 근거가 부족합니다</h3>
+        <p>데이터는 쌓여있지만 가공할 시간이 없습니다. 의사결정은 감각에 기대고, 결과 측정은 사후약방문이 됩니다.</p>
+        <div class="problem-meta">
+          <span>리포트 작성 주기</span>
+          <strong>주 1회 미만</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     SECTION 3: SOLUTION (지그재그)
+     ========================================================= -->
+<section id="solution">
+  <div class="grid-bg"></div>
+  <div class="container">
+    <div class="section-header reveal on visible show active aos-animate is-visible in-view">
+      <div class="eyebrow">/ 02 · 솔루션</div>
+      <h2>Stackly가 일하는 방식</h2>
+      <p class="lead" style="margin-top: 16px;">설치하고, 연결하고, 자동화하세요. 코드 없이 5분이면 됩니다.</p>
+    </div>
+
+    <!-- 솔루션 1: 통합 대시보드 -->
+    <div class="solution-row">
+      <div class="solution-text reveal on visible show active aos-animate is-visible in-view">
+        <span class="feature-tag">FEATURE 01 · DASHBOARD</span>
+        <h3>모든 데이터를 한 화면에서</h3>
+        <p>흩어진 데이터 소스를 자동으로 동기화하고, 실시간 KPI를 한눈에 확인합니다. SQL을 모르는 사람도 차트와 리포트를 만들 수 있습니다.</p>
+        <ul class="solution-bullets">
+          <li>50+ 데이터 소스를 노코드로 연결</li>
+          <li>실시간 KPI · 자동 새로고침</li>
+          <li>역할별 권한과 공유 워크스페이스</li>
+        </ul>
+      </div>
+
+      <div class="solution-visual reveal reveal-delay-1 on visible show active aos-animate is-visible in-view">
+        <div class="ui-mockup">
+          <div class="ui-window-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="url">stackly.app/dashboard</span>
+          </div>
+          <div class="mockup-dashboard">
+            <div class="mockup-sidebar">
+              <div class="nav-icon active"></div>
+              <div class="nav-icon"></div>
+              <div class="nav-icon"></div>
+              <div class="nav-icon"></div>
+            </div>
+            <div class="mockup-content">
+              <div class="mockup-stats">
+                <div class="mockup-stat">
+                  <div class="label">REVENUE</div>
+                  <div class="value">₩84.2M</div>
+                  <div class="delta">↑ 12.4%</div>
+                </div>
+                <div class="mockup-stat">
+                  <div class="label">USERS</div>
+                  <div class="value">12,847</div>
+                  <div class="delta">↑ 8.1%</div>
+                </div>
+                <div class="mockup-stat">
+                  <div class="label">CHURN</div>
+                  <div class="value">2.3%</div>
+                  <div class="delta" style="color: var(--success);">↓ 0.4%</div>
+                </div>
+              </div>
+              <div class="mockup-chart">
+                <svg viewBox="0 0 300 96" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="chartGrad1" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#5b8fff" stop-opacity="0.4"></stop>
+                      <stop offset="100%" stop-color="#5b8fff" stop-opacity="0"></stop>
+                    </linearGradient>
+                  </defs>
+                  <path d="M 0 70 L 30 60 L 60 65 L 90 50 L 120 55 L 150 40 L 180 35 L 210 25 L 240 30 L 270 18 L 300 15 L 300 96 L 0 96 Z" fill="url(#chartGrad1)"></path>
+                  <path d="M 0 70 L 30 60 L 60 65 L 90 50 L 120 55 L 150 40 L 180 35 L 210 25 L 240 30 L 270 18 L 300 15" fill="none" stroke="#5b8fff" stroke-width="2"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 솔루션 2: 워크플로우 자동화 (역방향) -->
+    <div class="solution-row reverse">
+      <div class="solution-text reveal on visible show active aos-animate is-visible in-view">
+        <span class="feature-tag">FEATURE 02 · AUTOMATION</span>
+        <h3>코드 없이, 자동화 워크플로우</h3>
+        <p>드래그 앤 드롭으로 트리거와 액션을 연결합니다. 신규 고객 등록 → CRM 입력 → Slack 알림 → 환영 메일 발송이 단 한 번의 설정으로 끝납니다.</p>
+        <ul class="solution-bullets">
+          <li>200+ 사전 빌드 트리거 · 액션</li>
+          <li>조건 분기 · 반복 · 에러 핸들링 내장</li>
+          <li>실행 로그 · 디버거로 투명한 운영</li>
+        </ul>
+      </div>
+
+      <div class="solution-visual reveal reveal-delay-1 on visible show active aos-animate is-visible in-view">
+        <div class="ui-mockup">
+          <div class="ui-window-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="url">stackly.app/workflows/onboarding</span>
+          </div>
+          <div class="mockup-flow">
+            <div class="flow-node active">
+              <div class="flow-node-icon">→</div>
+              <div class="flow-node-text">
+                <div class="title">트리거: 신규 고객 등록</div>
+                <div class="desc">webhook · POST /signup</div>
+              </div>
+              <div class="flow-node-status">실행됨</div>
+            </div>
+            <div class="flow-arrow"></div>
+            <div class="flow-node active">
+              <div class="flow-node-icon">DB</div>
+              <div class="flow-node-text">
+                <div class="title">CRM에 고객 정보 추가</div>
+                <div class="desc">notion · users 테이블</div>
+              </div>
+              <div class="flow-node-status">실행됨</div>
+            </div>
+            <div class="flow-arrow"></div>
+            <div class="flow-node active">
+              <div class="flow-node-icon">@</div>
+              <div class="flow-node-text">
+                <div class="title">Slack #sales 채널 알림</div>
+                <div class="desc">slack · message</div>
+              </div>
+              <div class="flow-node-status">실행됨</div>
+            </div>
+            <div class="flow-arrow"></div>
+            <div class="flow-node">
+              <div class="flow-node-icon">✉</div>
+              <div class="flow-node-text">
+                <div class="title">환영 메일 발송</div>
+                <div class="desc">sendgrid · template_42</div>
+              </div>
+              <div class="flow-node-status pending">대기 중</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 솔루션 3: AI 분석 -->
+    <div class="solution-row">
+      <div class="solution-text reveal on visible show active aos-animate is-visible in-view">
+        <span class="feature-tag">FEATURE 03 · INSIGHTS</span>
+        <h3>질문하면, 답이 나옵니다</h3>
+        <p>"지난 분기 대비 이탈률이 가장 높은 세그먼트는?" 같은 자연어 질문을 그대로 던지세요. AI 엔진이 데이터를 분석해 차트와 인사이트를 생성합니다.</p>
+        <ul class="solution-bullets">
+          <li>자연어 → SQL 자동 변환</li>
+          <li>이상치 · 트렌드 자동 감지</li>
+          <li>주간 인사이트 리포트 자동 발송</li>
+        </ul>
+      </div>
+
+      <div class="solution-visual reveal reveal-delay-1 on visible show active aos-animate is-visible in-view">
+        <div class="ui-mockup mockup-analytics">
+          <div class="ui-window-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="url">stackly.app/insights</span>
+          </div>
+          <div class="ui-tab">
+            <span class="active">고객 세그먼트</span>
+            <span>이탈 분석</span>
+            <span>매출 예측</span>
+          </div>
+          <div class="table-row">
+            <div class="cell-name"><span class="avatar"></span>Pro 사용자 (KR)</div>
+            <div class="cell-data">2,847</div>
+            <div class="cell-data">₩42.1M</div>
+            <span class="badge-mini success">+18%</span>
+          </div>
+          <div class="table-row">
+            <div class="cell-name"><span class="avatar" style="background:linear-gradient(135deg,#f5b942,#f26b5b)"></span>Starter 신규</div>
+            <div class="cell-data">1,204</div>
+            <div class="cell-data">₩8.4M</div>
+            <span class="badge-mini warn">-3%</span>
+          </div>
+          <div class="table-row">
+            <div class="cell-name"><span class="avatar" style="background:linear-gradient(135deg,#34d5b0,#5b8fff)"></span>Enterprise</div>
+            <div class="cell-data">42</div>
+            <div class="cell-data">₩28.7M</div>
+            <span class="badge-mini success">+24%</span>
+          </div>
+          <div class="table-row" style="border-bottom:none">
+            <div class="cell-name"><span class="avatar" style="background:linear-gradient(135deg,#5b8fff,#f26b5b)"></span>이탈 위험군</div>
+            <div class="cell-data">183</div>
+            <div class="cell-data">₩4.9M</div>
+            <span class="badge-mini warn">-12%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     SECTION 4: FEATURES (체크리스트 그리드)
+     ========================================================= -->
+<section id="features">
+  <div class="grid-bg"></div>
+  <div class="container">
+    <div class="section-header reveal on visible show active aos-animate is-visible in-view">
+      <div class="eyebrow">/ 03 · 핵심 기능</div>
+      <h2>실무에 필요한 모든 것,<br>이미 들어있습니다.</h2>
+    </div>
+
+    <div class="features-grid reveal on visible show active aos-animate is-visible in-view">
+      <div class="feature-cell">
+        <div class="feature-cell-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M9 9h6v6H9z"></path></svg>
+        </div>
+        <div>
+          <h4>노코드 워크플로우 빌더 <span class="badge-tag">CORE</span></h4>
+          <p>드래그 앤 드롭으로 자동화 흐름을 구성합니다. 개발자가 없어도 실무자가 직접 구축할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <div class="feature-cell">
+        <div class="feature-cell-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+        </div>
+        <div>
+          <h4>실시간 데이터 동기화</h4>
+          <p>설정한 주기로 데이터를 자동 동기화하고, 변경사항을 곧바로 대시보드에 반영합니다.</p>
+        </div>
+      </div>
+
+      <div class="feature-cell">
+        <div class="feature-cell-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20M12 2a15 15 0 0 1 0 20A15 15 0 0 1 12 2z"></path></svg>
+        </div>
+        <div>
+          <h4>AI 자연어 분석 <span class="badge-tag">NEW</span></h4>
+          <p>자연어로 질문하면 차트와 인사이트가 자동 생성됩니다. SQL 작성 없이도 데이터 분석이 가능합니다.</p>
+        </div>
+      </div>
+
+      <div class="feature-cell">
+        <div class="feature-cell-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        </div>
+        <div>
+          <h4>역할 기반 권한 관리</h4>
+          <p>팀과 역할별로 데이터 접근 권한을 세밀하게 제어합니다. 감사 로그도 자동으로 남습니다.</p>
+        </div>
+      </div>
+
+      <div class="feature-cell">
+        <div class="feature-cell-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+        </div>
+        <div>
+          <h4>200+ 통합 연동</h4>
+          <p>Slack, Notion, Salesforce, Google Workspace 등 대표 SaaS와 즉시 연동합니다.</p>
+        </div>
+      </div>
+
+      <div class="feature-cell">
+        <div class="feature-cell-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        </div>
+        <div>
+          <h4>엔터프라이즈 보안 <span class="badge-tag">SOC 2</span></h4>
+          <p>SOC 2 Type II · ISO 27001 인증 · SSO/SAML · 데이터 암호화 · 한국 리전 호스팅 옵션 지원.</p>
+        </div>
+      </div>
+
+      <div class="feature-cell">
+        <div class="feature-cell-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+        </div>
+        <div>
+          <h4>REST API · 웹훅 지원</h4>
+          <p>모든 기능을 API로 호출할 수 있습니다. 사내 시스템과의 양방향 연동도 자유롭습니다.</p>
+        </div>
+      </div>
+
+      <div class="feature-cell">
+        <div class="feature-cell-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </div>
+        <div>
+          <h4>한국어 전담 지원팀</h4>
+          <p>평일 9–18시 한국어 라이브 채팅. Pro 이상 플랜은 전담 CSM이 도입과 운영을 지원합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     SECTION 5: INTEGRATIONS (추가)
+     ========================================================= -->
+<section id="integrations">
+  <div class="grid-bg"></div>
+  <div class="container">
+    <div class="integrations-wrap">
+      <div class="integrations-text reveal on visible show active aos-animate is-visible in-view">
+        <div class="eyebrow" style="margin-bottom: 16px;">/ 04 · 통합 · 연동</div>
+        <h2>이미 쓰고 있는<br>모든 도구와 함께.</h2>
+        <p>새로운 도구를 강요하지 않습니다. Stackly는 기존 워크플로우 위에서 동작하며, 팀이 익숙한 환경 그대로 자동화 레이어를 더합니다.</p>
+        <ul class="integrations-list">
+          <li>커뮤니케이션: Slack, Teams, 카카오워크</li>
+          <li>데이터: PostgreSQL, BigQuery, Snowflake, MySQL</li>
+          <li>업무 도구: Notion, Jira, Confluence, Asana</li>
+          <li>마케팅: Google Ads, Meta Ads, GA4, Mixpanel</li>
+        </ul>
+        <div class="code-snippet-deco">
+          <span class="prompt">$</span>
+          <span>stackly add --integration=slack</span>
+          <span class="cursor"></span>
+        </div>
+      </div>
+
+      <div class="integrations-grid reveal reveal-delay-1 on visible show active aos-animate is-visible in-view">
+        <div class="integration-tile"><div class="ico" style="background: rgb(74, 21, 75);">SL</div><div class="name">Slack</div></div>
+        <div class="integration-tile"><div class="ico" style="background: rgb(0, 0, 0);">NT</div><div class="name">Notion</div></div>
+        <div class="integration-tile"><div class="ico" style="background: rgb(0, 82, 204);">JR</div><div class="name">Jira</div></div>
+        <div class="integration-tile"><div class="ico" style="background: rgb(234, 67, 53);">GM</div><div class="name">Gmail</div></div>
+        <div class="integration-tile"><div class="ico" style="background: rgb(0, 161, 224);">SF</div><div class="name">Salesforce</div></div>
+        <div class="integration-tile center">
+          <div class="ico" style="background: var(--gradient-brand);">S</div>
+          <div class="name">Stackly</div>
+        </div>
+        <div class="integration-tile"><div class="ico" style="background: rgb(245, 130, 32);">HS</div><div class="name">HubSpot</div></div>
+        <div class="integration-tile"><div class="ico" style="background: rgb(50, 108, 229);">PG</div><div class="name">PostgreSQL</div></div>
+        <div class="integration-tile"><div class="ico" style="background: rgb(66, 133, 244);">BQ</div><div class="name">BigQuery</div></div>
+        <div class="integration-tile"><div class="ico" style="background: rgb(98, 100, 167);">MS</div><div class="name">Teams</div></div>
+        <div class="integration-tile"><div class="ico" style="background: rgb(255, 205, 0);">KK</div><div class="name">카카오워크</div></div>
+        <div class="integration-tile"><div class="ico" style="background: rgb(123, 97, 255);">+</div><div class="name">200+ more</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     SECTION 6: METRICS (카운터)
+     ========================================================= -->
+<section id="metrics">
+  <div class="grid-bg"></div>
+  <div class="container">
+    <div class="section-header reveal on visible show active aos-animate is-visible in-view">
+      <div class="eyebrow">/ 05 · 도입 효과</div>
+      <h2>숫자로 검증된 변화.</h2>
+      <p class="lead" style="margin-top: 16px;">2024–2025년 Stackly 도입 234개 기업의 평균 데이터입니다.</p>
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-card reveal reveal-delay-1 on visible show active aos-animate is-visible in-view">
+        <div class="metric-label">업무 시간 절감</div>
+        <div class="metric-value">
+          <span class="counter mono" data-target="73">0</span><span class="metric-suffix">%</span>
+        </div>
+        <div class="metric-desc">
+          반복 업무에 쓰던 시간을 <strong>자동화로 회수</strong>해 핵심 업무에 집중합니다.
+          <br><span class="mono" style="font-size: 11px; color: var(--text-3); margin-top: 8px; display: inline-block;">출처 · 도입 6개월 후 내부 측정</span>
+        </div>
+      </div>
+
+      <div class="metric-card reveal reveal-delay-2 on visible show active aos-animate is-visible in-view">
+        <div class="metric-label">운영 비용 절감</div>
+        <div class="metric-value">
+          <span class="counter mono" data-target="42">0</span><span class="metric-suffix">%</span>
+        </div>
+        <div class="metric-desc">
+          중복 도구 통합과 인력 효율화로 <strong>월간 운영비를 평균 42% 감축</strong>했습니다.
+          <br><span class="mono" style="font-size: 11px; color: var(--text-3); margin-top: 8px; display: inline-block;">출처 · 연간 결산 비교 (n=87)</span>
+        </div>
+      </div>
+
+      <div class="metric-card reveal reveal-delay-3 on visible show active aos-animate is-visible in-view">
+        <div class="metric-label">고객 만족도</div>
+        <div class="metric-value">
+          <span class="counter mono" data-target="48" data-decimal="1">0.0</span><span class="metric-suffix">/5</span>
+        </div>
+        <div class="metric-desc">
+          <strong>NPS 64점</strong>, 도입 1년차 갱신율 96%. 한 번 쓰면 떠나기 어렵습니다.
+          <br><span class="mono" style="font-size: 11px; color: var(--text-3); margin-top: 8px; display: inline-block;">출처 · 분기별 CSAT 설문</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     SECTION 7: CASE STUDIES
+     ========================================================= -->
+<section id="cases">
+  <div class="grid-bg"></div>
+  <div class="container">
+    <div class="section-header reveal on visible show active aos-animate is-visible in-view">
+      <div class="eyebrow">/ 06 · 도입 사례</div>
+      <h2>이미 답을 찾은 팀들.</h2>
+    </div>
+
+    <div class="case-grid">
+      <div class="case-card reveal reveal-delay-1 on visible show active aos-animate is-visible in-view">
+        <div class="case-header">
+          <div class="case-logo">◆ NEXUS Commerce</div>
+          <div class="case-industry">이커머스</div>
+        </div>
+        <div class="case-result">
+          <div class="case-result-value">68%</div>
+          <div class="case-result-label">주문 처리 시간 단축</div>
+        </div>
+        <div class="case-quote">
+          주문 → 재고 → 배송 알림까지 사람이 오가던 4단계가 한 번의 트리거로 끝납니다. 야근이 사라진 게 가장 큰 변화입니다.
+        </div>
+        <div class="case-author">
+          <div class="case-avatar">박</div>
+          <div class="case-author-info">
+            <div class="name">박지원</div>
+            <div class="role">운영팀 리드</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-card reveal reveal-delay-2 on visible show active aos-animate is-visible in-view">
+        <div class="case-header">
+          <div class="case-logo">▣ ARCANE Studio</div>
+          <div class="case-industry">B2B SaaS</div>
+        </div>
+        <div class="case-result">
+          <div class="case-result-value">₩8.4M</div>
+          <div class="case-result-label">월간 운영비 절감</div>
+        </div>
+        <div class="case-quote">
+          여러 SaaS 구독을 하나로 정리하고 사내 자동화까지 갖췄습니다. 도입 3개월 만에 ROI를 회수했습니다.
+        </div>
+        <div class="case-author">
+          <div class="case-avatar">L</div>
+          <div class="case-author-info">
+            <div class="name">이민호</div>
+            <div class="role">CTO</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-card reveal reveal-delay-3 on visible show active aos-animate is-visible in-view">
+        <div class="case-header">
+          <div class="case-logo">▲ Helios Bank</div>
+          <div class="case-industry">금융</div>
+        </div>
+        <div class="case-result">
+          <div class="case-result-value">12x</div>
+          <div class="case-result-label">리포트 생성 속도 향상</div>
+        </div>
+        <div class="case-quote">
+          매주 4시간 걸리던 임원 리포트가 자동화되어 20분이면 완성됩니다. 의사결정 타이밍이 완전히 달라졌습니다.
+        </div>
+        <div class="case-author">
+          <div class="case-avatar">K</div>
+          <div class="case-author-info">
+            <div class="name">김수민</div>
+            <div class="role">데이터 전략실 부장</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     SECTION 8: PRICING (월간/연간 토글)
+     ========================================================= -->
+<section id="pricing">
+  <div class="grid-bg"></div>
+  <div class="container">
+    <div class="section-header reveal on visible show active aos-animate is-visible in-view" style="text-align:center; margin-left:auto; margin-right:auto;">
+      <div class="eyebrow" style="justify-content: center; display: inline-flex;">/ 07 · 요금제</div>
+      <h2>팀 규모에 맞춰 시작하세요.</h2>
+      <p class="lead" style="margin-top: 16px; margin-left: auto; margin-right: auto;">언제든 업그레이드 · 다운그레이드 가능. 14일 무료 체험.</p>
+    </div>
+
+    <div class="pricing-toggle-wrap reveal on visible show active aos-animate is-visible in-view">
+      <div class="pricing-toggle" id="pricingToggle">
+        <span class="slider" style="left: 5px; width: 91.4844px;"></span>
+        <button class="active" data-period="monthly">월간 결제</button>
+        <button data-period="yearly">
+          연간 결제
+          <span class="save-tag">-20%</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="pricing-grid">
+      <!-- Starter -->
+      <div class="pricing-card reveal reveal-delay-1 on visible show active aos-animate is-visible in-view">
+        <div class="plan-name">Starter</div>
+        <div class="plan-tagline">소규모 팀의 시작점</div>
+        <div class="plan-price">
+          <span class="currency">₩</span>
+          <span class="amount" data-monthly="49,000" data-yearly="39,000">49,000</span>
+        </div>
+        <div class="plan-period">/ user / month · VAT 별도</div>
+        <a href="#dp-contact-form" class="btn btn-ghost plan-cta" data-dp-btn-bound="1" onclick="var t=document.getElementById('dp-contact-form');if(t)t.scrollIntoView({behavior:'smooth'});return false;">무료로 시작하기</a>
+        <ul class="plan-features">
+          <li>최대 5명 사용자</li>
+          <li>워크플로우 10개</li>
+          <li>월 1만 회 자동 실행</li>
+          <li>기본 통합 (50+)</li>
+          <li>이메일 지원 (영업일)</li>
+          <li class="muted">AI 분석 엔진</li>
+          <li class="muted">전담 CSM</li>
+        </ul>
+      </div>
+
+      <!-- Pro (강조) -->
+      <div class="pricing-card featured reveal reveal-delay-2 on visible show active aos-animate is-visible in-view">
+        <div class="pricing-badge">가장 인기</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-tagline">성장하는 팀의 표준</div>
+        <div class="plan-price">
+          <span class="currency">₩</span>
+          <span class="amount" data-monthly="129,000" data-yearly="103,000">129,000</span>
+        </div>
+        <div class="plan-period">/ user / month · VAT 별도</div>
+        <a href="#" class="btn btn-accent plan-cta" data-dp-btn-bound="1" onclick="return false;" style="cursor: default;">14일 무료 체험</a>
+        <ul class="plan-features">
+          <li>최대 50명 사용자</li>
+          <li>워크플로우 무제한</li>
+          <li>월 100만 회 자동 실행</li>
+          <li>전체 통합 (200+)</li>
+          <li>AI 분석 엔진 포함</li>
+          <li>한국어 라이브 채팅 지원</li>
+          <li>역할 기반 권한 (RBAC)</li>
+        </ul>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="pricing-card reveal reveal-delay-3 on visible show active aos-animate is-visible in-view">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-tagline">대규모 운영을 위한 맞춤형</div>
+        <div class="plan-price" style="font-size: 36px;">
+          <span class="amount" style="background-clip: text; -webkit-text-fill-color: transparent;">맞춤 견적</span>
+        </div>
+        <div class="plan-period">SLA · 단독 호스팅 옵션</div>
+        <a href="#dp-contact-form" class="btn btn-ghost plan-cta" data-dp-btn-bound="1" onclick="var t=document.getElementById('dp-contact-form');if(t)t.scrollIntoView({behavior:'smooth'});return false;">영업팀 상담하기</a>
+        <ul class="plan-features">
+          <li>사용자 무제한</li>
+          <li>실행 무제한 + Custom SLA</li>
+          <li>SSO · SAML · SCIM</li>
+          <li>한국 리전 단독 호스팅</li>
+          <li>전담 CSM + 도입 컨설팅</li>
+          <li>온사이트 교육 · 워크숍</li>
+          <li>커스텀 통합 개발</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     SECTION 9: FAQ (아코디언)
+     ========================================================= -->
+<section id="faq">
+  <div class="grid-bg"></div>
+  <div class="container">
+    <div class="section-header reveal on visible show active aos-animate is-visible in-view" style="text-align:center; margin-left:auto; margin-right:auto;">
+      <div class="eyebrow" style="justify-content: center; display: inline-flex;">/ 08 · FAQ</div>
+      <h2>자주 묻는 질문</h2>
+    </div>
+
+    <div class="faq-wrap reveal on visible show active aos-animate is-visible in-view">
+      <div class="faq-item">
+        <button class="faq-q">
+          <span class="faq-num mono">01</span>
+          <span class="faq-q-text">개발자 없이 비개발자도 도입할 수 있나요?</span>
+          <span class="faq-toggle"></span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            네. Stackly는 노코드 워크플로우 빌더를 기본으로 제공하며, 200개 이상의 사전 빌드 템플릿이 있습니다. 마케팅·운영·CS 등 비개발 직군이 가장 활발하게 사용합니다. 다만 사내 시스템과의 깊은 연동이 필요하다면 <code>REST API</code>나 웹훅으로 확장할 수 있습니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span class="faq-num mono">02</span>
+          <span class="faq-q-text">기존에 쓰던 도구는 어떻게 연동하나요?</span>
+          <span class="faq-toggle"></span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            Slack, Notion, Salesforce, Google Workspace, HubSpot 등 200개 이상의 도구를 OAuth 한 번으로 연동할 수 있습니다. 자체 시스템은 <code>API Key</code> 또는 웹훅으로 연결합니다. 평균 연동 소요 시간은 도구당 3분 미만입니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span class="faq-num mono">03</span>
+          <span class="faq-q-text">데이터 보안은 어떻게 보장되나요?</span>
+          <span class="faq-toggle"></span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            SOC 2 Type II와 ISO 27001 인증을 보유하고 있으며, 모든 데이터는 전송 구간(TLS 1.3)과 저장 구간(AES-256) 모두 암호화됩니다. Enterprise 플랜은 한국 리전 단독 호스팅 옵션을 선택할 수 있고, SSO/SAML/SCIM도 지원합니다. 감사 로그는 최대 7년 보관됩니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span class="faq-num mono">04</span>
+          <span class="faq-q-text">도입까지 얼마나 걸리나요?</span>
+          <span class="faq-toggle"></span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            소규모 팀은 첫날 가입 → 첫 워크플로우 가동까지 평균 30분이 걸립니다. Pro 플랜 이상은 전담 온보딩 매니저가 1주일 이내 핵심 자동화 5개 셋업을 함께 진행합니다. Enterprise는 도입 컨설팅을 포함해 평균 4–6주 안에 풀-디플로이가 완료됩니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span class="faq-num mono">05</span>
+          <span class="faq-q-text">계약은 자유롭게 해지할 수 있나요?</span>
+          <span class="faq-toggle"></span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            월간 결제는 언제든 취소 가능하며, 다음 결제일 이후 자동 종료됩니다. 연간 결제는 잔여 기간에 비례한 환불 정책을 운영합니다. 데이터는 해지 후 30일간 보관되고 그 이후 영구 삭제되며, 언제든 <code>JSON / CSV</code>로 내보낼 수 있습니다.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     SECTION 10: CTA + FOOTER
+     ========================================================= -->
+<section id="cta" class="cta-final">
+  <div class="container">
+    <div class="cta-card reveal on visible show active aos-animate is-visible in-view">
+      <div class="eyebrow" style="justify-content: center; display: inline-flex; margin-bottom: 24px;">/ 09 · 시작하기</div>
+      <h2 class="display-2">오늘 시작하면,<br>다음 주엔 야근이 줄어듭니다.</h2>
+      <p>14일 무료 체험. 신용카드 등록 없이, 5분이면 첫 자동화가 가동됩니다.</p>
+      <div class="btn-group">
+        <a href="#" class="btn btn-accent btn-lg" data-dp-btn-bound="1" onclick="return false;" style="cursor: default;">14일 무료 체험 시작 →</a>
+        <a href="#dp-contact-form" class="btn btn-ghost btn-lg" data-dp-btn-bound="1" onclick="var t=document.getElementById('dp-contact-form');if(t)t.scrollIntoView({behavior:'smooth'});return false;">영업팀 상담 예약</a>
+      </div>
+      <div class="cta-meta">
+        <span><span class="check">✓</span> 신용카드 불필요</span>
+        <span><span class="check">✓</span> 언제든 해지 가능</span>
+        <span><span class="check">✓</span> 한국어 지원팀</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="nav-brand" data-dp-btn-bound="1" onclick="return false;" style="cursor: default;">
+            <span class="logo-mark"></span>
+            <span>Stackly</span>
+          </a>
+          <p>비즈니스 운영 자동화 플랫폼.<br>흐름을 설계하면, 일은 따라옵니다.</p>
+          <div class="footer-contact">
+            <a href="mailto:hello@stackly.kr">✉ hello@stackly.kr</a>
+            <a href="tel:+82215881234">☎ 02-1588-1234</a>
+            <span>📍 서울특별시 강남구 테헤란로 123</span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h5>제품</h5>
+          <ul>
+            <li><a href="#features">기능</a></li>
+            <li><a href="#integrations">통합</a></li>
+            <li><a href="#pricing">요금제</a></li>
+            <li><a href="#" onclick="return false;" style="cursor: default;">변경 로그</a></li>
+            <li><a href="#" onclick="return false;" style="cursor: default;">로드맵</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>리소스</h5>
+          <ul>
+            <li><a href="#" onclick="return false;" style="cursor: default;">개발자 문서</a></li>
+            <li><a href="#" onclick="return false;" style="cursor: default;">API 레퍼런스</a></li>
+            <li><a href="#" onclick="return false;" style="cursor: default;">템플릿 갤러리</a></li>
+            <li><a href="#" onclick="return false;" style="cursor: default;">고객 사례</a></li>
+            <li><a href="#" onclick="return false;" style="cursor: default;">블로그</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>회사</h5>
+          <ul>
+            <li><a href="#" onclick="return false;" style="cursor: default;">소개</a></li>
+            <li><a href="#" onclick="return false;" style="cursor: default;">채용</a></li>
+            <li><a href="#" onclick="return false;" style="cursor: default;">파트너 프로그램</a></li>
+            <li><a href="#" onclick="return false;" style="cursor: default;">보도자료</a></li>
+            <li><a href="#dp-contact-form" onclick="var t=document.getElementById('dp-contact-form');if(t)t.scrollIntoView({behavior:'smooth'});return false;">문의</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>법적 고지</h5>
+          <ul>
+            <li><a href="#" onclick="return false;" style="cursor: default;">이용약관</a></li>
+            <li><a href="#" onclick="return false;" style="cursor: default;">개인정보 처리방침</a></li>
+            <li><a href="#" onclick="return false;" style="cursor: default;">보안</a></li>
+            <li><a href="#" onclick="return false;" style="cursor: default;">SLA</a></li>
+            <li><a href="#" onclick="return false;" style="cursor: default;">상태 페이지</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Stackly Inc. All rights reserved.</span>
+        <div class="links">
+          <a href="#" onclick="return false;" style="cursor: default;">SOC 2 Type II</a>
+          <a href="#" onclick="return false;" style="cursor: default;">ISO 27001</a>
+          <a href="#" onclick="return false;" style="cursor: default;">GDPR</a>
+          <a href="#" onclick="return false;" style="cursor: default;">한국 ISMS</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</section>
+
+
+<script>
+/* =========================================================
+   1. Scroll Reveal: IntersectionObserver
+   ========================================================= */
+(function () {
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -80px 0px' });
+  els.forEach((el) => io.observe(el));
+})();
+
+
+/* =========================================================
+   2. FAQ 아코디언
+   ========================================================= */
+(function () {
+  const items = document.querySelectorAll('.faq-item');
+  items.forEach((item) => {
+    const q = item.querySelector('.faq-q');
+    const a = item.querySelector('.faq-a');
+    q.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      // 한 번에 하나만 열리도록 (선택적 동작)
+      items.forEach((other) => {
+        other.classList.remove('open');
+        other.querySelector('.faq-a').style.maxHeight = '0px';
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        a.style.maxHeight = a.scrollHeight + 'px';
+      }
+    });
+  });
+})();
+
+
+/* =========================================================
+   3. 카운터 애니메이션 (성과 지표)
+   ========================================================= */
+(function () {
+  const counters = document.querySelectorAll('.counter');
+  const animate = (el) => {
+    const target = parseFloat(el.dataset.target);
+    const decimal = parseInt(el.dataset.decimal || '0', 10);
+    const duration = 1600;
+    const startTime = performance.now();
+    const start = 0;
+
+    function tick(now) {
+      const progress = Math.min((now - startTime) / duration, 1);
+      // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = start + (target - start) * eased;
+      const value = decimal > 0 ? (current / 10).toFixed(decimal) : Math.floor(current);
+      el.textContent = value;
+      if (progress < 1) requestAnimationFrame(tick);
+      else el.textContent = decimal > 0 ? (target / 10).toFixed(decimal) : target;
+    }
+    requestAnimationFrame(tick);
+  };
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        animate(e.target);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach((c) => io.observe(c));
+})();
+
+
+/* =========================================================
+   4. 요금제 토글 (월간 / 연간)
+   ========================================================= */
+(function () {
+  const toggle = document.getElementById('pricingToggle');
+  if (!toggle) return;
+  const buttons = toggle.querySelectorAll('button');
+  const slider = toggle.querySelector('.slider');
+  const amounts = document.querySelectorAll('.plan-price .amount[data-monthly]');
+
+  const moveSlider = (btn) => {
+    const rect = btn.getBoundingClientRect();
+    const wrapRect = toggle.getBoundingClientRect();
+    slider.style.left = (rect.left - wrapRect.left) + 'px';
+    slider.style.width = rect.width + 'px';
+  };
+
+  // 초기 위치
+  requestAnimationFrame(() => moveSlider(buttons[0]));
+  window.addEventListener('resize', () => {
+    const active = toggle.querySelector('button.active');
+    moveSlider(active);
+  });
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      buttons.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      moveSlider(btn);
+
+      const period = btn.dataset.period;
+      amounts.forEach((amount) => {
+        const newVal = period === 'yearly' ? amount.dataset.yearly : amount.dataset.monthly;
+        // fade transition
+        amount.style.opacity = '0';
+        setTimeout(() => {
+          amount.textContent = newVal;
+          amount.style.opacity = '1';
+        }, 150);
+      });
+    });
+  });
+})();
+
+
+/* =========================================================
+   5. 네비게이션 스크롤 효과
+   ========================================================= */
+(function () {
+  const nav = document.querySelector('.nav');
+  let lastY = 0;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y > 80) {
+      nav.style.boxShadow = '0 16px 48px rgba(0,0,0,0.5)';
+      nav.style.background = 'rgba(13, 18, 32, 0.85)';
+    } else {
+      nav.style.boxShadow = '0 16px 48px rgba(0,0,0,0.3)';
+      nav.style.background = 'rgba(13, 18, 32, 0.7)';
+    }
+    lastY = y;
+  });
+})();
+</script>
+
+
+
+<section data-dp-auto-form="1" id="dp-contact-form" style="padding: 64px 20px; background: rgb(244, 246, 249); font-family: Pretendard, &quot;Apple SD Gothic Neo&quot;, -apple-system, sans-serif;"><div style="max-width:560px;margin:0 auto;text-align:center"><h2 style="margin: 0px 0px 8px; font-size: 28px; font-weight: 800; color: rgb(17, 17, 17); letter-spacing: -0.5px;">상담 신청</h2><p style="margin: 0px 0px 28px; font-size: 15px; color: rgb(102, 102, 119);">궁금한 점을 남겨주시면 빠르게 연락드립니다</p><form style="text-align:left;display:flex;flex-direction:column;gap:14px;background:#fff;padding:28px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.08)"><div><label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: rgb(26, 26, 26); opacity: 0.85;">성함 <span style="color: rgb(232, 93, 93);">*</span></label><input type="text" name="name" required="" placeholder="홍길동" style="width: 100%; padding: 13px 14px; border: 1px solid rgb(208, 212, 218); border-radius: 9px; font-size: 15px; font-family: inherit; background: rgb(255, 255, 255); color: rgb(26, 26, 26); box-sizing: border-box;"></div><div><label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: rgb(26, 26, 26); opacity: 0.85;">연락처 <span style="color: rgb(232, 93, 93);">*</span></label><input type="tel" name="phone" required="" placeholder="010-0000-0000" style="width: 100%; padding: 13px 14px; border: 1px solid rgb(208, 212, 218); border-radius: 9px; font-size: 15px; font-family: inherit; background: rgb(255, 255, 255); color: rgb(26, 26, 26); box-sizing: border-box;"></div><div><label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: rgb(26, 26, 26); opacity: 0.85;">이메일</label><input type="email" name="email" placeholder="email@example.com" style="width: 100%; padding: 13px 14px; border: 1px solid rgb(208, 212, 218); border-radius: 9px; font-size: 15px; font-family: inherit; background: rgb(255, 255, 255); color: rgb(26, 26, 26); box-sizing: border-box;"></div><div><label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: rgb(26, 26, 26); opacity: 0.85;">요청사항·문의</label><textarea name="message" rows="4" placeholder="문의 내용을 자유롭게 입력해 주세요" style="width: 100%; padding: 13px 14px; border: 1px solid rgb(208, 212, 218); border-radius: 9px; font-size: 15px; font-family: inherit; background: rgb(255, 255, 255); color: rgb(26, 26, 26); box-sizing: border-box; resize: vertical; min-height: 96px;"></textarea></div><button type="submit" style="width: 100%; padding: 16px; background: rgb(3, 199, 90); color: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 10px; font-size: 16px; font-weight: 800; font-family: inherit; margin-top: 6px;">상담 신청 보내기</button></form></div></section><script data-dp-form-handler="1">(function(){
+  var WORKER = "https://api.daperm.com";
+  var TO = "jinwoo85@gmail.com";
+  var SLUG = "";
+  function __dpWireForms(){
+    document.querySelectorAll('form').forEach(function(form){
+      // 템플릿의 기존 onsubmit 제거 (alert + form.reset()으로 데이터 손실 방지)
+      form.removeAttribute('onsubmit');
+      form.onsubmit = null;
+      // submit 핸들러 (Worker 호출)
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        var btn = form.querySelector('button[type="submit"], input[type="submit"], button:not([type])');
+        var origText = btn ? btn.textContent : '';
+        if(btn){ btn.disabled = true; btn.textContent = '⏳ 전송 중...'; }
+        try {
+          // FormData를 reset 전에 즉시 캡처
+          var fields = {};
+          new FormData(form).forEach(function(v, k){ fields[k] = String(v).slice(0, 5000); });
+          var r = await fetch(WORKER + '/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ _to: TO, _slug: SLUG, fields: fields })
+          });
+          if(!r.ok) throw new Error('전송 실패 (' + r.status + ')');
+          alert('✓ 신청이 접수되었습니다. 빠르게 연락드리겠습니다.');
+          form.reset();
+        } catch(err){
+          alert('❌ 전송 실패: ' + (err.message || '잠시 후 다시 시도해주세요'));
+        } finally {
+          if(btn){ btn.disabled = false; btn.textContent = origText; }
+        }
+      }, true);
+      // 봇 차단용 허니팟 (시각적으로 숨김)
+      if(!form.querySelector('input[name="_honey"]')){
+        var honey = document.createElement('input');
+        honey.type = 'text'; honey.name = '_honey'; honey.tabIndex = -1; honey.autocomplete = 'off';
+        honey.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none';
+        form.appendChild(honey);
+      }
+    });
+  }
+  // ⚠️ view.html은 document.write로 페이지를 주입 → 그 시점엔 DOMContentLoaded가 이미 지나 리스너가 안 걸림.
+  // 그래서 이미 로드됐으면 즉시 실행(그래야 폼이 묶여 상담이 전송됨). 모바일가드 스크립트와 동일한 방어 패턴.
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', __dpWireForms); } else { __dpWireForms(); }
+})();</script></body></html>

@@ -1,0 +1,2460 @@
+<!DOCTYPE html>
+<html lang="ko"><head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'&gt;&lt;rect width='64' height='64' rx='14' fill='%230a0a0a'/&gt;&lt;path d='M38 4 L14 36 L28 36 L24 60 L50 26 L34 26 Z' fill='%23FFEB00' stroke='%23FFEB00' stroke-width='1' stroke-linejoin='round'/&gt;&lt;/svg&gt;">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>늘봄. NEULBOM — 우리 가족 같은 돌봄.</title>
+<meta name="description" content="늘봄 재가복지센터 — 방문요양·방문목욕·방문간호·주야간보호·단기보호. 노인장기요양보험 협력 기관. 1:1 매칭 케어 시스템.">
+
+<!--
+  ============================================================
+  늘봄. NEULBOM  v1.0
+  Home Visit Care · Senior Care (10 sections · all LIGHT)
+  ------------------------------------------------------------
+  Design language
+    - 4-컬러: 세이지 그린 #5d735a (메인) + 웜 브라운 #84715c (보조)
+              + 페일 그린 #f0fdf4 + 웜 크림 #faf6ee
+    - 3-폰트: Pretendard 700-800 + Noto Sans KR 500 (17px 본문)
+              + JetBrains Mono (가격·번호·등급)
+    - 다크 0 (사용자 명시 다크 톤 금지)
+    - radius 12-16px (따뜻한 톤)
+    - 본문 17px 가독성 우선 (어르신·가족 대상)
+    - 시그니처: 시리즈 첫 노인장기요양보험 등급별 본인부담률 표
+    - 시그니처: 시리즈 첫 요양보호사 프로필 시스템 (자격·경력)
+    - 시그니처: 거대 전화번호 (NOLEAK 패턴 응용, 세이지 톤)
+  ------------------------------------------------------------
+  ⚠ 방문요양 사업 특수 규제 (CRITICAL)
+    노인장기요양보험법 + 노인복지법 제31조
+      → 장기요양기관 지정 + 재가노인복지시설 신고 필수
+      → 무신고 운영 1년 이하 징역
+    요양보호사 자격제도
+      → 한국보건복지인력개발원 발급 국가자격
+      → 실 자격자만 프로필 표시
+    노인장기요양보험 본인부담률 (보건복지부 고시)
+      → 등급별 기준 + 차상위·수급자 감면 정확 표기
+      → 2026년 기준 명시 + 변동 가능 안내
+    표시광고법 (단정 표현)
+      → "1위" / "최고" / "100% 만족" 금지
+    개인정보보호법 + 의료법 (민감정보)
+      → 어르신 건강 정보 = 민감정보 (제23조)
+      → 별도 동의 필수
+    응급의료에 관한 법률
+      → 요양보호사 의료 행위 금지
+      → "응급 처치 가능" 단정 회피
+    가족 후기 (표시광고법 + 사기죄)
+      → 실 후기 + 사전 동의 + 익명 처리
+    전자상거래법
+      → 시간제·일일·정기 환불 정책
+
+  실 데이터 교체 위치 (placeholder 전부)
+    SECTION 4: 요양보호사 프로필 (실 자격자만)
+    SECTION 6: 본인부담률 (2026년 보건복지부 최신 기준 확인)
+    SECTION 7: 가족 후기 (실 동의 받은 사례만)
+    SECTION 9: 가격 (실 운영 가격)
+    SECTION 10: 전화·카카오 ID
+  ------------------------------------------------------------
+  Brand-name bulk rename: 'NEULBOM' / '늘봄' / '늘봄 재가복지센터'
+  ============================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="">
+<link rel="stylesheet" as="style" crossorigin="" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&amp;family=Noto+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   1. Design Tokens — Senior Care / Sage + Warm
+   ============================================================ */
+:root{
+  --bg-white:       #ffffff;
+  --bg-green-pale:  #f0fdf4;
+  --bg-green-pale-2:#dcfce7;
+  --bg-cream:       #faf6ee;
+  --bg-cream-2:     #f5efe3;
+  --bg-soft-gray:   #f8f8f6;
+
+  --sage:           #5d735a;
+  --sage-dark:      #4a5e47;
+  --sage-darker:    #3a4a37;
+  --sage-light:     #7a8e77;
+  --sage-soft:      #a8b8a5;
+  --sage-glow:      rgba(93,115,90,.30);
+
+  --warm-brown:     #84715c;
+  --warm-brown-dark:#6b5b48;
+  --warm-brown-light:#a09080;
+  --warm-brown-soft:#c2b5a3;
+
+  --ink:            #2c2c2c;
+  --ink-soft:       #4a4a4a;
+  --ink-mute:       #6b6b6b;
+  --ink-faint:      #9a9a9a;
+
+  --line:           rgba(44,44,44,.08);
+  --line-strong:    rgba(44,44,44,.14);
+  --line-sage:      rgba(93,115,90,.25);
+  --line-warm:      rgba(132,113,92,.22);
+
+  --f-display:      'Pretendard Variable', 'Pretendard', 'Noto Sans KR', system-ui, sans-serif;
+  --f-body:         'Noto Sans KR', 'Pretendard Variable', system-ui, sans-serif;
+  --f-data:         'JetBrains Mono', ui-monospace, monospace;
+
+  --maxw: 1240px;
+  --pad-x: clamp(24px, 5vw, 80px);
+
+  --radius-sm: 8px;
+  --radius:    12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
+}
+
+/* ============================================================
+   2. Reset / Base — 본문 17px 가독성 우선
+   ============================================================ */
+*,*::before,*::after{ box-sizing: border-box; }
+html,body{ margin:0; padding:0; }
+html{ scroll-behavior: smooth; }
+body{
+  background: var(--bg-white);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 1.95;
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img{ max-width:100%; display:block; }
+a{ color: inherit; text-decoration: none; }
+button{ font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+h1,h2,h3,h4{
+  margin: 0;
+  font-family: var(--f-display);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+
+.container{
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding-left: var(--pad-x);
+  padding-right: var(--pad-x);
+}
+section{ padding: clamp(80px, 9vw, 120px) 0; position: relative; }
+
+/* Eyebrow */
+.eyebrow{
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--f-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--sage);
+  margin-bottom: 22px;
+}
+.eyebrow::before{
+  content: ""; width: 24px; height: 2px;
+  background: var(--sage);
+}
+.eyebrow.center{ justify-content: center; }
+.eyebrow.center::before, .eyebrow.center::after{ display: block; }
+.eyebrow.center::after{
+  content: ""; width: 24px; height: 2px;
+  background: var(--sage);
+}
+.eyebrow.warm{ color: var(--warm-brown-dark); }
+.eyebrow.warm::before, .eyebrow.warm::after{ background: var(--warm-brown); }
+
+/* Section title */
+.section-h2{
+  font-family: var(--f-display);
+  font-size: clamp(30px, 4.4vw, 50px);
+  font-weight: 800;
+  letter-spacing: -0.032em;
+  line-height: 1.2;
+  margin-bottom: 22px;
+  max-width: 22ch;
+  color: var(--ink);
+}
+.section-h2 em{ font-style: normal; color: var(--sage); font-weight: 800; }
+.section-h2 .warm{ color: var(--warm-brown-dark); font-style: normal; }
+.section-lead{
+  color: var(--ink-soft);
+  font-size: 17.5px;
+  line-height: 1.95;
+  max-width: 58ch;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Legal note */
+.legal-note{
+  margin-top: 40px;
+  padding: 24px 30px;
+  background: var(--bg-green-pale);
+  border-left: 3px solid var(--sage);
+  border-radius: var(--radius-sm);
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  line-height: 1.85;
+  font-weight: 500;
+}
+.legal-note strong{ color: var(--sage-dark); font-weight: 700; }
+.legal-note.warm{ background: var(--bg-cream); border-left-color: var(--warm-brown); }
+.legal-note.warm strong{ color: var(--warm-brown-dark); }
+
+/* CTA Buttons — 큰 클릭 영역 (시니어 가독성) */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--f-display);
+  font-size: 16.5px;
+  font-weight: 800;
+  letter-spacing: -0.005em;
+  padding: 20px 36px;
+  border-radius: var(--radius);
+  transition: background .25s, color .25s, border-color .25s, transform .15s, box-shadow .25s;
+  min-height: 62px;
+  white-space: nowrap;
+}
+.btn::after{ content: "→"; transition: transform .2s; font-weight: 700; }
+.btn:hover::after{ transform: translateX(4px); }
+.btn--sage{ background: var(--sage); color: var(--bg-white); border: 2px solid var(--sage); }
+.btn--sage:hover{ background: var(--sage-dark); border-color: var(--sage-dark); transform: translateY(-2px); box-shadow: 0 14px 32px -8px var(--sage-glow); }
+.btn--warm{ background: var(--warm-brown); color: var(--bg-white); border: 2px solid var(--warm-brown); }
+.btn--warm:hover{ background: var(--warm-brown-dark); border-color: var(--warm-brown-dark); transform: translateY(-2px); }
+.btn--outline{ background: transparent; color: var(--ink); border: 2px solid var(--ink); }
+.btn--outline:hover{ background: var(--ink); color: var(--bg-white); }
+.btn--outline-sage{ background: transparent; color: var(--sage-dark); border: 2px solid var(--sage); }
+.btn--outline-sage:hover{ background: var(--sage); color: var(--bg-white); }
+
+/* Data text */
+.num{ font-family: var(--f-data); font-variant-numeric: tabular-nums; }
+
+/* Status chips */
+.chip{
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--f-display);
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  letter-spacing: -0.005em;
+}
+.chip.sage{ background: var(--bg-green-pale-2); color: var(--sage-darker); }
+.chip.warm{ background: var(--bg-cream-2); color: var(--warm-brown-dark); }
+.chip.outline{ background: transparent; color: var(--ink-mute); border: 1px solid var(--line-strong); }
+
+/* ============================================================
+   3. NAV
+   ============================================================ */
+.nav{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255,255,255,.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.nav__inner{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 76px;
+  gap: 20px;
+}
+.logo{
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 24px;
+  color: var(--ink);
+  letter-spacing: -0.03em;
+  display: flex; align-items: baseline; gap: 10px;
+}
+.logo .dot{ color: var(--sage); }
+.logo small{
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink-mute);
+  letter-spacing: -0.005em;
+}
+.nav__menu{
+  display: flex;
+  gap: 28px;
+  font-family: var(--f-display);
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  margin-left: auto;
+  margin-right: 18px;
+}
+.nav__menu a{ transition: color .2s; }
+.nav__menu a:hover{ color: var(--sage); }
+.nav__phone{
+  display: none;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--f-data);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--sage-dark);
+  margin-right: 14px;
+}
+.nav__cta{
+  background: var(--sage);
+  color: var(--bg-white);
+  font-family: var(--f-display);
+  font-size: 14.5px;
+  font-weight: 800;
+  letter-spacing: -0.005em;
+  padding: 12px 22px;
+  border-radius: var(--radius);
+  border: 2px solid var(--sage);
+  transition: background .25s, border-color .25s;
+}
+.nav__cta:hover{ background: var(--sage-dark); border-color: var(--sage-dark); }
+@media (min-width: 760px){ .nav__phone{ display: inline-flex; } }
+@media (max-width: 1050px){ .nav__menu{ display: none; } }
+@media (max-width: 520px){ .logo small{ display: none; } }
+
+/* ============================================================
+   4. SECTION 1 — HERO (LIGHT cream + warm tone)
+   ============================================================ */
+.hero{
+  background:
+    radial-gradient(ellipse at top right, var(--bg-green-pale) 0%, transparent 55%),
+    radial-gradient(ellipse at bottom left, var(--bg-cream) 0%, transparent 60%),
+    var(--bg-white);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero__inner{
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(40px, 5vw, 80px);
+  align-items: center;
+  min-height: 88vh;
+  padding: clamp(60px, 8vw, 100px) 0;
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 900px){
+  .hero__inner{ grid-template-columns: 1fr; min-height: auto; padding: 56px 0; }
+}
+
+.hero__copy{ position: relative; }
+.hero__tag{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--f-display);
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  color: var(--sage-dark);
+  background: var(--bg-white);
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 28px;
+  border: 1px solid var(--line-sage);
+}
+.hero__tag::before{
+  content: "✓";
+  font-weight: 800;
+  color: var(--sage);
+}
+
+.hero__brand{
+  font-family: var(--f-display);
+  font-size: clamp(52px, 9vw, 116px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.96;
+  color: var(--ink);
+  margin-bottom: 22px;
+}
+.hero__brand .dot{ color: var(--sage); }
+.hero h1{
+  font-family: var(--f-display);
+  font-size: clamp(28px, 4vw, 46px);
+  font-weight: 800;
+  letter-spacing: -0.028em;
+  line-height: 1.28;
+  color: var(--ink);
+  margin-bottom: 24px;
+}
+.hero h1 em{
+  font-style: normal;
+  color: var(--sage);
+  position: relative;
+}
+.hero h1 em::after{
+  content: "";
+  position: absolute;
+  bottom: 4px; left: -3px; right: -3px;
+  height: 12px;
+  background: var(--bg-green-pale-2);
+  z-index: -1;
+  border-radius: var(--radius-pill);
+}
+.hero__sub{
+  font-family: var(--f-body);
+  font-size: clamp(16.5px, 1.4vw, 18px);
+  font-weight: 500;
+  color: var(--ink-soft);
+  line-height: 1.95;
+  margin: 0 0 38px;
+  max-width: 46ch;
+}
+.hero__ctas{ display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 44px; }
+
+.hero__strip{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+@media (max-width: 700px){ .hero__strip{ grid-template-columns: 1fr 1fr; gap: 22px; padding-top: 22px; } }
+.hero__strip > div{
+  padding: 0 18px 0 0;
+}
+.hero__strip > div + div{ padding-left: 22px; border-left: 1px solid var(--line); }
+@media (max-width: 700px){ .hero__strip > div + div{ padding-left: 0; border-left: none; } }
+.hero__strip strong{
+  display: block;
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 30px;
+  color: var(--sage-dark);
+  letter-spacing: -0.026em;
+  margin-bottom: 6px;
+  line-height: 1.1;
+}
+.hero__strip > div:nth-child(2) strong{ color: var(--warm-brown-dark); }
+.hero__strip > div:nth-child(3) strong{ color: var(--sage-dark); }
+.hero__strip > div:nth-child(4) strong{ color: var(--warm-brown-dark); }
+.hero__strip small{
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--ink-mute);
+  letter-spacing: -0.005em;
+  display: block;
+}
+
+/* Hero visual — care card */
+.hero__visual{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.care-card{
+  background: var(--bg-white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  padding: 36px;
+  box-shadow: 0 30px 60px -32px rgba(93,115,90,.22);
+}
+.care-card__head{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 26px;
+  padding-bottom: 22px;
+  border-bottom: 1px dashed var(--line-strong);
+}
+.care-card__avatar{
+  width: 56px; height: 56px;
+  background: linear-gradient(135deg, var(--sage) 0%, var(--sage-light) 100%);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--bg-white);
+  letter-spacing: -0.03em;
+}
+.care-card__head h4{
+  font-family: var(--f-display);
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+  margin-bottom: 3px;
+}
+.care-card__head small{
+  font-family: var(--f-body);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink-mute);
+  display: block;
+}
+
+.care-card__list{
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+}
+.care-card__list li{
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+}
+.care-card__list li:last-child{ border-bottom: none; }
+.care-card__list li::before{
+  content: "✓";
+  display: grid; place-items: center;
+  width: 28px; height: 28px;
+  background: var(--bg-green-pale-2);
+  color: var(--sage-dark);
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 800;
+}
+.care-card__list li time{
+  font-family: var(--f-data);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--ink-mute);
+}
+
+.care-card__foot{
+  background: var(--bg-green-pale);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--f-display);
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--sage-dark);
+}
+.care-card__foot strong{ color: var(--sage-darker); font-weight: 800; }
+
+/* ============================================================
+   5. SECTION 2 — SERVICES (5 cards · LIGHT)
+   ============================================================ */
+.services{ background: var(--bg-white); }
+.services__head{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: end;
+  margin-bottom: 56px;
+}
+@media (max-width: 800px){ .services__head{ grid-template-columns: 1fr; gap: 20px; } }
+.services__head p{
+  font-size: 17.5px;
+  color: var(--ink-soft);
+  line-height: 1.95;
+  margin: 0;
+  max-width: 46ch;
+  font-weight: 500;
+}
+
+.services__grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+@media (max-width: 900px){ .services__grid{ grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px){ .services__grid{ grid-template-columns: 1fr; } }
+
+.svc{
+  background: var(--bg-white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 38px 34px 38px;
+  transition: border-color .25s, transform .25s, box-shadow .25s;
+  display: flex;
+  flex-direction: column;
+}
+.svc:hover{
+  border-color: var(--sage);
+  transform: translateY(-4px);
+  box-shadow: 0 24px 50px -28px var(--sage-glow);
+}
+.svc:nth-child(2):hover{ border-color: var(--warm-brown); }
+.svc:nth-child(4):hover{ border-color: var(--warm-brown); }
+
+.svc__icon{
+  width: 60px; height: 60px;
+  background: var(--bg-green-pale);
+  border-radius: var(--radius);
+  display: grid; place-items: center;
+  color: var(--sage-dark);
+  margin-bottom: 24px;
+}
+.svc:nth-child(2) .svc__icon{ background: var(--bg-cream); color: var(--warm-brown-dark); }
+.svc:nth-child(4) .svc__icon{ background: var(--bg-cream); color: var(--warm-brown-dark); }
+.svc__icon svg{ width: 30px; height: 30px; }
+
+.svc__num{
+  font-family: var(--f-data);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ink-mute);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.svc h3{
+  font-family: var(--f-display);
+  font-size: 23px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.svc__desc{
+  font-family: var(--f-body);
+  font-size: 15.5px;
+  color: var(--ink-soft);
+  line-height: 1.85;
+  font-weight: 500;
+  margin: 0 0 20px;
+  flex: 1;
+}
+.svc__features{
+  font-family: var(--f-display);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink-mute);
+  letter-spacing: -0.005em;
+  padding-top: 18px;
+  border-top: 1px dashed var(--line-strong);
+}
+.svc__features strong{ color: var(--sage-dark); font-weight: 700; }
+
+/* ============================================================
+   6. SECTION 3 — CARE SYSTEM (4 cards · cream LIGHT)
+   ============================================================ */
+.system{ background: var(--bg-cream); }
+.system__head{ text-align: center; max-width: 760px; margin: 0 auto 56px; }
+
+.system__grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+@media (max-width: 900px){ .system__grid{ grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px){ .system__grid{ grid-template-columns: 1fr; } }
+
+.sys-card{
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  padding: 34px 28px 34px;
+  text-align: center;
+  border: 1px solid var(--line);
+  transition: border-color .25s, transform .25s;
+}
+.sys-card:hover{ border-color: var(--sage); transform: translateY(-4px); }
+
+.sys-card__icon{
+  width: 64px; height: 64px;
+  background: var(--bg-green-pale);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  color: var(--sage-dark);
+  margin: 0 auto 20px;
+}
+.sys-card:nth-child(2) .sys-card__icon, .sys-card:nth-child(4) .sys-card__icon{
+  background: var(--bg-cream-2);
+  color: var(--warm-brown-dark);
+}
+.sys-card__icon svg{ width: 30px; height: 30px; }
+
+.sys-card__num{
+  font-family: var(--f-data);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ink-mute);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.sys-card h3{
+  font-family: var(--f-display);
+  font-size: 19px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: -0.022em;
+  color: var(--ink);
+}
+.sys-card p{
+  font-family: var(--f-body);
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  line-height: 1.85;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* ============================================================
+   7. SECTION 4 — CAREGIVER PROFILES (LIGHT · 4 profiles)
+   ============================================================ */
+.caregivers{ background: var(--bg-white); }
+.caregivers__head{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: end;
+  margin-bottom: 56px;
+}
+@media (max-width: 800px){ .caregivers__head{ grid-template-columns: 1fr; gap: 20px; } }
+.caregivers__head p{
+  font-size: 17.5px;
+  color: var(--ink-soft);
+  line-height: 1.95;
+  margin: 0;
+  max-width: 46ch;
+  font-weight: 500;
+}
+
+.caregivers__grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+@media (max-width: 900px){ .caregivers__grid{ grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px){ .caregivers__grid{ grid-template-columns: 1fr; } }
+
+.cg{
+  background: var(--bg-white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px 30px;
+  transition: border-color .25s, transform .25s, box-shadow .25s;
+  text-align: center;
+}
+.cg:hover{ border-color: var(--sage); transform: translateY(-4px); box-shadow: 0 18px 40px -22px var(--sage-glow); }
+
+.cg__avatar{
+  width: 84px; height: 84px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--sage) 0%, var(--sage-light) 100%);
+  display: grid; place-items: center;
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 28px;
+  color: var(--bg-white);
+  letter-spacing: -0.03em;
+  margin: 0 auto 20px;
+}
+.cg:nth-child(2) .cg__avatar{ background: linear-gradient(135deg, var(--warm-brown) 0%, var(--warm-brown-light) 100%); }
+.cg:nth-child(3) .cg__avatar{ background: linear-gradient(135deg, var(--sage-dark) 0%, var(--warm-brown) 100%); }
+.cg:nth-child(4) .cg__avatar{ background: linear-gradient(135deg, var(--warm-brown-dark) 0%, var(--sage) 100%); }
+
+.cg__name{
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 19px;
+  color: var(--ink);
+  letter-spacing: -0.022em;
+  margin-bottom: 4px;
+}
+.cg__role{
+  font-family: var(--f-display);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--sage-dark);
+  letter-spacing: -0.005em;
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px dashed var(--line-strong);
+}
+.cg__list{
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px;
+  text-align: left;
+}
+.cg__list li{
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  gap: 10px;
+  padding: 5px 0;
+  font-family: var(--f-body);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.cg__list li::before{
+  content: "·";
+  color: var(--sage);
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 1;
+}
+.cg__cert{
+  font-family: var(--f-data);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--warm-brown-dark);
+  background: var(--bg-cream);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  text-align: center;
+}
+
+/* ============================================================
+   8. SECTION 5 — MATCHING PROCESS (5 steps · cream LIGHT)
+   ============================================================ */
+.process{ background: var(--bg-cream); }
+.process__head{ text-align: center; max-width: 760px; margin: 0 auto 70px; }
+
+.timeline{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  position: relative;
+}
+@media (max-width: 1000px){ .timeline{ grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 600px){ .timeline{ grid-template-columns: 1fr; } }
+
+.timeline::before{
+  content: "";
+  position: absolute;
+  top: 36px;
+  left: 8%; right: 8%;
+  height: 2px;
+  background: var(--sage);
+  z-index: 0;
+}
+@media (max-width: 1000px){ .timeline::before{ display: none; } }
+
+.step{
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+.step__num{
+  width: 72px; height: 72px;
+  background: var(--bg-white);
+  border: 3px solid var(--sage);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 24px;
+  color: var(--sage-dark);
+  letter-spacing: -0.02em;
+  margin: 0 auto 20px;
+  transition: background .25s, color .25s, transform .25s;
+}
+.step:hover .step__num{
+  background: var(--sage);
+  color: var(--bg-white);
+  transform: scale(1.05);
+}
+.step:nth-child(5) .step__num{ border-color: var(--warm-brown); color: var(--warm-brown-dark); }
+.step:nth-child(5):hover .step__num{ background: var(--warm-brown); color: var(--bg-white); }
+
+.step__phase{
+  font-family: var(--f-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  color: var(--sage-dark);
+  margin-bottom: 6px;
+}
+.step:nth-child(5) .step__phase{ color: var(--warm-brown-dark); }
+.step h4{
+  font-family: var(--f-display);
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  letter-spacing: -0.022em;
+  color: var(--ink);
+}
+.step p{
+  font-family: var(--f-body);
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  line-height: 1.75;
+  font-weight: 500;
+  margin: 0 0 14px;
+}
+.step__time{
+  font-family: var(--f-data);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink-mute);
+}
+
+/* ============================================================
+   9. SECTION 6 — INSURANCE TABLE (LIGHT · government grade table)
+   ============================================================ */
+.insurance{ background: var(--bg-green-pale); }
+.insurance__head{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: end;
+  margin-bottom: 50px;
+}
+@media (max-width: 800px){ .insurance__head{ grid-template-columns: 1fr; gap: 20px; } }
+.insurance__head p{ font-size: 17.5px; color: var(--ink-soft); line-height: 1.95; margin: 0; max-width: 50ch; font-weight: 500; }
+
+/* Grade table */
+.ins-table{
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  margin-bottom: 30px;
+}
+.ins-table__head{
+  background: var(--sage);
+  color: var(--bg-white);
+  padding: 22px 32px;
+  display: grid;
+  grid-template-columns: 1.2fr 2fr 1fr 1fr;
+  gap: 20px;
+  font-family: var(--f-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+}
+@media (max-width: 700px){
+  .ins-table__head{ display: none; }
+}
+.ins-row{
+  display: grid;
+  grid-template-columns: 1.2fr 2fr 1fr 1fr;
+  gap: 20px;
+  padding: 24px 32px;
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+  transition: background .2s;
+}
+.ins-row:last-child{ border-bottom: none; }
+.ins-row:hover{ background: var(--bg-green-pale); }
+@media (max-width: 700px){
+  .ins-row{
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 22px 24px;
+  }
+}
+
+.ins-grade{
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 17px;
+  color: var(--sage-dark);
+  letter-spacing: -0.015em;
+}
+.ins-desc{
+  font-family: var(--f-body);
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+.ins-share{
+  font-family: var(--f-data);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--warm-brown-dark);
+  letter-spacing: -0.005em;
+}
+.ins-limit{
+  font-family: var(--f-data);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  letter-spacing: -0.005em;
+}
+@media (max-width: 700px){
+  .ins-grade::before{ content: "■ 등급: "; font-family: var(--f-body); font-weight: 500; color: var(--ink-mute); font-size: 12px; letter-spacing: 0; }
+  .ins-share::before{ content: "본인부담 "; font-family: var(--f-body); font-weight: 500; color: var(--ink-mute); font-size: 12px; }
+  .ins-limit::before{ content: "월 한도 "; font-family: var(--f-body); font-weight: 500; color: var(--ink-mute); font-size: 12px; }
+}
+
+/* Discount info */
+.ins-discount{
+  background: var(--bg-cream);
+  border-radius: var(--radius);
+  padding: 24px 30px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 22px;
+  align-items: center;
+}
+@media (max-width: 600px){ .ins-discount{ grid-template-columns: 1fr; } }
+.ins-discount__icon{
+  width: 52px; height: 52px;
+  background: var(--warm-brown);
+  color: var(--bg-white);
+  border-radius: var(--radius);
+  display: grid; place-items: center;
+}
+.ins-discount__icon svg{ width: 26px; height: 26px; }
+.ins-discount h4{
+  font-family: var(--f-display);
+  font-size: 16.5px;
+  font-weight: 800;
+  margin-bottom: 4px;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+}
+.ins-discount p{
+  font-family: var(--f-body);
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  margin: 0;
+}
+.ins-discount strong{ color: var(--warm-brown-dark); font-weight: 700; }
+
+/* ============================================================
+   10. SECTION 7 — TESTIMONIALS (4 cards · LIGHT)
+   ============================================================ */
+.testi{ background: var(--bg-white); }
+.testi__head{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: end;
+  margin-bottom: 56px;
+}
+@media (max-width: 800px){ .testi__head{ grid-template-columns: 1fr; gap: 20px; } }
+.testi__head p{ font-size: 17.5px; color: var(--ink-soft); line-height: 1.95; margin: 0; max-width: 46ch; font-weight: 500; }
+
+.testi__grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+@media (max-width: 800px){ .testi__grid{ grid-template-columns: 1fr; } }
+
+.review{
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  padding: 36px 38px 34px;
+  border: 1px solid var(--line);
+  transition: border-color .25s, transform .25s;
+  position: relative;
+}
+.review:hover{ border-color: var(--sage); transform: translateY(-3px); }
+
+.review__quote{
+  font-family: var(--f-display);
+  font-size: 64px;
+  font-weight: 800;
+  line-height: 0.5;
+  color: var(--sage-soft);
+  margin-bottom: -8px;
+  font-style: italic;
+  display: block;
+}
+.review__body{
+  font-family: var(--f-body);
+  font-size: 16px;
+  color: var(--ink-soft);
+  line-height: 1.95;
+  font-weight: 500;
+  margin: 18px 0 26px;
+  letter-spacing: -0.005em;
+}
+.review__meta{
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  align-items: center;
+  padding-top: 22px;
+  border-top: 1px dashed var(--line-strong);
+}
+.review__avatar{
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--warm-brown) 0%, var(--warm-brown-light) 100%);
+  display: grid; place-items: center;
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--bg-white);
+  letter-spacing: -0.03em;
+}
+.review:nth-child(2) .review__avatar{ background: linear-gradient(135deg, var(--sage) 0%, var(--sage-light) 100%); }
+.review:nth-child(4) .review__avatar{ background: linear-gradient(135deg, var(--sage) 0%, var(--sage-light) 100%); }
+
+.review__name{
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 15.5px;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+  margin-bottom: 2px;
+}
+.review__detail{
+  font-family: var(--f-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-mute);
+}
+
+/* ============================================================
+   11. SECTION 8 — RELIEF SYSTEM (LIGHT · 3 cards + checklist)
+   ============================================================ */
+.relief{ background: var(--bg-cream); }
+.relief__head{ text-align: center; max-width: 760px; margin: 0 auto 56px; }
+
+.relief__grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 30px;
+}
+@media (max-width: 900px){ .relief__grid{ grid-template-columns: 1fr; max-width: 520px; margin: 0 auto 30px; } }
+
+.relief-card{
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px 36px;
+  border: 1px solid var(--line);
+  transition: border-color .25s, transform .25s;
+  display: flex;
+  flex-direction: column;
+}
+.relief-card:hover{ border-color: var(--sage); transform: translateY(-4px); }
+
+.relief-card__icon{
+  width: 56px; height: 56px;
+  background: var(--bg-green-pale);
+  border-radius: var(--radius);
+  display: grid; place-items: center;
+  color: var(--sage-dark);
+  margin-bottom: 22px;
+}
+.relief-card:nth-child(2) .relief-card__icon{ background: var(--bg-cream-2); color: var(--warm-brown-dark); }
+.relief-card__icon svg{ width: 28px; height: 28px; }
+
+.relief-card__num{
+  font-family: var(--f-data);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ink-mute);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.relief-card h3{
+  font-family: var(--f-display);
+  font-size: 21px;
+  font-weight: 800;
+  margin-bottom: 14px;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.relief-card p{
+  font-family: var(--f-body);
+  font-size: 15.5px;
+  color: var(--ink-soft);
+  line-height: 1.9;
+  font-weight: 500;
+  margin: 0;
+  flex: 1;
+}
+
+/* ============================================================
+   12. SECTION 9 — PRICING (3 plans · cream LIGHT)
+   ============================================================ */
+.pricing{ background: var(--bg-white); }
+.pricing__head{ text-align: center; max-width: 760px; margin: 0 auto 56px; }
+
+.pricing__grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+@media (max-width: 900px){ .pricing__grid{ grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; } }
+
+.plan{
+  background: var(--bg-white);
+  border: 2px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 38px 32px 36px;
+  display: flex;
+  flex-direction: column;
+  transition: border-color .25s, transform .25s;
+  position: relative;
+}
+.plan:hover{ border-color: var(--sage); transform: translateY(-4px); }
+.plan.featured{
+  border-color: var(--sage);
+  background: linear-gradient(180deg, var(--bg-green-pale) 0%, var(--bg-white) 60%);
+}
+.plan.featured::before{
+  content: "— 인기";
+  position: absolute;
+  top: -14px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--sage);
+  color: var(--bg-white);
+  font-family: var(--f-display);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0;
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+}
+
+.plan__type{
+  font-family: var(--f-data);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--sage-dark);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+.plan:nth-child(2) .plan__type{ color: var(--sage-dark); }
+.plan:nth-child(3) .plan__type{ color: var(--warm-brown-dark); }
+
+.plan h3{
+  font-family: var(--f-display);
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  letter-spacing: -0.028em;
+  color: var(--ink);
+}
+.plan__sub{
+  font-family: var(--f-body);
+  font-size: 14px;
+  color: var(--ink-mute);
+  margin-bottom: 22px;
+  font-weight: 500;
+}
+.plan__price{
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 36px;
+  color: var(--ink);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.plan__price small{
+  font-family: var(--f-body);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--ink-mute);
+  margin-left: 4px;
+  letter-spacing: 0;
+}
+.plan__period{
+  font-family: var(--f-data);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--ink-mute);
+  margin-bottom: 26px;
+}
+
+.plan__includes{
+  list-style: none;
+  padding: 22px 0 0;
+  margin: 0 0 28px;
+  border-top: 1px dashed var(--line-strong);
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  line-height: 1.85;
+  font-weight: 500;
+  flex: 1;
+}
+.plan__includes li{
+  padding: 5px 0;
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: 10px;
+}
+.plan__includes li::before{ content: "✓"; color: var(--sage); font-weight: 700; }
+
+.plan__cta{
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--f-display);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.005em;
+  padding: 14px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  transition: background .25s, color .25s, border-color .25s;
+}
+.plan__cta:hover{ background: var(--ink); color: var(--bg-white); }
+.plan.featured .plan__cta{ background: var(--sage); color: var(--bg-white); border-color: var(--sage); }
+.plan.featured .plan__cta:hover{ background: var(--sage-dark); border-color: var(--sage-dark); }
+
+/* ============================================================
+   13. SECTION 10 — CONTACT + FOOTER (cream + sage big phone)
+   ============================================================ */
+.contact{ background: var(--bg-cream); }
+.contact__inner{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 5vw, 80px);
+  align-items: center;
+  padding-bottom: 80px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 60px;
+}
+@media (max-width: 900px){ .contact__inner{ grid-template-columns: 1fr; padding-bottom: 56px; margin-bottom: 40px; } }
+
+.contact__copy h2{
+  font-family: var(--f-display);
+  font-size: clamp(32px, 4.6vw, 50px);
+  font-weight: 800;
+  letter-spacing: -0.032em;
+  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 22px;
+}
+.contact__copy h2 em{ color: var(--sage); font-style: normal; }
+.contact__copy p{
+  font-family: var(--f-body);
+  font-size: 17.5px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  line-height: 1.95;
+  margin: 0 0 32px;
+  max-width: 44ch;
+}
+
+.contact__perks{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.contact__perks li{
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 16px;
+  align-items: center;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 16.5px;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+}
+.contact__perks li:last-child{ border-bottom: none; }
+.contact__perks li::before{
+  content: "✓";
+  display: grid; place-items: center;
+  width: 32px; height: 32px;
+  background: var(--sage);
+  color: var(--bg-white);
+  border-radius: 50%;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* Big phone card */
+.contact__phone-card{
+  background: var(--bg-white);
+  border: 1px solid var(--line-sage);
+  border-radius: var(--radius-xl);
+  padding: 44px 42px 44px;
+  box-shadow: 0 30px 60px -32px rgba(93,115,90,.22);
+  text-align: center;
+}
+.contact__phone-label{
+  font-family: var(--f-display);
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--sage-dark);
+  margin-bottom: 18px;
+  letter-spacing: -0.005em;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.contact__phone-label::before, .contact__phone-label::after{
+  content: ""; width: 28px; height: 1.5px; background: var(--sage);
+}
+.contact__phone-big{
+  font-family: var(--f-data);
+  font-weight: 700;
+  font-size: clamp(40px, 5.8vw, 64px);
+  color: var(--ink);
+  letter-spacing: -0.025em;
+  line-height: 1;
+  margin-bottom: 16px;
+  display: block;
+}
+.contact__phone-hours{
+  font-family: var(--f-body);
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--ink-mute);
+  margin-bottom: 26px;
+}
+.contact__phone-buttons{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 26px;
+}
+@media (max-width: 480px){ .contact__phone-buttons{ grid-template-columns: 1fr; } }
+.contact__btn-call{
+  background: var(--sage);
+  color: var(--bg-white);
+  border-radius: var(--radius);
+  padding: 16px 22px;
+  font-family: var(--f-display);
+  font-size: 15px;
+  font-weight: 800;
+  text-align: center;
+  transition: background .25s;
+  min-height: 56px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.contact__btn-call:hover{ background: var(--sage-dark); }
+.contact__btn-kakao{
+  background: #FEE500;
+  color: #181600;
+  border-radius: var(--radius);
+  padding: 16px 22px;
+  font-family: var(--f-display);
+  font-size: 15px;
+  font-weight: 800;
+  text-align: center;
+  transition: filter .25s;
+  min-height: 56px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.contact__btn-kakao:hover{ filter: brightness(0.95); }
+
+.contact__phone-foot{
+  padding-top: 22px;
+  border-top: 1px dashed var(--line-strong);
+  font-family: var(--f-body);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+.contact__phone-foot strong{ color: var(--sage-dark); font-weight: 700; }
+
+/* Footer */
+.footer{
+  background: var(--bg-cream);
+  color: var(--ink-soft);
+  padding-top: 0;
+  padding-bottom: 30px;
+}
+.footer__inner{
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 44px;
+}
+@media (max-width: 800px){ .footer__inner{ grid-template-columns: 1fr 1fr; } }
+.footer .logo{ color: var(--ink); font-size: 24px; }
+.footer .logo .dot{ color: var(--sage); }
+.footer__about{
+  margin-top: 14px;
+  font-family: var(--f-body);
+  font-size: 14.5px;
+  line-height: 1.85;
+  color: var(--ink-mute);
+  font-weight: 500;
+  max-width: 360px;
+}
+.footer__col h5{
+  font-family: var(--f-display);
+  font-size: 13px;
+  letter-spacing: 0;
+  color: var(--sage-dark);
+  font-weight: 700;
+  margin: 0 0 16px;
+}
+.footer__col ul{ list-style: none; padding: 0; margin: 0; font-size: 14.5px; font-weight: 500; }
+.footer__col li{ margin-bottom: 10px; }
+.footer__col a:hover{ color: var(--sage); }
+
+.footer__legal{
+  font-family: var(--f-body);
+  font-size: 12.5px;
+  line-height: 1.85;
+  color: var(--ink-mute);
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+  font-weight: 500;
+}
+.footer__bottom{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--f-data);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--ink-mute);
+  font-weight: 600;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 14px;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   14. Reveal
+   ============================================================ */
+.reveal{
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .9s ease, transform .9s ease;
+}
+.reveal.is-in{ opacity: 1; transform: translateY(0); }
+.stagger > .reveal.is-in:nth-child(1){ transition-delay: 0s; }
+.stagger > .reveal.is-in:nth-child(2){ transition-delay: .06s; }
+.stagger > .reveal.is-in:nth-child(3){ transition-delay: .12s; }
+.stagger > .reveal.is-in:nth-child(4){ transition-delay: .18s; }
+.stagger > .reveal.is-in:nth-child(5){ transition-delay: .24s; }
+.stagger > .reveal.is-in:nth-child(6){ transition-delay: .30s; }
+
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal{ opacity: 1; transform: none; }
+}
+</style>
+<style id="dp-force-reveal-style">
+      .rv, .reveal, .day-row, .fade-in, .fade-up, .scroll-reveal, [data-aos], [data-reveal], .scroll-trigger, .animate-on-scroll {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style><style id="dp-mobile-guard">[class*="cursor-glow"],[class*="cursor-trail"],[class*="custom-cursor"],[class*="cursor-dot"],[class*="cursor-ring"],[class*="cursor-follow"]{display:none!important}html,body,body *,body *::before,body *::after{cursor:auto!important}a[href],button,[role="button"],input[type="submit"],input[type="button"],.btn,label,select,summary{cursor:pointer!important}button,input[type="submit"],input[type="button"],[role="button"],.btn,.dp-cta-submit,a[onclick]{-webkit-user-select:none!important;user-select:none!important;cursor:pointer!important}html{-webkit-text-size-adjust:100%;-moz-text-size-adjust:100%;text-size-adjust:100%;}img,video,iframe,table,pre,canvas,svg{max-width:100%;}h1,h2,h3,h4,h5,h6,p,li,a,span,div,blockquote{overflow-wrap:break-word;word-break:keep-all;}.dp-hero-video iframe{max-width:none!important;}@media (max-width:768px){html,body{overflow-x:hidden!important;}body *{max-width:100vw!important;min-width:0!important;box-sizing:border-box!important;}.dp-hero-video,.dp-hero-video *{max-width:none!important;}img,video,iframe,svg,canvas{height:auto!important;}.dp-hero-video iframe{height:auto!important;}[style*="display:flex"],[style*="display: flex"]{flex-wrap:wrap!important;}[style*="display:grid"],[style*="display: grid"]{grid-template-columns:1fr!important;}.gallery-track{animation:none!important;width:auto!important;flex-wrap:wrap!important;}.gallery-track .gallery-item{flex:0 0 100%!important;width:100%!important;height:220px!important;}.gallery-track .gallery-item:nth-child(n+6){display:none!important;}table{display:block!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch;white-space:nowrap;}}</style><script id="dp-grid-collapse">(function(){var BP=600;function apply(){var phone=window.innerWidth<=BP;var els=document.querySelectorAll('*');for(var i=0;i<els.length;i++){var el=els[i];var cs=getComputedStyle(el);if(cs.display.indexOf('grid')===-1){if(el.hasAttribute('data-dpg')){el.style.gridTemplateColumns=el.getAttribute('data-dpg')==='_'?'':el.getAttribute('data-dpg');el.removeAttribute('data-dpg');}continue;}var cols=cs.gridTemplateColumns.split(' ').filter(Boolean);if(phone&&cols.length>=2){if(!el.hasAttribute('data-dpg')){el.setAttribute('data-dpg',el.style.gridTemplateColumns||'_');}el.style.gridTemplateColumns='1fr';}else if(!phone&&el.hasAttribute('data-dpg')){el.style.gridTemplateColumns=el.getAttribute('data-dpg')==='_'?'':el.getAttribute('data-dpg');el.removeAttribute('data-dpg');}}}var t;function deb(){clearTimeout(t);t=setTimeout(apply,120);}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',apply);}else{apply();}window.addEventListener('resize',deb);window.addEventListener('orientationchange',deb);})();</script><style id="dp-edit-hide-style">
+      body.dp-editing .dp-sec-del,
+      body.dp-editing .dp-bg-btn { opacity: 0.15 !important; transition: opacity .15s; }
+      body.dp-editing .dp-sec-del:hover,
+      body.dp-editing .dp-bg-btn:hover { opacity: 1 !important; }
+    </style><style id="dp-bg-style">
+      [data-dp-bg-bound]:hover > .dp-bg-btn{opacity:1 !important;transform:translateY(0)}
+      [data-dp-bg-bound]:hover{outline:3px dashed #03c75a !important;outline-offset:-3px}
+      .dp-bg-btn{
+        position:absolute;top:64px;right:14px;z-index:9998;
+        background:rgba(0,0,0,.92);color:#FFEB00;border:2px solid #FFEB00;
+        padding:8px 12px;border-radius:10px;cursor:pointer;
+        font-family:'Pretendard',sans-serif;font-weight:800;font-size:12px;
+        opacity:0.65;transition:all .2s;
+        box-shadow:0 6px 20px rgba(0,0,0,.6),0 0 0 2px rgba(255,235,0,0.2);
+        display:inline-flex;align-items:center;gap:6px;
+        max-width:calc(100% - 28px);white-space:nowrap;
+      }
+      .dp-bg-btn:hover{background:#FFEB00;color:#000;transform:scale(1.05)}
+      .dp-bg-broken{outline:4px dashed #FFEB00 !important;outline-offset:-4px;animation:dpBgPulse 1.5s ease-in-out infinite}
+      .dp-bg-broken > .dp-bg-btn{opacity:1 !important;background:#ff3030 !important;border-color:#fff !important;color:#fff !important}
+      @keyframes dpBgPulse{0%,100%{box-shadow:inset 0 0 0 0 rgba(255,235,0,0.3)}50%{box-shadow:inset 0 0 100px 0 rgba(255,235,0,0.15)}}
+    </style><style id="dp-link-style">
+      [data-dp-btn-bound]{position:relative}
+      .dp-link-btn{
+        position:absolute;top:-12px;right:-8px;z-index:9998;
+        background:#03c75a;color:#fff;border:2px solid #fff;
+        padding:4px 9px;border-radius:14px;cursor:pointer;
+        font-family:'Pretendard',sans-serif;font-weight:900;font-size:11px;
+        box-shadow:0 4px 12px rgba(0,0,0,.5);white-space:nowrap;
+        opacity:0;pointer-events:none;transition:opacity .15s;
+        line-height:1;
+      }
+      [data-dp-btn-bound]:hover > .dp-link-btn{opacity:0.95;pointer-events:auto}
+      .dp-link-btn:hover{background:#fff;color:#03c75a;transform:scale(1.1);opacity:1}
+      [data-dp-btn-bound][data-dp-has-link="1"]:hover{
+        box-shadow: inset 0 0 0 2px rgba(3,199,90,0.6);
+      }
+      [data-dp-btn-bound][data-dp-has-link="1"] > .dp-link-btn{
+        background:#0d9e4a;
+      }
+      [data-dp-btn-bound][data-dp-has-link="1"] > .dp-link-btn::before{
+        content:'✓ ';
+      }
+    </style></head>
+<body><script data-dp-cta-rescue="1">(function(){
+  if(window.__dpCtaRescue) return; window.__dpCtaRescue = 1;
+  var _alert = window.alert.bind(window);
+  var KAKAO = "";
+  function goForm(){
+    var f = document.querySelector('#dp-contact-form') || document.querySelector('form');
+    if(!f) return false;
+    try{
+      f.scrollIntoView({behavior:'smooth', block:'center'});
+      var inp = f.querySelector('input:not([type=hidden]),textarea,select');
+      if(inp) setTimeout(function(){ try{ inp.focus(); }catch(e){} }, 500);
+    }catch(e){}
+    return true;
+  }
+  window.alert = function(msg){
+    var s = String(msg == null ? '' : msg);
+    // 실제 폼 검증·접수확인·동의·성공/오류 → 그대로 표시
+    if(/입력해|형식|선택해|동의|접수|완료|✓|❌|✗/.test(s)) return _alert(s);
+    // 카톡 채널 placeholder → 카톡 URL 있으면 열기, 없으면 상담폼
+    if(/카카오|카톡|채널/.test(s)){
+      if(KAKAO){ try{ window.open(KAKAO, '_blank', 'noopener'); }catch(e){} return; }
+      if(goForm()) return;
+    }
+    // 이동/데모/준비/백엔드/자사몰/플레이어/연결 placeholder → 상담폼으로
+    if(/이동합니다|이동한|준비\s*중|데모|백엔드|자사몰|플레이어|시뮬레이션|연동|연결됩니다/.test(s)){
+      if(goForm()) return;
+    }
+    return _alert(s);
+  };
+})();</script>
+
+<!-- =========================================================
+     NAV
+     ========================================================= -->
+<nav class="nav" aria-label="주요 메뉴">
+  <div class="container nav__inner">
+    <a href="#" class="logo" data-dp-btn-bound="1" onclick="return false;" style="cursor: default;">늘봄<span class="dot">.</span> <small>NEULBOM 재가복지센터</small></a>
+    <div class="nav__menu">
+      <a href="#services" data-dp-btn-bound="1" data-dp-has-link="1" onclick="var t=document.getElementById('services');if(t){t.scrollIntoView({behavior:'smooth'});}return false;">서비스</a>
+      <a href="#system" data-dp-btn-bound="1" data-dp-has-link="1" onclick="var t=document.getElementById('system');if(t){t.scrollIntoView({behavior:'smooth'});}return false;">케어 시스템</a>
+      <a href="#caregivers" data-dp-btn-bound="1" data-dp-has-link="1" onclick="var t=document.getElementById('caregivers');if(t){t.scrollIntoView({behavior:'smooth'});}return false;">요양보호사</a>
+      <a href="#insurance" data-dp-btn-bound="1" data-dp-has-link="1" onclick="var t=document.getElementById('insurance');if(t){t.scrollIntoView({behavior:'smooth'});}return false;">정부 지원</a>
+      <a href="#pricing" data-dp-btn-bound="1" data-dp-has-link="1" onclick="var t=document.getElementById('pricing');if(t){t.scrollIntoView({behavior:'smooth'});}return false;">요금</a>
+    </div>
+    <span class="nav__phone">☎ 1588-0000</span>
+    <a href="#contact" class="nav__cta" data-dp-btn-bound="1" data-dp-has-link="1" onclick="var t=document.getElementById('contact');if(t){t.scrollIntoView({behavior:'smooth'});}return false;">무료 상담</a>
+  </div>
+</nav>
+
+<!-- =========================================================
+     1. HERO (LIGHT cream + sage)
+     ========================================================= -->
+<header class="hero">
+  <div class="container hero__inner">
+
+    <div class="hero__copy">
+      <span class="hero__tag reveal on visible show active aos-animate is-visible in-view is-in">노인장기요양보험 협력 · 14년 운영 · 320+ 가정</span>
+      <div class="hero__brand reveal on visible show active aos-animate is-visible in-view is-in">늘봄<span class="dot">.</span></div>
+      <h1 class="reveal on visible show active aos-animate is-visible in-view is-in">
+        우리 가족 같은 <em>돌봄.</em>
+      </h1>
+      <p class="hero__sub reveal on visible show active aos-animate is-visible in-view is-in">
+        방문요양·방문목욕·방문간호·주야간보호·단기보호 — 어르신 댁에서 안심하고 모시는 통합 케어. 가족이 원하는 일정으로 시작합니다.
+      </p>
+      <div class="hero__ctas reveal on visible show active aos-animate is-visible in-view is-in">
+        <a href="#contact" class="btn btn--sage" data-dp-btn-bound="1" data-dp-has-link="1" onclick="var t=document.getElementById('contact');if(t){t.scrollIntoView({behavior:'smooth'});}return false;">무료 상담 신청</a>
+        <a href="tel:15880000" class="btn btn--outline-sage" data-dp-btn-bound="1" data-dp-has-link="1">☎ 1588-0000</a>
+      </div>
+
+      <div class="hero__strip reveal on visible show active aos-animate is-visible in-view is-in">
+        <div><strong class="num">320<small style="font-size: 0.5em;">+</small></strong><small>돌봄 가정</small></div>
+        <div><strong class="num">42<small style="font-size: 0.5em;">명</small></strong><small>요양보호사</small></div>
+        <div><strong class="num">14<small style="font-size: 0.5em;">년</small></strong><small>운영 경력</small></div>
+        <div><strong class="num">4.8<small style="font-size: 0.5em;">/5</small></strong><small>가족 만족도</small></div>
+      </div>
+    </div>
+
+    <div class="hero__visual reveal on visible show active aos-animate is-visible in-view is-in">
+      <div class="care-card">
+        <div class="care-card__head">
+          <div class="care-card__avatar">늘</div>
+          <div>
+            <h4>김 OO 어르신 (78세)</h4>
+            <small>장기요양 4등급 · 주 5회 방문요양</small>
+          </div>
+        </div>
+
+        <ul class="care-card__list">
+          <li>식사 보조 · 영양 관리 <time>09:00</time></li>
+          <li>복약 관리 · 산책 동행 <time>10:30</time></li>
+          <li>청소 · 세탁 · 환경 정리 <time>11:30</time></li>
+          <li>안부 통화 · 일일 보고 <time>12:30</time></li>
+        </ul>
+
+        <div class="care-card__foot">
+          <span>이번 주 만족도</span>
+          <strong>★ 5.0 / 5</strong>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<!-- =========================================================
+     2. SERVICES (5 cards · LIGHT)
+     ========================================================= -->
+<section class="services" id="services">
+  <div class="container">
+
+    <div class="services__head">
+      <div class="reveal on visible show active aos-animate is-visible in-view">
+        <span class="eyebrow">— 01 · Services</span>
+        <h2 class="section-h2">다섯 가지 <em>케어 서비스.</em></h2>
+      </div>
+      <p class="reveal on visible show active aos-animate is-visible in-view">방문요양부터 단기보호까지 — 어르신과 가족 상황에 맞게 자유롭게 조합할 수 있습니다.</p>
+    </div>
+
+    <div class="services__grid stagger">
+
+      <article class="svc reveal on visible show active aos-animate is-visible in-view">
+        <div class="svc__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        </div>
+        <div class="svc__num">— Service 01</div>
+        <h3>방문요양</h3>
+        <p class="svc__desc">요양보호사가 댁으로 방문해 식사·청소·산책·말벗 등 일상 생활을 도와드립니다. 가장 많이 이용하는 서비스입니다.</p>
+        <div class="svc__features"><strong>대상</strong> · 1~5등급 · 인지지원등급</div>
+      </article>
+
+      <article class="svc reveal on visible show active aos-animate is-visible in-view">
+        <div class="svc__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path></svg>
+        </div>
+        <div class="svc__num">— Service 02</div>
+        <h3>방문목욕</h3>
+        <p class="svc__desc">전문 장비(이동식 욕조·온수 시스템) 갖춘 차량이 댁으로 방문해 목욕을 도와드립니다. 거동 불편 어르신께 적합합니다.</p>
+        <div class="svc__features"><strong>장비</strong> · 이동 욕조 · 온수 보장</div>
+      </article>
+
+      <article class="svc reveal on visible show active aos-animate is-visible in-view">
+        <div class="svc__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+        </div>
+        <div class="svc__num">— Service 03</div>
+        <h3>방문간호</h3>
+        <p class="svc__desc">간호사·간호조무사가 의사 지시서에 따라 댁으로 방문해 처치·관찰·교육을 제공합니다. 만성질환 관리 가능.</p>
+        <div class="svc__features"><strong>대상</strong> · 의사 지시서 보유 어르신</div>
+      </article>
+
+      <article class="svc reveal on visible show active aos-animate is-visible in-view">
+        <div class="svc__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        </div>
+        <div class="svc__num">— Service 04</div>
+        <h3>주야간보호</h3>
+        <p class="svc__desc">낮시간(오전 7시 ~ 오후 7시) 또는 야간에 센터에서 어르신을 보살핍니다. 가족 직장·일정 부담을 덜어드립니다.</p>
+        <div class="svc__features"><strong>운영</strong> · 주간 · 야간 · 픽업 동행</div>
+      </article>
+
+      <article class="svc reveal on visible show active aos-animate is-visible in-view">
+        <div class="svc__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        </div>
+        <div class="svc__num">— Service 05</div>
+        <h3>단기보호</h3>
+        <p class="svc__desc">가족이 부재(여행·입원·경조사) 시 단기간 어르신을 모시는 서비스. 9일 이내, 연 최대 한도 내 이용 가능.</p>
+        <div class="svc__features"><strong>기간</strong> · 1박 ~ 9일 (연 한도 내)</div>
+      </article>
+
+      <article class="svc reveal on visible show active aos-animate is-visible in-view" style="background: linear-gradient(135deg, var(--bg-green-pale) 0%, var(--bg-cream) 100%); border-color: var(--sage);">
+        <div class="svc__icon" style="background: linear-gradient(135deg, var(--sage) 0%, var(--warm-brown) 100%); color: var(--bg-white);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"></path></svg>
+        </div>
+        <div class="svc__num">— Custom</div>
+        <h3>맞춤 케어</h3>
+        <p class="svc__desc">치매·중증·말기 어르신 등 특수 상황을 위한 맞춤 케어. 가족과 협의해 일정·내용을 정합니다.</p>
+        <div class="svc__features"><strong>대상</strong> · 1:1 상담 후 확정</div>
+      </article>
+
+    </div>
+
+    <div class="legal-note">
+      <strong>※ 서비스 안내</strong> · 본 센터는 「노인장기요양보험법」 및 「노인복지법」 제31조에 따라 시·군·구청장에게 장기요양기관 지정 + 재가노인복지시설 신고를 마친 정식 기관입니다.
+      각 서비스의 실제 이용 가능 여부·시간·횟수는 어르신의 장기요양 등급, 인정 점수, 월 한도액에 따라 결정되며, 국민건강보험공단 장기요양정보시스템을 통해 확인 가능합니다.
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     3. CARE SYSTEM (4 cards · cream LIGHT)
+     ========================================================= -->
+<section class="system" id="system">
+  <div class="container">
+
+    <div class="system__head reveal on visible show active aos-animate is-visible in-view">
+      <span class="eyebrow center">— 02 · Care System</span>
+      <h2 class="section-h2" style="margin: 0px auto;">안심할 수 있는 <em>케어 시스템.</em></h2>
+      <p class="section-lead" style="margin: 16px auto 0px;">1:1 매칭 + 정기 보고 + 가족 알림 + 응급 상황 대응 — 네 가지 시스템으로 가족이 마음을 놓을 수 있도록 합니다.</p>
+    </div>
+
+    <div class="system__grid stagger">
+
+      <article class="sys-card reveal on visible show active aos-animate is-visible in-view">
+        <div class="sys-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg>
+        </div>
+        <div class="sys-card__num">— System 01</div>
+        <h3>1:1 매칭</h3>
+        <p>어르신의 성격·건강 상태·생활 패턴을 평가한 뒤 가장 잘 맞는 요양보호사 1명을 매칭합니다. 매칭 후 교체 가능합니다.</p>
+      </article>
+
+      <article class="sys-card reveal on visible show active aos-animate is-visible in-view">
+        <div class="sys-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+        </div>
+        <div class="sys-card__num">— System 02</div>
+        <h3>정기 보고</h3>
+        <p>매 방문 후 어르신 상태·식사·복약·특이사항을 가족에게 카톡·문자로 보고. 월말에는 종합 케어 리포트를 전달합니다.</p>
+      </article>
+
+      <article class="sys-card reveal on visible show active aos-animate is-visible in-view">
+        <div class="sys-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M13.73 21a2 2 0 01-3.46 0"></path></svg>
+        </div>
+        <div class="sys-card__num">— System 03</div>
+        <h3>가족 알림</h3>
+        <p>방문 시작·종료, 특이사항 발생, 응급 상황 등 모든 변화를 가족 구성원 단톡방에 실시간 알림. 가족 모두가 함께 살핍니다.</p>
+      </article>
+
+      <article class="sys-card reveal on visible show active aos-animate is-visible in-view">
+        <div class="sys-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"></path></svg>
+        </div>
+        <div class="sys-card__num">— System 04</div>
+        <h3>응급 상황 대응</h3>
+        <p>응급 상황 감지 시 (1) 119 즉시 신고, (2) 가족 즉시 통보, (3) 의료기관 이송 동행 절차로 신속 대응. 24시간 비상 콜.</p>
+      </article>
+
+    </div>
+
+    <div class="legal-note">
+      <strong>※ 시스템 안내</strong> · 요양보호사는 「노인복지법」상 의료 행위를 수행할 수 없으며, 응급 상황 시 즉시 119 신고 + 가족 통보 + 의료기관 이송 동행을 원칙으로 합니다.
+      모든 어르신 건강 정보는 「개인정보보호법」 제23조 민감정보에 해당하며, 가족 알림은 어르신·가족의 사전 동의 후 운영됩니다.
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     4. CAREGIVER PROFILES (LIGHT · 4 profiles)
+     ========================================================= -->
+<section class="caregivers" id="caregivers">
+  <div class="container">
+
+    <div class="caregivers__head">
+      <div class="reveal on visible show active aos-animate is-visible in-view">
+        <span class="eyebrow">— 03 · Caregivers</span>
+        <h2 class="section-h2">자격과 경력이 <em>증명합니다.</em></h2>
+      </div>
+      <p class="reveal on visible show active aos-animate is-visible in-view">모든 요양보호사는 국가자격 보유자이며, 입사 전 검증·교육을 거칩니다. 어르신에 따라 가장 잘 맞는 한 분을 매칭합니다.</p>
+    </div>
+
+    <div class="caregivers__grid stagger">
+
+      <article class="cg reveal on visible show active aos-animate is-visible in-view">
+        <div class="cg__avatar">박</div>
+        <div class="cg__name">박 OO 선생님</div>
+        <div class="cg__role">— 요양보호사 1급 · 경력 12년</div>
+        <ul class="cg__list">
+          <li>치매 어르신 케어 전문</li>
+          <li>약물 복약 관리 인증</li>
+          <li>식이 조리 자격 보유</li>
+          <li>이전 6가정 평점 4.9</li>
+        </ul>
+        <div class="cg__cert">자격번호 OOOOO-OOO</div>
+      </article>
+
+      <article class="cg reveal on visible show active aos-animate is-visible in-view">
+        <div class="cg__avatar">김</div>
+        <div class="cg__name">김 OO 선생님</div>
+        <div class="cg__role">— 요양보호사 1급 · 경력 8년</div>
+        <ul class="cg__list">
+          <li>거동 불편 어르신 전문</li>
+          <li>이송 보조 자격</li>
+          <li>응급처치 교육 이수</li>
+          <li>이전 8가정 평점 4.8</li>
+        </ul>
+        <div class="cg__cert">자격번호 OOOOO-OOO</div>
+      </article>
+
+      <article class="cg reveal on visible show active aos-animate is-visible in-view">
+        <div class="cg__avatar">이</div>
+        <div class="cg__name">이 OO 선생님</div>
+        <div class="cg__role">— 요양보호사 1급 · 경력 5년</div>
+        <ul class="cg__list">
+          <li>말벗·정서 케어 강점</li>
+          <li>치매 예방 활동 인증</li>
+          <li>가벼운 운동·산책 동행</li>
+          <li>이전 5가정 평점 4.9</li>
+        </ul>
+        <div class="cg__cert">자격번호 OOOOO-OOO</div>
+      </article>
+
+      <article class="cg reveal on visible show active aos-animate is-visible in-view">
+        <div class="cg__avatar">최</div>
+        <div class="cg__name">최 OO 선생님</div>
+        <div class="cg__role">— 요양보호사 1급 · 경력 15년</div>
+        <ul class="cg__list">
+          <li>중증 어르신 케어 전문</li>
+          <li>욕창 예방 관리 인증</li>
+          <li>가족 상담 경험 다수</li>
+          <li>이전 10가정 평점 5.0</li>
+        </ul>
+        <div class="cg__cert">자격번호 OOOOO-OOO</div>
+      </article>
+
+    </div>
+
+    <div class="legal-note">
+      <strong>※ 요양보호사 안내</strong> · 모든 요양보호사는 「노인복지법 시행규칙」 제29조의2에 따라 한국보건복지인력개발원 발급 국가자격증을 보유합니다.
+      위 프로필은 placeholder이며, 실 매칭 시에는 자격증·경력·평가 자료를 가족에게 직접 공유합니다. 자격 미보유자 표시는 「자격기본법」 + 표시광고법 위반에 해당합니다.
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     5. MATCHING PROCESS (5 steps · cream LIGHT)
+     ========================================================= -->
+<section class="process is-light" id="process">
+  <div class="container">
+
+    <div class="process__head reveal on visible show active aos-animate is-visible in-view">
+      <span class="eyebrow center">— 04 · Matching</span>
+      <h2 class="section-h2" style="margin: 0px auto;">신청부터 정기 케어까지, <em>다섯 단계.</em></h2>
+      <p class="section-lead" style="margin: 16px auto 0px;">평균 5-7일 안에 첫 방문 시작. 신청·상담·매칭 모두 무료, 강제 없습니다.</p>
+    </div>
+
+    <div class="timeline stagger">
+
+      <div class="step reveal on visible show active aos-animate is-visible in-view">
+        <div class="step__num">01</div>
+        <div class="step__phase">— 신청</div>
+        <h4>무료 상담 신청</h4>
+        <p>전화·카카오·웹으로 무료 상담. 어르신 상태·가족 상황·원하는 서비스를 듣습니다.</p>
+        <div class="step__time">— 당일</div>
+      </div>
+
+      <div class="step reveal on visible show active aos-animate is-visible in-view">
+        <div class="step__num">02</div>
+        <div class="step__phase">— 평가</div>
+        <h4>건강·생활 평가</h4>
+        <p>전문 상담사가 방문해 어르신 건강·생활 환경·필요한 케어를 종합 평가합니다.</p>
+        <div class="step__time">— 1-2일</div>
+      </div>
+
+      <div class="step reveal on visible show active aos-animate is-visible in-view">
+        <div class="step__num">03</div>
+        <div class="step__phase">— 매칭</div>
+        <h4>요양보호사 매칭</h4>
+        <p>평가 결과를 바탕으로 어르신과 가장 잘 맞는 요양보호사를 1:1 매칭합니다.</p>
+        <div class="step__time">— 2-3일</div>
+      </div>
+
+      <div class="step reveal on visible show active aos-animate is-visible in-view">
+        <div class="step__num">04</div>
+        <div class="step__phase">— 첫 방문</div>
+        <h4>첫 방문 동행</h4>
+        <p>매니저가 요양보호사와 함께 첫 방문. 어르신·가족과 인사 후 케어 시작.</p>
+        <div class="step__time">— 5-7일</div>
+      </div>
+
+      <div class="step reveal on visible show active aos-animate is-visible in-view">
+        <div class="step__num">05</div>
+        <div class="step__phase">— 운영</div>
+        <h4>정기 케어 + 모니터링</h4>
+        <p>정기 방문 시작 + 월 1회 매니저 점검 + 가족 만족도 확인 + 필요 시 조정.</p>
+        <div class="step__time">— 지속</div>
+      </div>
+
+    </div>
+
+    <div class="legal-note warm">
+      <strong>※ 프로세스 안내</strong> · 위 일정은 일반적인 기준이며, 어르신 상태·지역·요양보호사 수급 상황에 따라 일정이 조정될 수 있습니다.
+      장기요양 등급이 없는 어르신은 신청 전 국민건강보험공단(☎ 1577-1000)에 등급 신청 후 인정서를 받으셔야 보험 혜택을 받으실 수 있습니다.
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     6. INSURANCE TABLE (LIGHT pale green · government grade)
+     ========================================================= -->
+<section class="insurance" id="insurance">
+  <div class="container">
+
+    <div class="insurance__head">
+      <div class="reveal on visible show active aos-animate is-visible in-view">
+        <span class="eyebrow">— 05 · Insurance</span>
+        <h2 class="section-h2">정부 지원으로 <em>부담을 줄입니다.</em></h2>
+      </div>
+      <p class="reveal on visible show active aos-animate is-visible in-view">노인장기요양보험으로 본인부담률 15%만 부담합니다. 차상위·기초생활수급자는 추가 감면 가능합니다.</p>
+    </div>
+
+    <div class="ins-table reveal on visible show active aos-animate is-visible in-view">
+      <div class="ins-table__head">
+        <div>장기요양 등급</div>
+        <div>대상 어르신</div>
+        <div>본인부담</div>
+        <div>월 한도액</div>
+      </div>
+
+      <div class="ins-row">
+        <div class="ins-grade">1등급</div>
+        <div class="ins-desc">일상생활에서 전적으로 다른 사람의 도움 필요</div>
+        <div class="ins-share">15%</div>
+        <div class="ins-limit">2,069,900원</div>
+      </div>
+      <div class="ins-row">
+        <div class="ins-grade">2등급</div>
+        <div class="ins-desc">일상생활에서 상당 부분 다른 사람의 도움 필요</div>
+        <div class="ins-share">15%</div>
+        <div class="ins-limit">1,869,600원</div>
+      </div>
+      <div class="ins-row">
+        <div class="ins-grade">3등급</div>
+        <div class="ins-desc">일상생활에서 부분적으로 다른 사람의 도움 필요</div>
+        <div class="ins-share">15%</div>
+        <div class="ins-limit">1,455,800원</div>
+      </div>
+      <div class="ins-row">
+        <div class="ins-grade">4등급</div>
+        <div class="ins-desc">일정 부분 다른 사람의 도움이 필요</div>
+        <div class="ins-share">15%</div>
+        <div class="ins-limit">1,341,800원</div>
+      </div>
+      <div class="ins-row">
+        <div class="ins-grade">5등급</div>
+        <div class="ins-desc">치매환자(노인성 질병에 한정)</div>
+        <div class="ins-share">15%</div>
+        <div class="ins-limit">1,151,600원</div>
+      </div>
+      <div class="ins-row">
+        <div class="ins-grade">인지지원</div>
+        <div class="ins-desc">치매환자(증상이 가벼움) · 주야간·방문요양 등 일부</div>
+        <div class="ins-share">15%</div>
+        <div class="ins-limit">643,700원</div>
+      </div>
+    </div>
+
+    <div class="ins-discount reveal on visible show active aos-animate is-visible in-view">
+      <div class="ins-discount__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path></svg>
+      </div>
+      <div>
+        <h4>차상위·기초생활수급자 추가 감면</h4>
+        <p>차상위 계층은 본인부담 <strong>6%</strong>, 기초생활수급자는 <strong>0%</strong> (전액 면제) 적용됩니다. 가족 직접 신청 또는 본 센터에서 신청 절차 안내해 드립니다.</p>
+      </div>
+    </div>
+
+    <div class="legal-note">
+      <strong>※ 본인부담률 안내</strong> · 위 본인부담률·월 한도액은 보건복지부 고시 + 국민건강보험공단 「2026년 장기요양보험료율 및 수가·급여비용」 공시 기준이며, 정부 정책에 따라 매년 조정될 수 있습니다.
+      실 적용 금액은 어르신의 인정 등급·이용 서비스·월 사용량에 따라 결정되며, 공단에서 발행하는 「장기요양 인정서」를 본 센터에 제출하시면 정확한 본인부담금을 안내해 드립니다.
+      등급 신청은 국민건강보험공단(☎ 1577-1000)에서 직접 진행하시거나 본 센터 상담 시 도움을 드립니다.
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     7. TESTIMONIALS (4 reviews · LIGHT)
+     ========================================================= -->
+<section class="testi" id="testi">
+  <div class="container">
+
+    <div class="testi__head">
+      <div class="reveal on visible show active aos-animate is-visible in-view">
+        <span class="eyebrow warm">— 06 · Family Reviews</span>
+        <h2 class="section-h2">가족이 쓴 <em class="warm">진짜 후기.</em></h2>
+      </div>
+      <p class="reveal on visible show active aos-animate is-visible in-view">사전 동의 받은 가족 후기를 그대로 게시합니다. 회사명·이름은 익명 처리되어 있습니다.</p>
+    </div>
+
+    <div class="testi__grid stagger">
+
+      <article class="review reveal on visible show active aos-animate is-visible in-view">
+        <span class="review__quote">"</span>
+        <p class="review__body">처음에는 낯선 분이 어머니와 단둘이 계신다는 게 걱정이었는데, 박 선생님이 어머니 성격을 정말 잘 맞춰 주셨어요. 어머니가 박 선생님 오시는 날을 기다리세요. 매일 카톡으로 사진·식사·복약 보고를 받으니 직장 다니면서도 마음이 놓입니다.</p>
+        <div class="review__meta">
+          <div class="review__avatar">정</div>
+          <div>
+            <div class="review__name">정 OO 가족분</div>
+            <div class="review__detail">— 어머니(81세) 방문요양 · 8개월 이용</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review reveal on visible show active aos-animate is-visible in-view">
+        <span class="review__quote">"</span>
+        <p class="review__body">아버지가 치매 진단 받으신 후 형제들 의견이 갈렸는데, 늘봄에서 첫 방문 동행 + 매니저 점검 + 가족 단톡방까지 시스템이 잘 잡혀 있어서 형제 모두 안심하고 맡길 수 있었습니다. 응급 상황 한 번 있었는데 그때 119 신고·이송 동행까지 책임지셔서 정말 감사했어요.</p>
+        <div class="review__meta">
+          <div class="review__avatar">한</div>
+          <div>
+            <div class="review__name">한 OO 가족분</div>
+            <div class="review__detail">— 아버지(76세) 방문요양 + 방문간호 · 1년 2개월</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review reveal on visible show active aos-animate is-visible in-view">
+        <span class="review__quote">"</span>
+        <p class="review__body">방문목욕을 신청했는데 차량에 욕조·온수가 다 갖춰져 있어서 어머니께서 편안하게 목욕하실 수 있었어요. 거동이 불편하셔서 욕실까지 가는 게 힘드셨는데, 정말 큰 도움이 되었습니다. 본인부담률도 15%만 부담하면 되니 부담이 적어 좋아요.</p>
+        <div class="review__meta">
+          <div class="review__avatar">서</div>
+          <div>
+            <div class="review__name">서 OO 가족분</div>
+            <div class="review__detail">— 어머니(83세) 방문목욕 · 주 2회 이용</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review reveal on visible show active aos-animate is-visible in-view">
+        <span class="review__quote">"</span>
+        <p class="review__body">제가 직장 다니면서 아버지를 모실 수 없어서 주야간보호를 신청했어요. 아침에 차량 픽업해 가시고 저녁에 모셔다 주시니까 정말 편해요. 아버지께서 다른 어르신들과 어울리시면서 활기도 되찾으셨어요. 매니저님이 매달 식사·활동 보고서 보내주셔서 신뢰가 갑니다.</p>
+        <div class="review__meta">
+          <div class="review__avatar">유</div>
+          <div>
+            <div class="review__name">유 OO 가족분</div>
+            <div class="review__detail">— 아버지(78세) 주야간보호 · 6개월 이용</div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="legal-note warm">
+      <strong>※ 후기 안내</strong> · 위 후기는 모두 실 이용 가족의 사전 동의를 받아 게시되었으며, 어르신·가족의 이름·연락처는 익명 처리되었습니다.
+      개별 케어 성과는 어르신 상태·가족 환경·이용 기간에 따라 차이가 있을 수 있으며, 동일한 결과를 보장하지 않습니다.
+      모든 후기는 「표시·광고의 공정화에 관한 법률」 검증 가능하며, 조작·허위 후기 게시 시 형법상 사기죄 및 표시광고법 위반에 해당합니다.
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     8. RELIEF SYSTEM (3 cards · cream)
+     ========================================================= -->
+<section class="relief" id="relief">
+  <div class="container">
+
+    <div class="relief__head reveal on visible show active aos-animate is-visible in-view">
+      <span class="eyebrow center">— 07 · Relief</span>
+      <h2 class="section-h2" style="margin: 0px auto;">계속 함께할 수 있도록, <em>안심 시스템.</em></h2>
+      <p class="section-lead" style="margin: 16px auto 0px;">한 번 매칭하고 끝이 아닙니다. 정기 점검·평가·교체 가능 — 가족이 만족할 때까지 함께 조정합니다.</p>
+    </div>
+
+    <div class="relief__grid stagger">
+
+      <article class="relief-card reveal on visible show active aos-animate is-visible in-view">
+        <div class="relief-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        </div>
+        <div class="relief-card__num">— Relief 01</div>
+        <h3>월 1회 정기 점검</h3>
+        <p>매니저가 어르신 댁을 직접 방문해 케어 품질·만족도·건강 변화를 점검합니다. 변화가 있으면 케어 계획을 함께 조정합니다.</p>
+      </article>
+
+      <article class="relief-card reveal on visible show active aos-animate is-visible in-view">
+        <div class="relief-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </div>
+        <div class="relief-card__num">— Relief 02</div>
+        <h3>요양보호사 평가</h3>
+        <p>월 1회 가족 만족도 설문 + 매니저 평가 + 어르신 인터뷰. 평가 결과는 요양보호사 교육·인센티브에 반영합니다.</p>
+      </article>
+
+      <article class="relief-card reveal on visible show active aos-animate is-visible in-view">
+        <div class="relief-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"></path></svg>
+        </div>
+        <div class="relief-card__num">— Relief 03</div>
+        <h3>요양보호사 교체</h3>
+        <p>합이 맞지 않거나 가족이 원하시면 언제든 요양보호사 교체 가능합니다. 사유 없이 신청 가능, 위약금 없음.</p>
+      </article>
+
+    </div>
+
+    <div class="legal-note">
+      <strong>※ 안심 시스템 안내</strong> · 요양보호사 교체는 무료이며, 어르신·가족·요양보호사 모두의 안정성을 위해 사전 협의 후 진행됩니다.
+      어르신 등급·이용 시간에 영향이 없도록 새 요양보호사 매칭까지 임시 대체 요양보호사가 케어를 이어갑니다.
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     9. PRICING (3 plans · LIGHT)
+     ========================================================= -->
+<section class="pricing" id="pricing">
+  <div class="container">
+
+    <div class="pricing__head reveal on visible show active aos-animate is-visible in-view">
+      <span class="eyebrow center">— 08 · Pricing</span>
+      <h2 class="section-h2" style="margin: 0px auto;">투명한 <em>요금 안내.</em></h2>
+      <p class="section-lead" style="margin: 16px auto 0px;">장기요양보험 적용 시 본인부담 15%만 부담합니다. 비급여(자비) 케어는 시간·일·정기 방식 선택 가능합니다.</p>
+    </div>
+
+    <div class="pricing__grid stagger">
+
+      <article class="plan reveal on visible show active aos-animate is-visible in-view">
+        <div class="plan__type">— Plan I</div>
+        <h3>시간제 케어</h3>
+        <div class="plan__sub">단발 또는 가끔 필요할 때</div>
+        <div class="plan__price">22,000<small>원/시간~</small></div>
+        <div class="plan__period">— 비급여 자비 부담 / VAT 별도</div>
+        <ul class="plan__includes">
+          <li>최소 2시간 단위 이용</li>
+          <li>식사·청소·산책 동행</li>
+          <li>당일·익일 예약 가능</li>
+          <li>주말·공휴일 +10%</li>
+        </ul>
+        <a href="#contact" class="plan__cta" data-dp-btn-bound="1" data-dp-has-link="1" onclick="var t=document.getElementById('contact');if(t)t.scrollIntoView({behavior:'smooth'});return false;">상담 신청 →</a>
+      </article>
+
+      <article class="plan featured reveal on visible show active aos-animate is-visible in-view">
+        <div class="plan__type">— Plan II</div>
+        <h3>장기요양보험 케어</h3>
+        <div class="plan__sub">등급 인정 어르신 (가장 많이 이용)</div>
+        <div class="plan__price">본인부담 15<small>%</small></div>
+        <div class="plan__period">— 1·2·3·4·5등급 · 인지지원</div>
+        <ul class="plan__includes">
+          <li>방문요양 / 방문목욕 / 방문간호</li>
+          <li>주야간보호 / 단기보호 가능</li>
+          <li>월 한도액 내 자유 조합</li>
+          <li>차상위 6% · 기초수급 0%</li>
+          <li>전담 매니저 + 정기 점검</li>
+        </ul>
+        <a href="#contact" class="plan__cta" data-dp-btn-bound="1" data-dp-has-link="1" onclick="var t=document.getElementById('contact');if(t)t.scrollIntoView({behavior:'smooth'});return false;">상담 신청 →</a>
+      </article>
+
+      <article class="plan reveal on visible show active aos-animate is-visible in-view">
+        <div class="plan__type">— Plan III</div>
+        <h3>정기 케어 패키지</h3>
+        <div class="plan__sub">등급 없이 정기적으로 이용</div>
+        <div class="plan__price">980,000<small>원/월~</small></div>
+        <div class="plan__period">— 비급여 자비 부담 / VAT 별도</div>
+        <ul class="plan__includes">
+          <li>주 3회 / 회당 3시간</li>
+          <li>전담 요양보호사 매칭</li>
+          <li>월말 종합 리포트</li>
+          <li>응급 상황 24시간 대응</li>
+          <li>중도 해지 위약금 없음</li>
+        </ul>
+        <a href="#contact" class="plan__cta" data-dp-btn-bound="1" data-dp-has-link="1" onclick="var t=document.getElementById('contact');if(t)t.scrollIntoView({behavior:'smooth'});return false;">상담 신청 →</a>
+      </article>
+
+    </div>
+
+    <div class="legal-note">
+      <strong>※ 요금제 안내</strong> · 표시 가격은 부가세 별도이며, 장기요양보험 적용 시 본인부담률 15% (차상위 6% · 기초수급 0%)가 적용됩니다.
+      비급여 정기 패키지는 「전자상거래법」에 따라 14일 이내 환불 가능하며, 위약금은 「약관규제법」 기준 잔여 일수 비례 정산됩니다.
+      실 견적은 어르신 상태·등급·이용 시간에 따라 결정되며, 상담 후 정확한 금액이 안내됩니다.
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     10. CONTACT + FOOTER (cream + big phone card)
+     ========================================================= -->
+<section class="contact" id="contact">
+  <div class="container">
+
+    <div class="contact__inner">
+
+      <div class="contact__copy reveal on visible show active aos-animate is-visible in-view">
+        <span class="eyebrow">— 09 · Get Started</span>
+        <h2>지금, <em>마음을 놓으세요.</em></h2>
+        <p>전화 또는 카카오로 무료 상담 시작. 강제 계약 없습니다. 어르신과 가족 상황을 듣고 적합한 방향만 안내해 드립니다.</p>
+
+        <ul class="contact__perks">
+          <li>무료 상담 + 무료 가정 평가</li>
+          <li>장기요양 등급 신청 절차 안내</li>
+          <li>본인부담률 정확 안내 + 견적</li>
+          <li>요양보호사 매칭 + 첫 방문 동행</li>
+          <li>이용 후 마음에 안 들면 즉시 교체</li>
+        </ul>
+      </div>
+
+      <div class="contact__phone-card reveal on visible show active aos-animate is-visible in-view">
+        <div class="contact__phone-label">24시간 무료 상담</div>
+        <span class="contact__phone-big">1588 — 0000</span>
+        <div class="contact__phone-hours">평일·주말·공휴일 무관 · 응급 통화 가능</div>
+
+        <div class="contact__phone-buttons">
+          <a href="tel:15880000" class="contact__btn-call" data-dp-btn-bound="1" data-dp-has-link="1">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"></path></svg>
+            전화 상담
+          </a>
+          <a href="#contact" class="contact__btn-kakao" data-dp-btn-bound="1" onclick="var t=document.getElementById('contact');if(t)t.scrollIntoView({behavior:'smooth'});return false;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.9 1.9 5.4 4.8 6.8L5.5 22l4.5-3c.7.1 1.3.1 2 .1 5.5 0 10-3.6 10-8s-4.5-8-10-8z"></path></svg>
+            카카오톡 상담
+          </a>
+        </div>
+
+        <div class="contact__phone-foot">
+          <strong>응답 약속</strong> · 영업 시간 내 30분 이내 회신.<br>
+          야간·새벽 문의는 다음 영업일 오전 회신.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div class="footer__inner">
+        <div>
+          <div class="logo">늘봄<span class="dot">.</span></div>
+          <p class="footer__about">
+            늘봄 NEULBOM 재가복지센터<br>
+            방문요양·방문목욕·방문간호·주야간보호·단기보호. 14년 운영 · 320+ 가정 · 노인장기요양보험 협력 기관.
+          </p>
+        </div>
+        <div class="footer__col">
+          <h5>서비스</h5>
+          <ul>
+            <li><a href="#services" data-dp-btn-bound="1" data-dp-has-link="1">방문요양</a></li>
+            <li><a href="#services" data-dp-btn-bound="1" data-dp-has-link="1">방문목욕</a></li>
+            <li><a href="#services" data-dp-btn-bound="1" data-dp-has-link="1">방문간호</a></li>
+            <li><a href="#services" data-dp-btn-bound="1" data-dp-has-link="1">주야간보호</a></li>
+            <li><a href="#services" data-dp-btn-bound="1" data-dp-has-link="1">단기보호</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h5>안내</h5>
+          <ul>
+            <li><a href="#system" data-dp-btn-bound="1" data-dp-has-link="1">케어 시스템</a></li>
+            <li><a href="#caregivers" data-dp-btn-bound="1" data-dp-has-link="1">요양보호사</a></li>
+            <li><a href="#process" data-dp-btn-bound="1" data-dp-has-link="1">매칭 프로세스</a></li>
+            <li><a href="#insurance" data-dp-btn-bound="1" data-dp-has-link="1">정부 지원</a></li>
+            <li><a href="#pricing" data-dp-btn-bound="1" data-dp-has-link="1">요금</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h5>문의</h5>
+          <ul>
+            <li><a href="tel:15880000" data-dp-btn-bound="1" data-dp-has-link="1">☎ 1588-0000</a></li>
+            <li><a href="#contact" data-dp-btn-bound="1" onclick="var t=document.getElementById('contact');if(t)t.scrollIntoView({behavior:'smooth'});return false;">카카오톡 상담</a></li>
+            <li><a href="#contact" data-dp-btn-bound="1" data-dp-has-link="1" onclick="var t=document.getElementById('contact');if(t)t.scrollIntoView({behavior:'smooth'});return false;">무료 상담 신청</a></li>
+            <li><a href="mailto:hello@neulbom.kr" data-dp-btn-bound="1" data-dp-has-link="1">hello@neulbom.kr</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__legal">
+        <strong style="color: var(--sage-dark);">늘봄 NEULBOM 재가복지센터</strong> ·
+        운영 법인 OOOO · 대표 OOO · 사업자등록번호 000-00-00000 ·
+        장기요양기관 지정번호 제0000-000000호 · 재가노인복지시설 신고 제0000호 ·
+        서울 강남구 OOO로 OOO · CS 1588-0000
+        <br><br>
+        본 센터는 「노인장기요양보험법」 및 「노인복지법」 제31조에 따라 시·군·구청장에게 장기요양기관 지정 + 재가노인복지시설 신고를 마친 정식 기관입니다.
+        모든 요양보호사는 「노인복지법 시행규칙」 제29조의2에 따른 국가자격증을 보유하며, 입사 전 검증·교육을 거칩니다.
+        본인부담률·월 한도액은 보건복지부 + 국민건강보험공단 공식 기준이며, 정부 정책에 따라 매년 조정됩니다. 등급 신청은 국민건강보험공단 ☎ 1577-1000.
+        모든 어르신 건강 정보는 「개인정보보호법」 제23조 민감정보에 해당하여 별도 동의 후 처리되며, 가족 후기는 사전 동의 + 익명 처리되었습니다.
+        요양보호사는 「노인복지법」상 의료 행위를 수행하지 않으며, 응급 상황 시 119 + 가족 + 의료기관 이송 동행을 원칙으로 합니다.
+        모든 인증·자격·지정번호는 placeholder이며, 실 운영 시 정확한 번호로 표기됩니다.
+      </div>
+
+      <div class="footer__bottom">
+        <span>© 2026 NEULBOM · All rights reserved.</span>
+        <span>이용약관 · 개인정보처리방침 · 민감정보 처리방침</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     SCRIPT
+     ========================================================= -->
+<script>
+(function(){
+  'use strict';
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Reveal */
+  var reveals = document.querySelectorAll('.reveal');
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    reveals.forEach(function(el){ el.classList.add('is-in'); });
+  } else {
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('is-in'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+    reveals.forEach(function(el){ obs.observe(el); });
+  }
+
+  /* Smooth scroll */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = this.getAttribute('href');
+      if (id.length > 1 && document.querySelector(id)){
+        e.preventDefault();
+        document.querySelector(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+})();
+</script>
+
+
+<section data-dp-auto-form="1" id="dp-contact-form" style="padding: 64px 20px; background: rgb(244, 246, 249); font-family: Pretendard, &quot;Apple SD Gothic Neo&quot;, -apple-system, sans-serif;"><div style="max-width:560px;margin:0 auto;text-align:center"><h2 style="margin: 0px 0px 8px; font-size: 28px; font-weight: 800; color: rgb(17, 17, 17); letter-spacing: -0.5px;">상담 신청</h2><p style="margin: 0px 0px 28px; font-size: 15px; color: rgb(102, 102, 119);">궁금한 점을 남겨주시면 빠르게 연락드립니다</p><form style="text-align:left;display:flex;flex-direction:column;gap:14px;background:#fff;padding:28px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.08)"><div><label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: rgb(26, 26, 26); opacity: 0.85;">성함 <span style="color: rgb(232, 93, 93);">*</span></label><input type="text" name="name" required="" placeholder="홍길동" style="width: 100%; padding: 13px 14px; border: 1px solid rgb(208, 212, 218); border-radius: 9px; font-size: 15px; font-family: inherit; background: rgb(255, 255, 255); color: rgb(26, 26, 26); box-sizing: border-box;"></div><div><label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: rgb(26, 26, 26); opacity: 0.85;">연락처 <span style="color: rgb(232, 93, 93);">*</span></label><input type="tel" name="phone" required="" placeholder="010-0000-0000" style="width: 100%; padding: 13px 14px; border: 1px solid rgb(208, 212, 218); border-radius: 9px; font-size: 15px; font-family: inherit; background: rgb(255, 255, 255); color: rgb(26, 26, 26); box-sizing: border-box;"></div><div><label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: rgb(26, 26, 26); opacity: 0.85;">이메일</label><input type="email" name="email" placeholder="email@example.com" style="width: 100%; padding: 13px 14px; border: 1px solid rgb(208, 212, 218); border-radius: 9px; font-size: 15px; font-family: inherit; background: rgb(255, 255, 255); color: rgb(26, 26, 26); box-sizing: border-box;"></div><div><label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: rgb(26, 26, 26); opacity: 0.85;">요청사항·문의</label><textarea name="message" rows="4" placeholder="문의 내용을 자유롭게 입력해 주세요" style="width: 100%; padding: 13px 14px; border: 1px solid rgb(208, 212, 218); border-radius: 9px; font-size: 15px; font-family: inherit; background: rgb(255, 255, 255); color: rgb(26, 26, 26); box-sizing: border-box; resize: vertical; min-height: 96px;"></textarea></div><button type="submit" style="width: 100%; padding: 16px; background: rgb(3, 199, 90); color: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 10px; font-size: 16px; font-weight: 800; font-family: inherit; margin-top: 6px;">상담 신청 보내기</button></form></div></section><script data-dp-form-handler="1">(function(){
+  var WORKER = "https://api.daperm.com";
+  var TO = "jinwoo85@gmail.com";
+  var SLUG = "";
+  function __dpWireForms(){
+    document.querySelectorAll('form').forEach(function(form){
+      // 템플릿의 기존 onsubmit 제거 (alert + form.reset()으로 데이터 손실 방지)
+      form.removeAttribute('onsubmit');
+      form.onsubmit = null;
+      // submit 핸들러 (Worker 호출)
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        var btn = form.querySelector('button[type="submit"], input[type="submit"], button:not([type])');
+        var origText = btn ? btn.textContent : '';
+        if(btn){ btn.disabled = true; btn.textContent = '⏳ 전송 중...'; }
+        try {
+          // FormData를 reset 전에 즉시 캡처
+          var fields = {};
+          new FormData(form).forEach(function(v, k){ fields[k] = String(v).slice(0, 5000); });
+          var r = await fetch(WORKER + '/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ _to: TO, _slug: SLUG, fields: fields })
+          });
+          if(!r.ok) throw new Error('전송 실패 (' + r.status + ')');
+          alert('✓ 신청이 접수되었습니다. 빠르게 연락드리겠습니다.');
+          form.reset();
+        } catch(err){
+          alert('❌ 전송 실패: ' + (err.message || '잠시 후 다시 시도해주세요'));
+        } finally {
+          if(btn){ btn.disabled = false; btn.textContent = origText; }
+        }
+      }, true);
+      // 봇 차단용 허니팟 (시각적으로 숨김)
+      if(!form.querySelector('input[name="_honey"]')){
+        var honey = document.createElement('input');
+        honey.type = 'text'; honey.name = '_honey'; honey.tabIndex = -1; honey.autocomplete = 'off';
+        honey.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none';
+        form.appendChild(honey);
+      }
+    });
+  }
+  // ⚠️ view.html은 document.write로 페이지를 주입 → 그 시점엔 DOMContentLoaded가 이미 지나 리스너가 안 걸림.
+  // 그래서 이미 로드됐으면 즉시 실행(그래야 폼이 묶여 상담이 전송됨). 모바일가드 스크립트와 동일한 방어 패턴.
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', __dpWireForms); } else { __dpWireForms(); }
+})();</script></body></html>

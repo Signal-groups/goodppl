@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>포트폴리오 | Good People</title>
+<meta name="description" content="업종별 홈페이지 제작 샘플 31종 - PC와 모바일 화면을 선택해서 바로 미리볼 수 있습니다.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .pf-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px;}
+  .pf-filters button{
+    border:1px solid var(--border-strong);background:var(--card);color:var(--text-dim);
+    font-size:13.5px;font-weight:700;padding:9px 18px;border-radius:100px;cursor:pointer;
+    transition:background .2s,color .2s,border-color .2s;
+  }
+  .pf-filters button:hover{border-color:rgba(255,255,255,.32);}
+  .pf-filters button.active{background:var(--gradient);color:#0a0c18;border-color:transparent;}
+  .pf-count{font-size:13px;color:var(--text-faint);margin-bottom:20px;}
+
+  .pf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .pf-card{
+    border:1px solid var(--border);border-radius:18px;overflow:hidden;background:var(--card);
+    transition:transform .25s,border-color .25s,box-shadow .25s;cursor:pointer;
+    display:flex;flex-direction:column;text-align:left;font:inherit;color:inherit;
+    padding:0;width:100%;
+  }
+  .pf-card:focus-visible{outline:2px solid var(--accent-2);outline-offset:3px;}
+  .pf-card:hover{transform:translateY(-5px);border-color:var(--border-strong);box-shadow:0 26px 50px -30px rgba(124,92,255,.4);}
+  .pf-thumb{aspect-ratio:4/3;background:var(--gradient-soft);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .pf-thumb::before{content:attr(data-en);position:absolute;font-size:13vw;font-weight:900;color:rgba(255,255,255,.05);letter-spacing:-.03em;white-space:nowrap;}
+  .pf-thumb .mock{width:78%;background:var(--bg-alt);border:1px solid var(--border-strong);border-radius:10px;padding:14px;z-index:1;box-shadow:0 20px 40px -16px rgba(0,0,0,.5);}
+  .pf-thumb .mock .bar{display:flex;gap:5px;margin-bottom:10px;}
+  .pf-thumb .mock .bar span{width:6px;height:6px;border-radius:50%;background:var(--border-strong);}
+  .pf-thumb .mock .line{height:7px;border-radius:4px;background:var(--border-strong);margin-bottom:7px;}
+  .pf-thumb .mock .line.w60{width:60%;}
+  .pf-thumb .mock .line.w80{width:80%;}
+  .pf-thumb .mock .line.grad{background:var(--gradient);width:40%;height:9px;margin-top:10px;}
+  .pf-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1;}
+  .pf-cat{font-size:11px;font-weight:800;letter-spacing:.07em;color:var(--accent-2);text-transform:uppercase;}
+  .pf-body h3{font-size:16px;font-weight:700;}
+  .pf-body p{font-size:13px;color:var(--text-dim);line-height:1.55;flex:1;}
+  .pf-link{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--text);margin-top:6px;}
+  .pf-link .arrow{transition:transform .2s;}
+  .pf-card:hover .pf-link .arrow{transform:translateX(4px);}
+
+  /* preview modal */
+  .preview-modal{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:20px;}
+  .preview-modal.open{display:flex;}
+  .preview-backdrop{position:absolute;inset:0;background:rgba(5,6,14,.85);backdrop-filter:blur(6px);}
+  .preview-panel{
+    position:relative;z-index:1;width:100%;max-width:1240px;height:90vh;
+    background:var(--bg-alt);border:1px solid var(--border-strong);border-radius:20px;
+    overflow:hidden;display:flex;flex-direction:column;box-shadow:0 60px 120px -40px rgba(0,0,0,.7);
+  }
+  .preview-toolbar{display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .preview-title{font-weight:700;font-size:14.5px;flex:1;min-width:100px;}
+  .preview-modes{display:flex;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:100px;padding:4px;flex-shrink:0;}
+  .preview-modes button{border:none;background:none;color:var(--text-dim);font-size:13px;font-weight:700;padding:7px 14px;border-radius:100px;cursor:pointer;transition:background .2s,color .2s;}
+  .preview-modes button.active{background:var(--gradient);color:#0a0c18;}
+  .preview-close{width:32px;height:32px;border-radius:9px;border:1px solid var(--border-strong);background:transparent;color:var(--text);cursor:pointer;font-size:15px;flex-shrink:0;}
+  .preview-frame-wrap{flex:1;overflow:auto;display:flex;justify-content:center;padding:20px;background:var(--bg);}
+  .preview-frame-wrap iframe{width:100%;height:100%;border:none;border-radius:10px;background:#fff;}
+  .preview-frame-wrap[data-mode="mobile"] iframe{width:390px;max-width:100%;height:100%;border-radius:30px;border:8px solid #111;box-shadow:0 20px 50px -20px rgba(0,0,0,.6);}
+
+  @media (max-width:920px){
+    .pf-grid{grid-template-columns:repeat(2,1fr);}
+    .preview-panel{height:94vh;border-radius:14px;}
+    .preview-frame-wrap{padding:12px;}
+  }
+  @media (max-width:600px){
+    .pf-grid{grid-template-columns:1fr;}
+    .preview-toolbar{gap:10px;}
+    .preview-title{width:100%;order:-1;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="index.html" class="logo"><span>Good</span><span>people</span></a>
+    <div class="navlinks">
+      <a href="index.html">HOME</a>
+      <a href="services.html">서비스</a>
+      <a href="portfolio.html" class="active">포트폴리오</a>
+      <a href="pricing.html">가격안내</a>
+      <a href="guide.html">이용안내</a>
+      <a href="index.html#contact">상담문의</a>
+    </div>
+    <div class="nav-cta">
+      <a href="index.html#contact" class="btn btn-ghost">무료 상권진단</a>
+      <a href="#" data-kakao target="_blank" class="btn btn-solid">카카오 상담</a>
+      <button class="nav-toggle" aria-label="메뉴" aria-expanded="false">☰</button>
+    </div>
+  </nav>
+  <div class="mobile-menu">
+    <a href="index.html">HOME</a>
+    <a href="services.html">서비스</a>
+    <a href="portfolio.html" class="active">포트폴리오</a>
+    <a href="pricing.html">가격안내</a>
+    <a href="guide.html">이용안내</a>
+    <a href="index.html#contact">상담문의</a>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <span class="eyebrow"><span class="dot"></span>포트폴리오 31종</span>
+      <h1>이런 홈페이지를<br>만들어드립니다.</h1>
+      <p>카드를 누르면 그 자리에서 바로 미리볼 수 있습니다. PC·모바일 화면을 선택해서 확인해보세요.</p>
+    </div>
+  </section>
+
+  <section class="section-pad tight">
+    <div class="wrap">
+      <div class="pf-filters" id="pf-filters">
+        <button data-filter="all" class="active">전체</button>
+        <button data-filter="cafe">카페·베이커리</button>
+        <button data-filter="food">음식점</button>
+        <button data-filter="beauty">미용·뷰티</button>
+        <button data-filter="medical">병원·클리닉</button>
+        <button data-filter="academy">학원·교육</button>
+        <button data-filter="fitness">헬스·피트니스</button>
+        <button data-filter="local">지역서비스·공방</button>
+        <button data-filter="business">전문서비스</button>
+      </div>
+      <div class="pf-count" id="pf-count"></div>
+      <div class="pf-grid" id="pf-grid"></div>
+    </div>
+  </section>
+
+  <section class="section-pad" id="contact">
+    <div class="wrap">
+      <div class="cta-banner">
+        <h2>마음에 드는 스타일을 찾으셨나요?</h2>
+        <p>비슷한 느낌으로 사장님 가게에 맞게 제작해드립니다.</p>
+        <div class="hero-cta">
+          <a href="#" data-kakao target="_blank" class="btn btn-solid">카카오톡으로 상담하기</a>
+          <a href="pricing.html" class="btn btn-ghost">이용금액 보기</a>
+        </div>
+        <div class="cta-sub">상담만 받아보셔도 괜찮습니다.</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a href="index.html" class="logo"><span>Good</span><span>people</span></a>
+        <p>소상공인의 온라인 매장을 함께 만듭니다.<br>홈페이지 제작 · 네이버플레이스 · 블로그 · 체험단.</p>
+        <div class="foot-tags"><span>Blog Marketing Platform</span><span>Connecting Bloggers &amp; Businesses</span></div>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h5>SERVICE</h5>
+          <a href="services.html">홈페이지 제작</a>
+          <a href="services.html">네이버플레이스</a>
+          <a href="services.html">블로그 대행</a>
+          <a href="services.html">체험단</a>
+        </div>
+        <div class="foot-col">
+          <h5>COMPANY</h5>
+          <a href="portfolio.html">포트폴리오</a>
+          <a href="pricing.html">이용금액</a>
+          <a href="guide.html">이용안내</a>
+          <a href="index.html#contact">상담문의</a>
+        </div>
+        <div class="foot-col">
+          <h5>CONTACT</h5>
+          <p>대표 : 배진우</p>
+          <p>010-3430-2565</p>
+          <p>gooodppl0@gmail.com</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Good People. All Rights Reserved.</span>
+      <div class="foot-legal"><a href="#">개인정보처리방침</a><a href="#">이용약관</a></div>
+    </div>
+  </div>
+</footer>
+
+<a href="#" data-kakao target="_blank" class="float-cta">💬 카카오 상담</a>
+
+<!-- Preview modal -->
+<div class="preview-modal" id="preview-modal">
+  <div class="preview-backdrop"></div>
+  <div class="preview-panel">
+    <div class="preview-toolbar">
+      <span class="preview-title" id="preview-title"></span>
+      <div class="preview-modes">
+        <button data-mode="pc" class="active">PC 화면</button>
+        <button data-mode="mobile">모바일 화면</button>
+      </div>
+      <a id="preview-open-tab" href="#" target="_blank" class="btn btn-ghost btn-sm">새 탭에서 열기</a>
+      <button class="preview-close" aria-label="닫기">✕</button>
+    </div>
+    <div class="preview-frame-wrap" id="preview-frame-wrap" data-mode="pc">
+      <iframe id="preview-frame" src="about:blank" title="홈페이지 미리보기"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+  var CATEGORIES = {
+    cafe:     { label: "카페·베이커리", en: "CAFE" },
+    food:     { label: "음식점",         en: "FOOD" },
+    beauty:   { label: "미용·뷰티",      en: "BEAUTY" },
+    medical:  { label: "병원·클리닉",    en: "MEDICAL" },
+    academy:  { label: "학원·교육",      en: "ACADEMY" },
+    fitness:  { label: "헬스·피트니스",  en: "FIT" },
+    local:    { label: "지역서비스·공방", en: "LOCAL" },
+    business: { label: "전문서비스",     en: "BIZ" }
+  };
+
+  var ITEMS = [
+    { file: "cafe-01.html",     cat: "cafe",     name: "모모 카페",        tag: "동네의 따뜻한 한 잔" },
+    { file: "cafe-02.html",     cat: "cafe",     name: "메종 룬",          tag: "매일 새벽 5시에 시작합니다" },
+
+    { file: "food-01.html",     cat: "food",     name: "L'ÉLÉGANCE",      tag: "Fine Dining · 예약 상담" },
+    { file: "food-02.html",     cat: "food",     name: "KICK BURGER",     tag: "30분 도착, 펄펄 끓는 패티" },
+    { file: "food-03.html",     cat: "food",     name: "굽굽 GUBGUB",     tag: "오늘 어디 갈까?" },
+
+    { file: "beauty-01.html",   cat: "beauty",   name: "MAISON ROSÉ",     tag: "Beauty & Nail Atelier" },
+    { file: "beauty-02.html",   cat: "beauty",   name: "MAISON NOIR",     tag: "Hair Atelier" },
+    { file: "beauty-03.html",   cat: "beauty",   name: "벨라 왁싱 스튜디오", tag: "처음이라도 편안하게" },
+    { file: "beauty-04.html",   cat: "beauty",   name: "REPOS",           tag: "Skin & Wellness Atelier" },
+    { file: "beauty-05.html",   cat: "beauty",   name: "명월 바버샵",       tag: "한 사람의 남자가 되는 시간" },
+
+    { file: "medical-01.html",  cat: "medical",  name: "피부과 클리닉",     tag: "당신의 피부가 가장 아름다울 때" },
+    { file: "medical-02.html",  cat: "medical",  name: "리커버 클리닉",     tag: "정형외과 · 재활의학과" },
+
+    { file: "academy-01.html",  cat: "academy",  name: "PRIME ACADEMY",   tag: "대치동 입시 전문 학원" },
+    { file: "academy-02.html",  cat: "academy",  name: "햇살 어린이집",     tag: "놀이로 배우는 첫 사회" },
+
+    { file: "fitness-01.html",  cat: "fitness",  name: "IRONFORGE",       tag: "TRANSFORM YOUR BODY" },
+
+    { file: "local-01.html",    cat: "local",    name: "WASHLY",          tag: "비대면 세탁 · 드라이클리닝" },
+    { file: "local-02.html",    cat: "local",    name: "솔밭 캠프",         tag: "별빛 아래 한밤의 캠프" },
+    { file: "local-03.html",    cat: "local",    name: "결 공방",          tag: "결을 따라, 만드는 시간" },
+    { file: "local-04.html",    cat: "local",    name: "포포 펫살롱",       tag: "우리 아이의 두 번째 집" },
+    { file: "local-05.html",    cat: "local",    name: "정온 HVAC",       tag: "안전 · 정확 · 따뜻함" },
+    { file: "local-06.html",    cat: "local",    name: "FIX24",           tag: "막힌 곳, 30분 안에" },
+    { file: "local-07.html",    cat: "local",    name: "리룸 REROOM",      tag: "전체 공사 없이 핵심만" },
+    { file: "local-08.html",    cat: "local",    name: "프루프랩",         tag: "새는 곳, 다시는 안 새게" },
+    { file: "local-09.html",    cat: "local",    name: "늘봄",             tag: "우리 가족 같은 돌봄" },
+
+    { file: "business-01.html", cat: "business", name: "Stackly",         tag: "IT Solution Proposal" },
+    { file: "business-02.html", cat: "business", name: "Maison Blanc",    tag: "웨딩 플래너 · Your Perfect Day" },
+    { file: "business-03.html", cat: "business", name: "세무회계 파트너",   tag: "데이터로 절세하는 세무 파트너" },
+    { file: "business-04.html", cat: "business", name: "AURUM",           tag: "자산을 거래합니다" },
+    { file: "business-05.html", cat: "business", name: "어사화",           tag: "브랜드 혁신 제안서" },
+    { file: "business-06.html", cat: "business", name: "CARMATCH",        tag: "중고차 매매 플랫폼" },
+    { file: "business-07.html", cat: "business", name: "HANSE",           tag: "종합보험사" }
+  ];
+
+  var grid = document.getElementById("pf-grid");
+  var countEl = document.getElementById("pf-count");
+  countEl.textContent = "총 " + ITEMS.length + "개 업종 샘플";
+
+  ITEMS.forEach(function (item) {
+    var meta = CATEGORIES[item.cat];
+    var card = document.createElement("button");
+    card.type = "button";
+    card.className = "pf-card";
+    card.setAttribute("data-category", item.cat);
+    card.setAttribute("data-preview", "portfolio/" + item.file);
+    card.setAttribute("data-name", item.name);
+    card.innerHTML =
+      '<div class="pf-thumb" data-en="' + meta.en + '">' +
+        '<div class="mock"><div class="bar"><span></span><span></span><span></span></div>' +
+        '<div class="line w80"></div><div class="line w60"></div><div class="line grad"></div></div>' +
+      '</div>' +
+      '<div class="pf-body">' +
+        '<span class="pf-cat">' + meta.label + '</span>' +
+        '<h3>' + item.name + '</h3>' +
+        '<p>' + item.tag + '</p>' +
+        '<span class="pf-link">미리보기 <span class="arrow">→</span></span>' +
+      '</div>';
+    grid.appendChild(card);
+  });
+
+  // Auto-select category filter from ?cat= query param.
+  // Applied directly (not via btn.click()) because app.js attaches its
+  // filter listeners on DOMContentLoaded, which hasn't fired yet here.
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var cat = params.get("cat");
+    if (!cat || !CATEGORIES[cat]) return;
+    var btn = document.querySelector('#pf-filters [data-filter="' + cat + '"]');
+    if (!btn) return;
+    document.querySelectorAll("#pf-filters button").forEach(function (b) {
+      b.classList.remove("active");
+    });
+    btn.classList.add("active");
+    var visible = 0;
+    document.querySelectorAll("[data-category]").forEach(function (card) {
+      var show = card.getAttribute("data-category") === cat;
+      card.style.display = show ? "" : "none";
+      if (show) visible++;
+    });
+    countEl.textContent = btn.textContent + " · " + visible + "개";
+  })();
+</script>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
