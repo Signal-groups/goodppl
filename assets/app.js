@@ -56,7 +56,7 @@ var LEGAL_CONTENT = {
 
       "<h4>11. 고지의 의무</h4>" +
       "<p>본 방침은 시행일로부터 적용되며, 내용의 추가·삭제 및 수정이 있을 경우 개정 최소 7일 전부터 홈페이지를 통해 공지합니다.</p>" +
-      "<p style=\"color:var(--text-faint);margin-top:16px;\">시행일 : 2026년 8월 20일<br>※ 사업자등록 완료 후 사업자 정보(사업자등록번호 등)를 포함하여 갱신될 예정입니다.</p>"
+      "<p style=\"color:var(--text-faint);margin-top:16px;\">시행일 : 2026년 8월 20일 · 개정 : 2026년 10월 15일<br>상호 : 굿피플 · 대표 : 배진우 · 사업자등록번호 : 702-06-03686<br>주소 : 강원특별자치도 원주시 남원로534번길 50, B동 507호</p>"
   },
   terms: {
     title: "이용약관",
@@ -107,7 +107,59 @@ var LEGAL_CONTENT = {
   }
 };
 
+document.documentElement.classList.add("js");
+
+// Count-up numbers: <span data-count="390000">, started when revealed
+function countUp(el) {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var end = +el.getAttribute("data-count");
+  var start = null;
+  function step(ts) {
+    if (!start) start = ts;
+    var p = Math.min((ts - start) / 1200, 1);
+    el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))).toLocaleString("ko-KR");
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+  // Scroll reveal: any .reveal element fades up once it enters the viewport
+  var reveals = document.querySelectorAll(".reveal");
+  // Stagger siblings in a grid so cards cascade in
+  reveals.forEach(function (el) {
+    var i = Array.prototype.indexOf.call(el.parentNode.children, el);
+    el.style.setProperty("--d", Math.min(i, 6) * 0.08 + "s");
+  });
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          var el = en.target;
+          el.classList.add("in");
+          io.unobserve(el);
+          el.querySelectorAll("[data-count]").forEach(countUp);
+          // Drop reveal classes afterwards so the element's own hover transforms work again
+          setTimeout(function () { el.classList.remove("reveal", "in"); }, 1300);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(function (el) { io.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add("in"); });
+  }
+
+  // Top scroll progress bar (index.html)
+  var bar = document.querySelector(".progress");
+  if (bar) {
+    var onScroll = function () {
+      var max = document.documentElement.scrollHeight - innerHeight;
+      bar.style.transform = "scaleX(" + (max > 0 ? scrollY / max : 0) + ")";
+    };
+    addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
   document.querySelectorAll("[data-kakao]").forEach(function (el) {
     el.setAttribute("href", KAKAO_URL);
   });
@@ -156,13 +208,13 @@ document.addEventListener("DOMContentLoaded", function () {
   if (openAcc) openAcc.style.maxHeight = openAcc.scrollHeight + "px";
 
   // Portfolio preview modal (portfolio.html)
-  var modal = document.getElementById("preview-modal");
-  if (modal) {
+  var previewModal = document.getElementById("preview-modal");
+  if (previewModal) {
     var frame = document.getElementById("preview-frame");
     var frameWrap = document.getElementById("preview-frame-wrap");
     var titleEl = document.getElementById("preview-title");
     var openInTabLink = document.getElementById("preview-open-tab");
-    var modeButtons = modal.querySelectorAll("[data-mode]");
+    var modeButtons = previewModal.querySelectorAll("[data-mode]");
 
     function setMode(mode) {
       frameWrap.setAttribute("data-mode", mode);
@@ -179,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function () {
         titleEl.textContent = name;
         openInTabLink.setAttribute("href", url);
         setMode(card.getAttribute("data-default-mode") || "pc");
-        modal.classList.add("open");
+        previewModal.classList.add("open");
         document.body.style.overflow = "hidden";
       });
     });
@@ -191,14 +243,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function closeModal() {
-      modal.classList.remove("open");
+      previewModal.classList.remove("open");
       document.body.style.overflow = "";
       frame.src = "about:blank";
     }
-    modal.querySelector(".preview-close").addEventListener("click", closeModal);
-    modal.querySelector(".preview-backdrop").addEventListener("click", closeModal);
+    previewModal.querySelector(".preview-close").addEventListener("click", closeModal);
+    previewModal.querySelector(".preview-backdrop").addEventListener("click", closeModal);
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && modal.classList.contains("open")) closeModal();
+      if (e.key === "Escape" && previewModal.classList.contains("open")) closeModal();
     });
   }
 
